@@ -1,6 +1,6 @@
-# New Project
+# Lost-n-Found
 
-This project was created from the neue fische next template.
+The Lost-n-Found app will help lost or found things find their owner more quickly.
 
 ## Development
 
