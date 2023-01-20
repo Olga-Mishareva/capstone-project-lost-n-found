@@ -12,7 +12,7 @@ const StyledItem = styled.div`
   width: 300px;
   height: 70px;
   background-color: ${({ initialStatus }) =>
-    initialStatus ? "rgba(237, 80, 80, 0.6)" : "rgba(63, 127, 202, 0.6)"};
+    initialStatus ? "rgba(237, 80, 80, 0.5)" : "rgba(63, 127, 202, 0.5)"};
   border-radius: 10px;
   display: flex;
   justify-content: center;

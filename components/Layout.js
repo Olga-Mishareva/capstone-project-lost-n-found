@@ -16,7 +16,7 @@ export function Layout({ children }) {
 
 const Wrapper = styled.div`
   display: grid;
-  grid-template-rows: 70px auto 36px;
+  grid-template-rows: 80px auto 36px;
   height: 100vh;
 `;
 
@@ -37,7 +37,7 @@ const Footer = styled.footer`
 
 const Copyright = styled.p`
   margin: 0;
-  padding: 10px 20px;
+  padding: 10px 7.5%;
   font-size: 14px;
   line-height: 16px;
   color: rgba(26, 26, 26, 0.3);

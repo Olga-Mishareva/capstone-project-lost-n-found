@@ -3,7 +3,9 @@ import styled from "styled-components";
 export function TitleBar() {
   return (
     <StyledHeader>
-      <Headline>Lost-n-Found</Headline>
+      <Headline>
+        <LostSpan>Lost</LostSpan>-n-<FoundSpan>Found</FoundSpan>
+      </Headline>
     </StyledHeader>
   );
 }
@@ -15,9 +17,19 @@ const StyledHeader = styled.header`
 `;
 
 const Headline = styled.h1`
-  font-weight: 700;
+  margin: 0;
+  font-weight: 600;
+  line-height: 40px;
   width: 85%;
   border-bottom: 2px solid rgba(26, 26, 26, 0.3);
-  padding: 15px 0;
+  padding: 20px 0;
   text-align: center;
+`;
+
+const LostSpan = styled.span`
+  color: var(--lost-color);
+`;
+
+const FoundSpan = styled.span`
+  color: var(--found-color);
 `;
