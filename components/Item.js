@@ -1,16 +1,25 @@
-import styled, { StyledComponent } from "styled-components";
+import styled from "styled-components";
 
 export default function Item({ title, initialStatus }) {
   return (
-    <div>
-      <h2>{title}</h2>
-    </div>
+    <StyledItem initialStatus={initialStatus}>
+      <Title>{title}</Title>
+    </StyledItem>
   );
 }
 
 const StyledItem = styled.div`
   width: 300px;
-  height: 50px;
-  background-color: lightblue;
+  height: 70px;
+  background-color: ${({ initialStatus }) =>
+    initialStatus ? "rgba(237, 80, 80, 0.6)" : "rgba(63, 127, 202, 0.6)"};
   border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const Title = styled.h2`
+  margin: 0;
+  font-weight: 600;
 `;
