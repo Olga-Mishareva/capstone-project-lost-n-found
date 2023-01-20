@@ -10,49 +10,49 @@
   {
     "initiallyLost": false,
     "itemId": "6acff376-41a9-45ea-bb6b-44b2ec4b74ff",
-    "itemTitle": "",
-    "itemDescription": "",
+    "itemTitle": "Starwars figure",
+    "itemDescription": "I think it's Darth Vader. The figure looks as good as new and is probably very precious to someone.",
     "userName": "Samanta",
     "userId": "701b9b4d-d27a-4388-a697-53727169c9a2"
   },
   {
     "initiallyLost": false,
     "itemId": "2b7627a0-e1e8-42a4-8dbe-af93db8faff4",
-    "itemTitle": "",
-    "itemDescription": "",
+    "itemTitle": "Scarf",
+    "itemDescription": "It looks very good and probably has Hermès label.",
     "userName": "Otto",
     "userId": "d81457b8-1f76-43ea-80eb-65a18ea54f58"
   },
   {
     "initiallyLost": true,
     "itemId": "c73cca40-5560-4f9f-958a-80acbc8e3bbd",
-    "itemTitle": "",
-    "itemDescription": "",
-    "userName": "Otto",
+    "itemTitle": "iPhone SE",
+    "itemDescription": "It's almost new and has a purple cover.",
+    "userName": "Siggi",
     "userId": "33e191f6-70b7-4f4c-a7b2-c4ba3cafb81a"
   },
   {
     "initiallyLost": true,
     "itemId": "c07d2451-5773-4589-b2da-c1cd727b2f6a",
-    "itemTitle": "",
-    "itemDescription": "",
-    "userName": "Otto",
+    "itemTitle": "Handbag",
+    "itemDescription": "It's coral handbag with a silver chain as a handle. Inside was only cosmetics and gloves.",
+    "userName": "Sindy",
     "userId": "bb16c5b5-5be9-4231-8ac1-c857ab1f46de"
   },
   {
     "initiallyLost": false,
     "itemId": "279fcce8-456d-419c-bbb4-f9718bd875fd",
-    "itemTitle": "",
-    "itemDescription": "",
-    "userName": "Otto",
+    "itemTitle": "Keychain",
+    "itemDescription": "A keychain of 4 keys. Two normal keys, two small keys and a caterpillar keyring.",
+    "userName": "Juliana",
     "userId": "1b0efc21-302c-4bbb-9a46-00ca6c753947"
   },
   {
     "initiallyLost": true,
     "itemId": "db2b6891-8472-4929-9915-dc644ecbbee6",
-    "itemTitle": "",
-    "itemDescription": "",
-    "userName": "Otto",
+    "itemTitle": "Two tickets to show",
+    "itemDescription": "Two tickets to show 'ARISE'. Realy good places. If you have found them I invite you to come with me.",
+    "userName": "Gerhard",
     "userId": "3b756932-63c0-41d1-b978-5fc98b997ba8"
   }
 ]
