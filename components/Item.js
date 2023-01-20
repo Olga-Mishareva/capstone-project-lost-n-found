@@ -11,6 +11,7 @@ export default function Item({ title, initialStatus }) {
 const StyledItem = styled.div`
   min-width: 300px;
   min-height: 70px;
+  margin: 0 35px;
   background-color: ${({ initialStatus }) =>
     initialStatus ? "var(--lost-pastel-color)" : "var(--found-pastel-color)"};
   border-radius: 10px;
@@ -22,4 +23,5 @@ const StyledItem = styled.div`
 const Title = styled.h2`
   margin: 0;
   font-weight: 600;
+  padding: 10px;
 `;
