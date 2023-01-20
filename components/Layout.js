@@ -37,7 +37,7 @@ const Footer = styled.footer`
 
 const Copyright = styled.p`
   margin: 0;
-  padding: 10px 7.5%;
+  padding-right: 7.5%;
   font-size: 14px;
   line-height: 16px;
   color: rgba(26, 26, 26, 0.3);
