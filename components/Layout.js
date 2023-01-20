@@ -40,5 +40,5 @@ const Copyright = styled.p`
   padding-right: 7.5%;
   font-size: 14px;
   line-height: 16px;
-  color: rgba(26, 26, 26, 0.3);
+  color: var(--lightgrey-color);
 `;

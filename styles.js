@@ -9,9 +9,15 @@ export default createGlobalStyle`
 
   :root {
     --lost-color: #ED5050;
+    --lost-pastel-color: rgba(237, 80, 80, 0.5);
     --found-color: #3F7FCA;
+    --found-pastel-color: rgba(63, 127, 202, 0.5);
+    --inDiscuss-color: #EDCB50;
+    --inDiscuss-pastel-color: rgba(237, 203, 80, 0.5);
     --finished-color: #448C74;
+    --finished-pastel-color: rgba(68, 140, 116, 0.5);
     --font-color: #262626;
+    --lightgrey-color: rgba(26, 26, 26, 0.3);
   }
 
   body {

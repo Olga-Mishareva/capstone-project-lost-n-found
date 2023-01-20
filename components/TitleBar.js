@@ -21,7 +21,7 @@ const Headline = styled.h1`
   font-weight: 600;
   line-height: 40px;
   width: 85%;
-  border-bottom: 2px solid rgba(26, 26, 26, 0.3);
+  border-bottom: 2px solid var(--lightgrey-color);
   padding: 20px 0;
   text-align: center;
 `;
