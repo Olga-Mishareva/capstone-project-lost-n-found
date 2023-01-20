@@ -8,7 +8,7 @@ export default function HomePage() {
     <StyledList>
       {items.map((item) => (
         <li key={item.itemId}>
-          <Item title={item.itemTitle} initialStatus={item.initiallyLost} />
+          <Item title={item.title} initialStatus={item.initiallyLost} />
         </li>
       ))}
     </StyledList>
