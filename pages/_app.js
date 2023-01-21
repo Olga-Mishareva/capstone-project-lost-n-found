@@ -1,14 +1,23 @@
-import GlobalStyle from "@/styles";
 import Head from "next/head";
+import styled from "styled-components";
+import { Inter } from "@next/font/google";
+
+import GlobalStyle from "@/styles";
+import { TitleBar } from "@/components/TitleBar";
+import { Layout } from "@/components/Layout";
+
+const inter = Inter({ subsets: ["latin"] });
 
 export default function App({ Component, pageProps }) {
   return (
-    <>
-      <GlobalStyle />
+    <div className={inter.className}>
       <Head>
-        <title>Capstone Project</title>
+        <title>Lost-n-Found</title>
       </Head>
-      <Component {...pageProps} />
-    </>
+      <GlobalStyle />
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
+    </div>
   );
 }
