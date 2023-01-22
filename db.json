@@ -5,7 +5,24 @@
     "title": "Watch Watch Watch Watch Watch Watch Watch Watch Watch Watch",
     "description": "Red watch with a black lether strap.",
     "userName": "Peter",
-    "userId": "5668a8de-9ae2-4128-acbd-e30a9dc647c3"
+    "userId": "5668a8de-9ae2-4128-acbd-e30a9dc647c3",
+    "userRole": "user",
+    "longitude": "13.388517",
+    "latitude": "52.5202038",
+    "inDiscuss": false,
+    "isFinished": false,
+    "messages": [
+      {
+        "userName": "Olga",
+        "userId": "a82d3f61-a32c-4665-8d34-7da857b54ab9",
+        "message": "I found it at the zoo."
+      },
+      {
+        "userName": "Peter",
+        "userId": "5668a8de-9ae2-4128-acbd-e30a9dc647c3",
+        "message": "I'm so glad!"
+      }
+    ]
   },
   {
     "initiallyLost": false,
