@@ -1,16 +1,27 @@
 import styled from "styled-components";
+import useSWR from "swr";
 
-import items from "@/db.json";
 import Item from "@/components/Item";
 
 export default function HomePage() {
+  const { data: items, isLoading, error } = useSWR("/api/items");
+
+  if (error) {
+    console.log(error.message);
+    return <h2>{error.message}</h2>;
+  }
+
   return (
     <StyledList>
-      {items.map((item) => (
-        <li key={item.itemId}>
-          <Item title={item.title} initialStatus={item.initiallyLost} />
-        </li>
-      ))}
+      {isLoading ? (
+        <h2>Loading...</h2>
+      ) : (
+        items.map((item) => (
+          <li key={item.itemId}>
+            <Item title={item.title} initialStatus={item.initiallyLost} />
+          </li>
+        ))
+      )}
     </StyledList>
   );
 }
