@@ -23,6 +23,7 @@ export default createGlobalStyle`
   body {
     margin: 0;
     font-family: system-ui;
+    font-size: 16px;
     color: var(--font-color);
   }
 `;

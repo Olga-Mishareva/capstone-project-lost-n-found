@@ -9,9 +9,8 @@ export default function Item({ title, initialStatus }) {
 }
 
 const StyledItem = styled.div`
-  min-width: 10em;
+  min-width: 18em;
   min-height: 3em;
-  margin: 0 35px;
   background-color: ${({ initialStatus }) =>
     initialStatus ? "var(--lost-pastel-color)" : "var(--found-pastel-color)"};
   border-radius: 10px;

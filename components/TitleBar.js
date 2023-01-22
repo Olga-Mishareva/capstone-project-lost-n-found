@@ -20,9 +20,9 @@ const Headline = styled.h1`
   margin: 0;
   font-weight: 600;
   line-height: 40px;
-  width: 85%;
+  width: 85vw;
   border-bottom: 2px solid var(--lightgrey-color);
-  padding: 20px 0;
+  padding: 0.6em 0;
   text-align: center;
 `;
 
