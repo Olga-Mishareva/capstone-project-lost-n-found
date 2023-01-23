@@ -15,6 +15,7 @@ export function Layout({ children }) {
 }
 
 const Wrapper = styled.div`
+  padding: 0 2rem;
   display: grid;
   grid-template-rows: 80px auto 36px;
   height: 100vh;
@@ -37,7 +38,6 @@ const Footer = styled.footer`
 
 const Copyright = styled.p`
   margin: 0;
-  padding-right: 7.5%;
   font-size: 14px;
   line-height: 16px;
   color: var(--lightgrey-color);
