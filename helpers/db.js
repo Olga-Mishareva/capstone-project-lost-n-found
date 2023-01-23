@@ -1,6 +1,6 @@
 import mongoose, { model, models, Schema } from "mongoose";
 
-const URI = process.env.MONGODB;
+// const URI = process.env.MONGODB_URI;
 
 const ItemSchema = new Schema({
   initiallyLost: Boolean,
@@ -20,7 +20,7 @@ const ItemSchema = new Schema({
 const Item = models.Item || model("Item", ItemSchema);
 
 async function connectDatabase() {
-  await mongoose.connect(URI);
+  await mongoose.connect(process.env.MONGODB_URI);
 }
 
 async function getAllItems() {
