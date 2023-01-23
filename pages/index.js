@@ -7,16 +7,15 @@ export default function HomePage() {
   const { data: items, isLoading, error } = useSWR("/api/items");
 
   if (error) {
-    console.log(error.message);
     return <h2>{error.message}</h2>;
   }
-
-  console.log(items);
 
   return (
     <StyledList>
       {isLoading ? (
-        <h2>Loading...</h2>
+        <li>
+          <h2>Loading...</h2>
+        </li>
       ) : (
         items.map((item) => (
           <li key={item.itemId}>
