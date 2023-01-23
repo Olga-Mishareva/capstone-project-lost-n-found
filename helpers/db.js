@@ -1,6 +1,6 @@
 import mongoose, { model, models, Schema } from "mongoose";
 
-// const URI = process.env.MONGODB_URI;
+const URI = `mongodb+srv://mooowik:${process.env.MONGODB_PASSWORD}@lost-n-found.dp2d557.mongodb.net/?retryWrites=true&w=majority`;
 
 const ItemSchema = new Schema({
   initiallyLost: Boolean,
@@ -20,7 +20,7 @@ const ItemSchema = new Schema({
 const Item = models.Item || model("Item", ItemSchema);
 
 async function connectDatabase() {
-  await mongoose.connect(process.env.MONGODB_URI);
+  await mongoose.connect(URI);
 }
 
 async function getAllItems() {
