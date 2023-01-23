@@ -14,6 +14,7 @@ const StyledHeader = styled.header`
   display: flex;
   justify-content: center;
   align-items: center;
+  border-bottom: 2px solid var(--lightgrey-color);
 `;
 
 const Headline = styled.h1`
@@ -21,8 +22,6 @@ const Headline = styled.h1`
   font-size: 2rem;
   font-weight: 600;
   line-height: 2.2rem;
-  width: 85vw;
-  border-bottom: 2px solid var(--lightgrey-color);
   padding: 0.6em 0;
   text-align: center;
 `;
