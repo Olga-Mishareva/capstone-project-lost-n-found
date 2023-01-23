@@ -11,6 +11,8 @@ export default function HomePage() {
     return <h2>{error.message}</h2>;
   }
 
+  console.log(items);
+
   return (
     <StyledList>
       {isLoading ? (
@@ -30,7 +32,7 @@ const StyledList = styled.ul`
   list-style: none;
   display: flex;
   flex-direction: column;
-  row-gap: 30px;
+  row-gap: 2em;
   margin: 0;
-  padding: 30px 0;
+  padding: 2em 0;
 `;

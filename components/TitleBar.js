@@ -18,8 +18,9 @@ const StyledHeader = styled.header`
 
 const Headline = styled.h1`
   margin: 0;
+  font-size: 2rem;
   font-weight: 600;
-  line-height: 40px;
+  line-height: 2.2rem;
   width: 85vw;
   border-bottom: 2px solid var(--lightgrey-color);
   padding: 0.6em 0;

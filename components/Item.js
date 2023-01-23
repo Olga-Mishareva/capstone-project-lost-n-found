@@ -21,6 +21,7 @@ const StyledItem = styled.div`
 
 const Title = styled.h2`
   margin: 0;
+  font-size: 1.5rem;
   font-weight: 600;
   padding: 1em;
 `;
