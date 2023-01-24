@@ -25,6 +25,7 @@ export default function DetailsPage() {
       description={item.description}
       initialStatus={item.initiallyLost}
       isFound={item.inDiscuss}
+      userName={item.userName}
     />
   );
 }
