@@ -1,6 +1,5 @@
 import useSWR from "swr";
 import { useRouter } from "next/router";
-import Link from "next/link";
 
 import ItemDetails from "@/components/ItemDetails";
 
@@ -9,7 +8,16 @@ export default function DetailsPage() {
   const { isReady } = router;
   const { id } = router.query;
 
-  const { data: item, isLoading, error } = useSWR(`/api/items/${id}`);
+  const { data: item, mutate, isLoading, error } = useSWR(`/api/items/${id}`);
+
+  async function handleStatus() {
+    const newItem = { ...item, inDiscuss: !item.inDiscuss };
+    await fetch(`/api/items/${id}`, {
+      method: "PUT",
+      body: JSON.stringify(newItem),
+    });
+    mutate(newItem);
+  }
 
   if (!isReady || isLoading) {
     return <h2>Loading...</h2>;
@@ -26,6 +34,7 @@ export default function DetailsPage() {
       initialStatus={item.initiallyLost}
       isFound={item.inDiscuss}
       userName={item.userName}
+      onHandle={() => handleStatus()}
     />
   );
 }

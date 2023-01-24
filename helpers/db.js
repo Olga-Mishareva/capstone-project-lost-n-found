@@ -37,4 +37,11 @@ async function getItem(id) {
   return item;
 }
 
-export { getAllItems, getItem };
+async function updateItem(id, item) {
+  await connectDatabase();
+
+  const newItem = await Item.findOneAndUpdate({ itemId: id }, item);
+  return newItem;
+}
+
+export { getAllItems, getItem, updateItem };
