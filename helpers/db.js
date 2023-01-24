@@ -30,4 +30,11 @@ async function getAllItems() {
   return items;
 }
 
-export { getAllItems };
+async function getItem(id) {
+  await connectDatabase();
+
+  const item = await Item.findOne({ itemId: id });
+  return item;
+}
+
+export { getAllItems, getItem };
