@@ -9,13 +9,14 @@ export default function ItemDetails({
   initialStatus,
   isFound,
   userName,
+  onHandle,
 }) {
-  function handleStatus() {}
-
   return (
     <DetailsWrapper>
       <Container>
-        <Category>{initialStatus ? "Lost" : "Found"}</Category>
+        <Category initialStatus={initialStatus} isFound={isFound}>
+          {isFound ? "Waiting for pick-up" : initialStatus ? "Lost" : "Found"}
+        </Category>
         <StyledLink href={"/"}>
           <CloseLink />
         </StyledLink>
@@ -23,7 +24,7 @@ export default function ItemDetails({
       <UserName>by {userName}</UserName>
       <ItemTitle>{title}</ItemTitle>
       <ItemDescription>{description}</ItemDescription>
-      <StyledButton onClick={handleStatus} type="button" isFound={isFound}>
+      <StyledButton onClick={onHandle} type="button" isFound={isFound}>
         {isFound
           ? "Found its owner"
           : initialStatus
@@ -48,7 +49,13 @@ const Container = styled.div`
 
 const Category = styled.h2`
   margin: 0;
-  font-size: 1.3rem;
+  font-size: 1.2rem;
+  color: ${({ isFound, initialStatus }) =>
+    isFound
+      ? "var(--finished-color)"
+      : initialStatus
+      ? "var(--lost-color)"
+      : "var(--found-color)"};
 `;
 
 const StyledLink = styled(Link)`
@@ -59,7 +66,6 @@ const StyledLink = styled(Link)`
 
 const UserName = styled.p`
   margin: 0;
-  /* text-align: end; */
 `;
 
 const ItemTitle = styled.h3`
@@ -82,4 +88,5 @@ const StyledButton = styled.button`
   border-radius: 15px;
   background-color: ${({ isFound }) =>
     isFound ? "var(--finished-color)" : "var(--finished-pastel-color)"};
+  color: ${({ isFound }) => (isFound ? "#FFFFFF" : "var(--font-color)")};
 `;
