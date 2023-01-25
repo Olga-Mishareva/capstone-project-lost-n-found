@@ -8,8 +8,7 @@ export default async function handler(request, response) {
         response.status(404).json({
           message: `Item ${request.query.id} was not found.`,
         });
-      }
-      response.status(200).json(item);
+      } else response.status(200).json(item);
       break;
     }
     case "PUT": {
@@ -19,8 +18,7 @@ export default async function handler(request, response) {
         response.status(404).json({
           message: `Item ${request.query.id} was not found.`,
         });
-      }
-      response.status(200).json(newItem);
+      } else response.status(200).json(newItem);
       break;
     }
     default: {
