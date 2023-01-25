@@ -1,7 +1,5 @@
 import mongoose, { model, models, Schema } from "mongoose";
 
-// const URI = `mongodb+srv://mooowik:${process.env.MONGODB_PASSWORD}@lost-n-found.dp2d557.mongodb.net/?retryWrites=true&w=majority`;
-
 const ItemSchema = new Schema({
   initiallyLost: Boolean,
   title: String,

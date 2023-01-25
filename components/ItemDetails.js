@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import Link from "next/link";
 
-import CloseLink from "@/components/CloseLink";
+import SVGIcon from "@/components/SVGIcon";
 
 export default function ItemDetails({
   title,
@@ -18,7 +18,7 @@ export default function ItemDetails({
           {isFound ? "Waiting for pick-up" : initialStatus ? "Lost" : "Found"}
         </Category>
         <StyledLink href={"/"}>
-          <CloseLink />
+          <SVGIcon variant="close" width="48px" color="var(--font-color)" />
         </StyledLink>
       </Container>
       <UserName>by {userName}</UserName>
