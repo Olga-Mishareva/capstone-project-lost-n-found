@@ -1,5 +1,6 @@
 import useSWR from "swr";
 import { useRouter } from "next/router";
+import { useEffect } from "react";
 
 import ItemDetails from "@/components/ItemDetails";
 
@@ -19,7 +20,13 @@ export default function DetailsPage() {
     mutate(newItem);
   }
 
-  if (!isReady || isLoading) {
+  useEffect(() => {
+    if (!isReady) {
+      return <h2>Loading...</h2>;
+    }
+  }, [isReady]);
+
+  if (isLoading) {
     return <h2>Loading...</h2>;
   }
 
@@ -34,7 +41,7 @@ export default function DetailsPage() {
       initialStatus={item.initiallyLost}
       isFound={item.inDiscuss}
       userName={item.userName}
-      onHandle={() => handleStatus()}
+      onHandle={handleStatus}
     />
   );
 }
