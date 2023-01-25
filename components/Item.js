@@ -13,7 +13,7 @@ const StyledItem = styled.div`
   min-height: 3em;
   background-color: ${({ initialStatus }) =>
     initialStatus ? "var(--lost-pastel-color)" : "var(--found-pastel-color)"};
-  border-radius: 10px;
+  border-radius: 0.7em;
   display: flex;
   justify-content: center;
   align-items: center;

@@ -47,9 +47,10 @@ const Container = styled.div`
   padding: 1.8rem 0 1rem;
 `;
 
-const Category = styled.h2`
+const Category = styled.p`
   margin: 0;
   font-size: 1.2rem;
+  font-weight: 700;
   color: ${({ isFound, initialStatus }) =>
     isFound
       ? "var(--finished-color)"
@@ -68,7 +69,7 @@ const UserName = styled.p`
   margin: 0;
 `;
 
-const ItemTitle = styled.h3`
+const ItemTitle = styled.h2`
   margin: 0;
   font-size: 1.5rem;
   padding: 2.2rem 0 1.5rem;
@@ -85,7 +86,7 @@ const StyledButton = styled.button`
   margin: 5em 0;
   padding: 1em;
   border: none;
-  border-radius: 15px;
+  border-radius: 1em;
   background-color: ${({ isFound }) =>
     isFound ? "var(--finished-color)" : "var(--finished-pastel-color)"};
   color: ${({ isFound }) => (isFound ? "#FFFFFF" : "var(--font-color)")};
