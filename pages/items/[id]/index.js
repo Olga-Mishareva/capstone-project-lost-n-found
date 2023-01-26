@@ -34,6 +34,7 @@ export default function DetailsPage() {
       isFound={item.inDiscuss}
       userName={item.userName}
       onHandleStatus={handleStatus}
+      isLoading={isLoading}
     />
   ) : (
     <h2>Loading...</h2>
