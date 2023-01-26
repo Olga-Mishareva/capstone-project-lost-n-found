@@ -1,12 +1,10 @@
 import useSWR from "swr";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
 
 import ItemDetails from "@/components/ItemDetails";
 
 export default function DetailsPage() {
   const router = useRouter();
-  const { isReady } = router;
   const { id } = router.query;
 
   const { data: item, mutate, isLoading, error } = useSWR(`/api/items/${id}`);
@@ -20,10 +18,6 @@ export default function DetailsPage() {
     mutate();
   }
 
-  useEffect(() => {
-    if (!isReady) return;
-  }, [isReady]);
-
   if (isLoading) {
     return <h2>Loading...</h2>;
   }
@@ -32,7 +26,7 @@ export default function DetailsPage() {
     return <h2>{error}</h2>;
   }
 
-  return (
+  return id ? (
     <ItemDetails
       title={item.title}
       description={item.description}
@@ -41,5 +35,7 @@ export default function DetailsPage() {
       userName={item.userName}
       onHandleStatus={handleStatus}
     />
+  ) : (
+    <h2>Loading...</h2>
   );
 }
