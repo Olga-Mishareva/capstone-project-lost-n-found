@@ -10,7 +10,6 @@ export default function ItemDetails({
   isFound,
   userName,
   onHandleStatus,
-  isLoading,
 }) {
   return (
     <DetailsWrapper>
@@ -26,9 +25,7 @@ export default function ItemDetails({
       <ItemTitle>{title}</ItemTitle>
       <ItemDescription>{description}</ItemDescription>
       <StyledButton onClick={onHandleStatus} type="button" isFound={isFound}>
-        {isLoading
-          ? "In process..."
-          : isFound
+        {isFound
           ? "Found its owner"
           : initialStatus
           ? "I found it"
