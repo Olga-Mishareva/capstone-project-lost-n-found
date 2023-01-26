@@ -21,9 +21,7 @@ export default function DetailsPage() {
   }
 
   useEffect(() => {
-    if (!isReady) {
-      return <h2>Loading...</h2>;
-    }
+    if (!isReady) return;
   }, [isReady]);
 
   if (isLoading) {
