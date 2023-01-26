@@ -38,7 +38,9 @@ async function getItem(id) {
 async function updateItem(id, item) {
   await connectDatabase();
 
-  const newItem = await Item.findOneAndUpdate({ itemId: id }, item);
+  const newItem = await Item.findOneAndUpdate({ itemId: id }, item, {
+    new: true,
+  });
   return newItem;
 }
 
