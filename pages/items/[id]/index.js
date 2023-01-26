@@ -18,7 +18,7 @@ export default function DetailsPage() {
     mutate();
   }
 
-  if (isLoading) {
+  if (isLoading || !id) {
     return <h2>Loading...</h2>;
   }
 
@@ -26,7 +26,7 @@ export default function DetailsPage() {
     return <h2>{error}</h2>;
   }
 
-  return id ? (
+  return (
     <ItemDetails
       title={item.title}
       description={item.description}
@@ -35,7 +35,5 @@ export default function DetailsPage() {
       userName={item.userName}
       onHandleStatus={handleStatus}
     />
-  ) : (
-    <h2>Loading...</h2>
   );
 }
