@@ -17,7 +17,7 @@ export default function DetailsPage() {
       method: "PUT",
       body: JSON.stringify(newItem),
     });
-    mutate(newItem);
+    mutate();
   }
 
   useEffect(() => {
@@ -39,7 +39,7 @@ export default function DetailsPage() {
       initialStatus={item.initiallyLost}
       isFound={item.inDiscuss}
       userName={item.userName}
-      onHandle={handleStatus}
+      onHandleStatus={handleStatus}
     />
   );
 }

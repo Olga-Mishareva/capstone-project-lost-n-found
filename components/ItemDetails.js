@@ -9,7 +9,7 @@ export default function ItemDetails({
   initialStatus,
   isFound,
   userName,
-  onHandle,
+  onHandleStatus,
 }) {
   return (
     <DetailsWrapper>
@@ -24,7 +24,7 @@ export default function ItemDetails({
       <UserName>by {userName}</UserName>
       <ItemTitle>{title}</ItemTitle>
       <ItemDescription>{description}</ItemDescription>
-      <StyledButton onClick={onHandle} type="button" isFound={isFound}>
+      <StyledButton onClick={onHandleStatus} type="button" isFound={isFound}>
         {isFound
           ? "Found its owner"
           : initialStatus
@@ -36,7 +36,7 @@ export default function ItemDetails({
 }
 
 const DetailsWrapper = styled.div`
-  max-width: 350px;
+  max-width: 350px; // temporary
 `;
 
 const Container = styled.div`
