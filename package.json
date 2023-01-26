@@ -11,17 +11,14 @@
   },
   "dependencies": {
     "@next/font": "13.1.2",
-    "crypto": "^1.0.1",
     "eslint": "8.32.0",
     "eslint-config-next": "13.1.2",
-    "immer": "^9.0.18",
     "mongoose": "^6.8.4",
     "next": "13.1.2",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "styled-components": "^5.3.6",
-    "swr": "^2.0.1",
-    "use-immer": "^0.8.1"
+    "swr": "^2.0.1"
   },
   "devDependencies": {
     "@svgr/webpack": "^6.5.1",
