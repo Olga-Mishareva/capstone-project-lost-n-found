@@ -1,4 +1,4 @@
-import { paths } from "@/lib/paths";
+import { svgPaths } from "@/lib/paths";
 
 export default function SVGIcon({ variant, width, color = "currentColor" }) {
   return (
