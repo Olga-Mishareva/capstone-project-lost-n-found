@@ -41,7 +41,7 @@ export default function ItemDetails({
 }
 
 const DetailsWrapper = styled.div`
-  max-width: 350px; // temporary
+  min-width: 300px;
 `;
 
 const Container = styled.div`
