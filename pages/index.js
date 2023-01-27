@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import useSWR from "swr";
+import Link from "next/link";
 
 import Item from "@/components/Item";
 
@@ -19,7 +20,9 @@ export default function HomePage() {
       ) : (
         items.map((item) => (
           <li key={item.itemId}>
-            <Item title={item.title} initialStatus={item.initiallyLost} />
+            <StyledLink href={`/items/${item.itemId}`}>
+              <Item title={item.title} initialStatus={item.initiallyLost} />
+            </StyledLink>
           </li>
         ))
       )}
@@ -34,4 +37,9 @@ const StyledList = styled.ul`
   row-gap: 2em;
   margin: 0;
   padding: 2em 0;
+`;
+
+const StyledLink = styled(Link)`
+  text-decoration: none;
+  color: var(--font-color);
 `;

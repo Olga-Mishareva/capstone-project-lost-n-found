@@ -1,7 +1,5 @@
 import mongoose, { model, models, Schema } from "mongoose";
 
-const URI = `mongodb+srv://mooowik:${process.env.MONGODB_PASSWORD}@lost-n-found.dp2d557.mongodb.net/?retryWrites=true&w=majority`;
-
 const ItemSchema = new Schema({
   initiallyLost: Boolean,
   title: String,
@@ -20,7 +18,7 @@ const ItemSchema = new Schema({
 const Item = models.Item || model("Item", ItemSchema);
 
 async function connectDatabase() {
-  await mongoose.connect(URI);
+  await mongoose.connect(process.env.MONGODB_URI);
 }
 
 async function getAllItems() {
@@ -30,4 +28,20 @@ async function getAllItems() {
   return items;
 }
 
-export { getAllItems };
+async function getItem(id) {
+  await connectDatabase();
+
+  const item = await Item.findOne({ itemId: id });
+  return item;
+}
+
+async function updateItem(id, item) {
+  await connectDatabase();
+
+  const newItem = await Item.findOneAndUpdate({ itemId: id }, item, {
+    new: true,
+  });
+  return newItem;
+}
+
+export { getAllItems, getItem, updateItem };

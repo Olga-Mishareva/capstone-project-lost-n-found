@@ -1,10 +1,8 @@
 import Head from "next/head";
-import styled from "styled-components";
 import { Inter } from "@next/font/google";
 import { SWRConfig } from "swr";
 
 import GlobalStyle from "@/styles";
-import { TitleBar } from "@/components/TitleBar";
 import { Layout } from "@/components/Layout";
 import fetcher from "@/lib/fetcher";
 
