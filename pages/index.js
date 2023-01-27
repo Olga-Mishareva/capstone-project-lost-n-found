@@ -1,11 +1,19 @@
 import styled from "styled-components";
 import useSWR from "swr";
 import Link from "next/link";
+import { useState, useEffect } from "react";
 
 import Item from "@/components/Item";
 
 export default function HomePage() {
   const { data: items, isLoading, error } = useSWR("/api/items");
+  const [reversedItems, setReversedItems] = useState([]);
+
+  useEffect(() => {
+    if (items) {
+      setReversedItems(items.reverse());
+    }
+  }, [items]);
 
   if (error) {
     return <h2>{error.message}</h2>;
@@ -22,7 +30,7 @@ export default function HomePage() {
             <h2>Loading...</h2>
           </li>
         ) : (
-          items.map((item) => (
+          reversedItems?.map((item) => (
             <li key={item.itemId}>
               <ItemLink href={`/items/${item.itemId}`}>
                 <Item title={item.title} initialStatus={item.initiallyLost} />
