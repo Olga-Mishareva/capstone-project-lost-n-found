@@ -1,9 +1,16 @@
 import styled from "styled-components";
 import Link from "next/link";
 
-export default function ItemForm() {
+export default function ItemForm({ onSubmit }) {
+  function handleSubmit(event) {
+    event.preventDefault();
+    const data = Object.fromEntries(new FormData(event.target));
+
+    onSubmit(data);
+  }
+
   return (
-    <Form>
+    <Form onSubmit={handleSubmit}>
       <CategoryWrapper>
         <Label htmlFor="category-select">Category:</Label>
         <Select name="category" id="category-select" required>
@@ -13,7 +20,7 @@ export default function ItemForm() {
         </Select>
       </CategoryWrapper>
       <Label htmlFor="user-name">User name:</Label>
-      <Input type="text" name="username" id="user-name" required />
+      <Input type="text" name="userName" id="user-name" required />
       <Label htmlFor="title">Title of item:</Label>
       <Input type="text" name="title" id="title" required />
       <Label htmlFor="description">Description:</Label>
@@ -72,7 +79,7 @@ const Input = styled.input`
   border: 1px solid var(--lightgrey-color);
   border-radius: 0.2rem;
   min-height: 1.8rem;
-  padding: 0.4rem;
+  padding: 0.5rem;
   font-size: 1rem;
   :focus {
     border: 1px solid var(--found-color);
