@@ -1,14 +1,19 @@
 import { svgPaths } from "@/lib/svgPaths";
 
-export default function SVGIcon({ variant, width, color = "currentColor" }) {
+export default function SVGIcon({
+  variant,
+  width,
+  label,
+  color = "currentColor",
+}) {
   return (
     <svg
       viewBox={svgPaths[variant].viewbox}
       width={width}
       fill={color}
-      aria-labelledby="title"
+      aria-label={label}
     >
-      <title id="title">{variant}</title>
+      <title id={label}>{variant}</title>
       <path d={svgPaths[variant].path} />
     </svg>
   );

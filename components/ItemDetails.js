@@ -18,7 +18,12 @@ export default function ItemDetails({
           {isFound ? "Waiting for pick-up" : initialStatus ? "Lost" : "Found"}
         </Category>
         <StyledLink href={"/"}>
-          <SVGIcon variant="close" width="48px" color="var(--font-color)" />
+          <SVGIcon
+            variant="close"
+            width="48px"
+            label="close"
+            color="var(--font-color)"
+          />
         </StyledLink>
       </Container>
       <UserName>by {userName}</UserName>
