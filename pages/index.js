@@ -7,7 +7,7 @@ import Item from "@/components/Item";
 
 export default function HomePage() {
   const { data: items, isLoading, error } = useSWR("/api/items");
-  const [reversedItems, setReversedItems] = useState(items?.reverse());
+  const [reversedItems, setReversedItems] = useState([]);
 
   useEffect(() => {
     if (items) {
@@ -30,7 +30,7 @@ export default function HomePage() {
             <h2>Loading...</h2>
           </li>
         ) : (
-          reversedItems?.map((item) => (
+          reversedItems.map((item) => (
             <li key={item.itemId}>
               <ItemLink href={`/items/${item.itemId}`}>
                 <Item title={item.title} initialStatus={item.initiallyLost} />
