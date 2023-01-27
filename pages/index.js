@@ -12,21 +12,26 @@ export default function HomePage() {
   }
 
   return (
-    <StyledList>
-      {isLoading ? (
-        <li>
-          <h2>Loading...</h2>
-        </li>
-      ) : (
-        items.map((item) => (
-          <li key={item.itemId}>
-            <StyledLink href={`/items/${item.itemId}`}>
-              <Item title={item.title} initialStatus={item.initiallyLost} />
-            </StyledLink>
+    <>
+      <AddItemLink href={"/create"}>
+        <StyledLinkTitle>Add item</StyledLinkTitle>
+      </AddItemLink>
+      <StyledList>
+        {isLoading ? (
+          <li>
+            <h2>Loading...</h2>
           </li>
-        ))
-      )}
-    </StyledList>
+        ) : (
+          items.map((item) => (
+            <li key={item.itemId}>
+              <ItemLink href={`/items/${item.itemId}`}>
+                <Item title={item.title} initialStatus={item.initiallyLost} />
+              </ItemLink>
+            </li>
+          ))
+        )}
+      </StyledList>
+    </>
   );
 }
 
@@ -39,7 +44,24 @@ const StyledList = styled.ul`
   padding: 2em 0;
 `;
 
-const StyledLink = styled(Link)`
+const ItemLink = styled(Link)`
   text-decoration: none;
   color: var(--font-color);
+`;
+
+const AddItemLink = styled(ItemLink)`
+  margin-top: 2em;
+  min-width: 18em;
+  min-height: 3em;
+  border: 3px solid var(--lightgrey-color);
+  border-radius: 0.7em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const StyledLinkTitle = styled.h2`
+  font-size: 1.5rem;
+  font-weight: 600;
+  /* padding: 1em; */
 `;
