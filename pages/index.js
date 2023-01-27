@@ -7,7 +7,7 @@ import Item from "@/components/Item";
 
 export default function HomePage() {
   const { data: items, isLoading, error } = useSWR("/api/items");
-  const [reversedItems, setReversedItems] = useState([]);
+  const [reversedItems, setReversedItems] = useState(items?.reverse());
 
   useEffect(() => {
     if (items) {
