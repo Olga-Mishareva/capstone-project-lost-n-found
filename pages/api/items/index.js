@@ -5,7 +5,7 @@ export default async function handler(request, response) {
     case "GET": {
       const items = await getAllItems();
       if (!items) {
-        response.status(400).json({ message: "Bad request" });
+        response.status(500).json({ message: "Internal server error." });
         return;
       }
       response.status(200).json(items);
@@ -15,7 +15,7 @@ export default async function handler(request, response) {
       const item = JSON.parse(request.body);
       const newItem = await createItem(item);
       if (!newItem) {
-        response.status(400).json({ message: "Bad request" });
+        response.status(500).json({ message: "Internal server error." });
         return;
       }
 
