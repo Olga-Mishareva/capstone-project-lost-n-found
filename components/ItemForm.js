@@ -13,7 +13,7 @@ export default function ItemForm({ onSubmit }) {
     <Form onSubmit={handleSubmit}>
       <CategoryWrapper>
         <Label htmlFor="category-select">Category:</Label>
-        <Select name="category" id="category-select" required>
+        <Select name="category" id="category-select" required autoFocus>
           <option value="">Choose</option>
           <option value="Lost">Lost</option>
           <option value="Found">Found</option>
@@ -22,7 +22,7 @@ export default function ItemForm({ onSubmit }) {
       <Label htmlFor="user-name">User name:</Label>
       <Input type="text" name="userName" id="user-name" required />
       <Label htmlFor="title">Title of item:</Label>
-      <Input type="text" name="title" id="title" required />
+      <Input name="title" id="title" required />
       <Label htmlFor="description">Description:</Label>
       <Textarea
         type="text"
@@ -32,7 +32,7 @@ export default function ItemForm({ onSubmit }) {
         required
       />
       <ButtonsWrapper>
-        <BackLink href={"/"} aria-label="cancel">
+        <BackLink href="/" aria-label="cancel">
           Cancel
         </BackLink>
         <SubmitButton type="submit">Submit</SubmitButton>

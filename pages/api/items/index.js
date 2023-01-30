@@ -23,7 +23,7 @@ export default async function handler(request, response) {
       break;
     }
     default: {
-      res
+      response
         .status(405)
         .setHeader("Allow", "GET, POST")
         .json(

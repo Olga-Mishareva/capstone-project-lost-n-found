@@ -17,7 +17,7 @@ export default function ItemDetails({
         <Category initialStatus={initialStatus} isFound={isFound}>
           {isFound ? "Waiting for pick-up" : initialStatus ? "Lost" : "Found"}
         </Category>
-        <StyledLink href={"/"}>
+        <StyledLink href="/">
           <SVGIcon
             variant="close"
             width="48px"

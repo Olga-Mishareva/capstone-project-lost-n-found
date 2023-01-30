@@ -13,7 +13,7 @@ export default function HomePage() {
 
   return (
     <>
-      <AddItemLink href={"/create"}>
+      <AddItemLink href="/create">
         <StyledLinkTitle>Add item</StyledLinkTitle>
       </AddItemLink>
       <StyledList>
@@ -23,7 +23,7 @@ export default function HomePage() {
           </li>
         ) : (
           items
-            .slice()
+            .slice() // temporary reverse function!
             .reverse()
             .map((item) => (
               <li key={item.itemId}>
