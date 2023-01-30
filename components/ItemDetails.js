@@ -17,8 +17,13 @@ export default function ItemDetails({
         <Category initialStatus={initialStatus} isFound={isFound}>
           {isFound ? "Waiting for pick-up" : initialStatus ? "Lost" : "Found"}
         </Category>
-        <StyledLink href={"/"}>
-          <SVGIcon variant="close" width="48px" color="var(--font-color)" />
+        <StyledLink href="/">
+          <SVGIcon
+            variant="close"
+            width="48px"
+            label="close"
+            color="var(--font-color)"
+          />
         </StyledLink>
       </Container>
       <UserName>by {userName}</UserName>
@@ -36,7 +41,7 @@ export default function ItemDetails({
 }
 
 const DetailsWrapper = styled.div`
-  max-width: 350px; // temporary
+  min-width: 300px;
 `;
 
 const Container = styled.div`

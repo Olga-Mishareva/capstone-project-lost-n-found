@@ -38,7 +38,7 @@ const Footer = styled.footer`
 
 const Copyright = styled.p`
   margin: 0;
-  font-size: 14px;
-  line-height: 16px;
+  font-size: 0.8rem;
+  line-height: 1rem;
   color: var(--lightgrey-color);
 `;

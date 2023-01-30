@@ -44,4 +44,11 @@ async function updateItem(id, item) {
   return newItem;
 }
 
-export { getAllItems, getItem, updateItem };
+async function createItem(item) {
+  await connectDatabase();
+
+  const newItem = await Item.create(item);
+  return newItem;
+}
+
+export { getAllItems, getItem, updateItem, createItem };

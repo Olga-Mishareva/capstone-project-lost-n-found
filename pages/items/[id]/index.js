@@ -10,12 +10,16 @@ export default function DetailsPage() {
   const { data: item, mutate, isLoading, error } = useSWR(`/api/items/${id}`);
 
   async function handleStatus() {
-    const newItem = { ...item, inDiscuss: !item.inDiscuss };
-    await fetch(`/api/items/${id}`, {
-      method: "PUT",
-      body: JSON.stringify(newItem),
-    });
-    mutate();
+    const updatedItem = { ...item, inDiscuss: !item.inDiscuss };
+    try {
+      await fetch(`/api/items/${id}`, {
+        method: "PUT",
+        body: JSON.stringify(updatedItem),
+      });
+      mutate();
+    } catch (error) {
+      throw new Error({ message: error });
+    }
   }
 
   if (isLoading || !id) {
