@@ -20,15 +20,24 @@ export default function ItemForm({ onSubmit }) {
         </Select>
       </CategoryWrapper>
       <Label htmlFor="user-name">User name:</Label>
-      <Input type="text" name="userName" id="user-name" required />
+      <Input
+        type="text"
+        name="userName"
+        id="user-name"
+        minLength="2"
+        maxLength="30"
+        required
+      />
       <Label htmlFor="title">Title of item:</Label>
-      <Input name="title" id="title" required />
+      <Input name="title" id="title" minLength="2" maxLength="30" required />
       <Label htmlFor="description">Description:</Label>
       <Textarea
         type="text"
         name="description"
         id="description"
         rows="7"
+        minLength="3"
+        maxLength="500"
         required
       />
       <ButtonsWrapper>

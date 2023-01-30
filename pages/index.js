@@ -45,6 +45,7 @@ const StyledList = styled.ul`
   row-gap: 2em;
   margin: 0;
   padding: 2em 0;
+  word-break: break-word;
 `;
 
 const ItemLink = styled(Link)`
