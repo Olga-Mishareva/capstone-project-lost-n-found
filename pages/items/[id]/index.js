@@ -11,11 +11,15 @@ export default function DetailsPage() {
 
   async function handleStatus() {
     const newItem = { ...item, inDiscuss: !item.inDiscuss };
-    await fetch(`/api/items/${id}`, {
-      method: "PUT",
-      body: JSON.stringify(newItem),
-    });
-    mutate();
+    try {
+      await fetch(`/api/items/${id}`, {
+        method: "PUT",
+        body: JSON.stringify(newItem),
+      });
+      mutate();
+    } catch (error) {
+      throw new Error({ message: error });
+    }
   }
 
   if (isLoading || !id) {
