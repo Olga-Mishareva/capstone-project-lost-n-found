@@ -29,5 +29,5 @@ export default function CreatePage() {
     }
   }
 
-  return <ItemForm onSubmit={addItem} formType="add" />;
+  return <ItemForm onSubmit={addItem} formtype="add" />;
 }

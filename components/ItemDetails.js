@@ -60,14 +60,14 @@ export default function ItemDetails({
         <StyledSubmitButton
           type="button"
           onClick={handleDelete}
-          pageType="details-page"
+          pagetype="details-page"
         >
           Delete
         </StyledSubmitButton>
         <StyledLinkButton
           href={`/items/${id}/edit`}
           aria-label="edit"
-          pageType="details-page"
+          pagetype="details-page"
         >
           Edit
         </StyledLinkButton>

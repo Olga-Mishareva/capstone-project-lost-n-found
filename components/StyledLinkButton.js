@@ -5,8 +5,8 @@ export const StyledLinkButton = styled(Link)`
   min-width: 8.8rem;
   min-height: 2.6rem;
   text-decoration: none;
-  background-color: ${({ pageType }) =>
-    pageType === "details-page"
+  background-color: ${({ pagetype }) =>
+    pagetype === "details-page"
       ? "var(--lightgrey-color)"
       : "var(--lost-pastel-color)"};
   border-radius: 0.6rem;

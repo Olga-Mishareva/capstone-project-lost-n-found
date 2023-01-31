@@ -5,8 +5,8 @@ export const StyledSubmitButton = styled.button`
   min-height: 2.6rem;
   border: none;
   color: var(--font-color);
-  background-color: ${({ pageType }) =>
-    pageType === "add-form"
+  background-color: ${({ pagetype }) =>
+    pagetype === "add-form"
       ? "var(--finished-pastel-color)"
       : "var(--lost-pastel-color)"};
 
