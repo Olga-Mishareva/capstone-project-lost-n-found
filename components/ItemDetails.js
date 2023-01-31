@@ -44,7 +44,9 @@ export default function ItemDetails({
           />
         </StyledLink>
       </Container>
-      <UserName>by {userName}</UserName>
+      <UserName>
+        <Span>by</Span> {userName}
+      </UserName>
       <ItemTitle>{title}</ItemTitle>
       <ItemDescription>{description}</ItemDescription>
       <StyledButton onClick={onHandleStatus} type="button" isFound={isFound}>
@@ -104,8 +106,13 @@ const StyledLink = styled(Link)`
   }
 `;
 
+const Span = styled.span`
+  font-weight: 400;
+`;
+
 const UserName = styled.p`
   margin: 0;
+  font-weight: 600;
 `;
 
 const ItemTitle = styled.h2`

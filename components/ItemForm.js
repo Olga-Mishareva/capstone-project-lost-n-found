@@ -43,15 +43,15 @@ export default function ItemForm({
             name="userName"
             id="user-name"
             minLength="2"
-            maxLength="30"
+            maxLength="20"
             required
           />
         </>
       ) : (
-        <>
-          <p>User name:</p>
-          <p>{userName}</p>
-        </>
+        <UserNameContainer>
+          <UserNameLabel id="user-name">User name:</UserNameLabel>
+          <UserName aria-labelledby="user-name">{userName}</UserName>
+        </UserNameContainer>
       )}
 
       <Label htmlFor="title">Title of item:</Label>
@@ -143,4 +143,20 @@ const Textarea = styled.textarea`
     border: 1px solid var(--found-color);
     background-color: var(--input-color);
   }
+`;
+
+const UserNameContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 0;
+`;
+
+const UserName = styled.p`
+  margin: 0;
+  font-weight: 600;
+`;
+
+const UserNameLabel = styled.span`
+  font-weight: 500;
 `;
