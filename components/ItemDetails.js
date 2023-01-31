@@ -15,6 +15,17 @@ export default function ItemDetails({
   const router = useRouter();
   const { id } = router.query;
 
+  async function handleDelete() {
+    try {
+      await fetch(`/api/items/${id}`, {
+        method: "DELETE",
+      });
+      router.push("/");
+    } catch (error) {
+      throw new Error({ message: error });
+    }
+  }
+
   return (
     <DetailsWrapper>
       <Container>
@@ -41,10 +52,12 @@ export default function ItemDetails({
           : "That's mine"}
       </StyledButton>
       <ButtonsWrapper>
-        <BackLink href="/" aria-label="cancel">
+        <DeleteButton type="button" onClick={handleDelete}>
           Delete
-        </BackLink>
-        <EditLink href={`/items/${id}/edit`}>Edit</EditLink>
+        </DeleteButton>
+        <EditLink href={`/items/${id}/edit`} aria-label="edit">
+          Edit
+        </EditLink>
       </ButtonsWrapper>
     </DetailsWrapper>
   );
@@ -117,10 +130,13 @@ const ButtonsWrapper = styled.div`
   align-items: center;
 `;
 
-const BackLink = styled(Link)`
-  text-decoration: none;
+const DeleteButton = styled.button`
+  min-width: 8.8rem;
+  min-height: 2.6rem;
+  border: none;
   color: var(--font-color);
   background-color: var(--lost-pastel-color);
+  /* border: 3px solid var(--lost-pastel-color); */
   border-radius: 0.6rem;
   padding: 0.6rem 2.4rem;
   font-size: 1.2rem;
@@ -131,12 +147,15 @@ const BackLink = styled(Link)`
 `;
 
 const EditLink = styled(Link)`
+  min-width: 8.8rem;
+  min-height: 2.6rem;
   text-decoration: none;
-  border: none;
+  /* border: 3px solid var(--lightgrey-color); */
   background-color: var(--lightgrey-color);
   border-radius: 0.6rem;
   padding: 0.6rem 2.4rem;
   font-size: 1.2rem;
+  text-align: center;
   color: var(--font-color);
   font-weight: 500;
   :hover {

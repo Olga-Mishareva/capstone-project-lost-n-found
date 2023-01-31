@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import Link from "next/link";
-import { Tillana } from "@next/font/google";
 
 export default function ItemForm({
   formType,
@@ -148,6 +147,8 @@ const ButtonsWrapper = styled.div`
 `;
 
 const BackLink = styled(Link)`
+  min-width: 8.8rem;
+  min-height: 2.6rem;
   text-decoration: none;
   color: var(--font-color);
   background-color: var(--lost-pastel-color);
@@ -161,13 +162,15 @@ const BackLink = styled(Link)`
 `;
 
 const SubmitButton = styled.button`
+  min-width: 8.8rem;
+  min-height: 2.6rem;
   border: none;
   background-color: var(--finished-pastel-color);
   border-radius: 0.6rem;
   padding: 0.6rem 2.4rem;
   font-size: 1.2rem;
-  color: var(--font-color);
   font-weight: 500;
+  color: var(--font-color);
   :hover {
     cursor: pointer;
   }
