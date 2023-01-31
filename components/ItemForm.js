@@ -1,5 +1,8 @@
 import styled from "styled-components";
-import Link from "next/link";
+
+import { StyledLinkButton } from "@/components/StyledLinkButton";
+import { StyledSubmitButton } from "@/components/StyledSubmitButton";
+import { ButtonsWrapper } from "@/components/ButtonsWrapper";
 
 export default function ItemForm({
   formType,
@@ -72,17 +75,19 @@ export default function ItemForm({
         defaultValue={formType === "edit" ? description : ""}
       />
       <ButtonsWrapper>
-        <BackLink href={"/"} aria-label="cancel">
+        <StyledLinkButton href={"/"} aria-label="cancel" pageType="add-form">
           Cancel
-        </BackLink>
-        <SubmitButton type="submit">Submit</SubmitButton>
+        </StyledLinkButton>
+        <StyledSubmitButton type="submit" pageType="add-form">
+          Submit
+        </StyledSubmitButton>
       </ButtonsWrapper>
     </Form>
   );
 }
 
 const Form = styled.form`
-  min-width: 18rem;
+  min-width: 18.5rem;
   display: flex;
   flex-direction: column;
   padding: 1rem 0;
@@ -120,6 +125,7 @@ const Input = styled.input`
   border-radius: 0.2rem;
   min-height: 1.8rem;
   padding: 0.5rem;
+  font-family: var(--inter-font);
   font-size: 1rem;
   :focus {
     border: 1px solid var(--found-color);
@@ -131,47 +137,10 @@ const Textarea = styled.textarea`
   border: 1px solid var(--lightgrey-color);
   border-radius: 0.2rem;
   padding: 0.4rem;
+  font-family: var(--inter-font);
   font-size: 1rem;
   :focus {
     border: 1px solid var(--found-color);
     background-color: var(--input-color);
-  }
-`;
-
-const ButtonsWrapper = styled.div`
-  padding-top: 2rem;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-`;
-
-const BackLink = styled(Link)`
-  min-width: 8.8rem;
-  min-height: 2.6rem;
-  text-decoration: none;
-  color: var(--font-color);
-  background-color: var(--lost-pastel-color);
-  border-radius: 0.6rem;
-  padding: 0.6rem 2.4rem;
-  font-size: 1.2rem;
-  font-weight: 500;
-  :hover {
-    cursor: pointer;
-  }
-`;
-
-const SubmitButton = styled.button`
-  min-width: 8.8rem;
-  min-height: 2.6rem;
-  border: none;
-  background-color: var(--finished-pastel-color);
-  border-radius: 0.6rem;
-  padding: 0.6rem 2.4rem;
-  font-size: 1.2rem;
-  font-weight: 500;
-  color: var(--font-color);
-  :hover {
-    cursor: pointer;
   }
 `;

@@ -3,6 +3,9 @@ import styled from "styled-components";
 import Link from "next/link";
 
 import SVGIcon from "@/components/SVGIcon";
+import { StyledLinkButton } from "@/components/StyledLinkButton";
+import { StyledSubmitButton } from "@/components/StyledSubmitButton";
+import { ButtonsWrapper } from "@/components/ButtonsWrapper";
 
 export default function ItemDetails({
   title,
@@ -52,19 +55,27 @@ export default function ItemDetails({
           : "That's mine"}
       </StyledButton>
       <ButtonsWrapper>
-        <DeleteButton type="button" onClick={handleDelete}>
+        <StyledSubmitButton
+          type="button"
+          onClick={handleDelete}
+          pageType="details-page"
+        >
           Delete
-        </DeleteButton>
-        <EditLink href={`/items/${id}/edit`} aria-label="edit">
+        </StyledSubmitButton>
+        <StyledLinkButton
+          href={`/items/${id}/edit`}
+          aria-label="edit"
+          pageType="details-page"
+        >
           Edit
-        </EditLink>
+        </StyledLinkButton>
       </ButtonsWrapper>
     </DetailsWrapper>
   );
 }
 
 const DetailsWrapper = styled.div`
-  min-width: 300px;
+  min-width: 18.5rem;
 `;
 
 const Container = styled.div`
@@ -118,47 +129,4 @@ const StyledButton = styled.button`
   background-color: ${({ isFound }) =>
     isFound ? "var(--finished-color)" : "var(--finished-pastel-color)"};
   color: ${({ isFound }) => (isFound ? "#FFFFFF" : "var(--font-color)")};
-`;
-
-// ------------
-
-const ButtonsWrapper = styled.div`
-  padding-top: 2rem;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-`;
-
-const DeleteButton = styled.button`
-  min-width: 8.8rem;
-  min-height: 2.6rem;
-  border: none;
-  color: var(--font-color);
-  background-color: var(--lost-pastel-color);
-  /* border: 3px solid var(--lost-pastel-color); */
-  border-radius: 0.6rem;
-  padding: 0.6rem 2.4rem;
-  font-size: 1.2rem;
-  font-weight: 500;
-  :hover {
-    cursor: pointer;
-  }
-`;
-
-const EditLink = styled(Link)`
-  min-width: 8.8rem;
-  min-height: 2.6rem;
-  text-decoration: none;
-  /* border: 3px solid var(--lightgrey-color); */
-  background-color: var(--lightgrey-color);
-  border-radius: 0.6rem;
-  padding: 0.6rem 2.4rem;
-  font-size: 1.2rem;
-  text-align: center;
-  color: var(--font-color);
-  font-weight: 500;
-  :hover {
-    cursor: pointer;
-  }
 `;
