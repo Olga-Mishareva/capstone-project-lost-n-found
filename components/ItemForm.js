@@ -5,7 +5,8 @@ import { StyledSubmitButton } from "@/components/StyledSubmitButton";
 import { ButtonsWrapper } from "@/components/ButtonsWrapper";
 
 export default function ItemForm({
-  formType,
+  formtype,
+  id,
   title,
   description,
   userName,
@@ -26,7 +27,7 @@ export default function ItemForm({
         <Select
           name="initiallyLost"
           id="category-select"
-          defaultValue={formType === "add" ? "" : category ? "Lost" : "Found"}
+          defaultValue={formtype === "add" ? "" : category ? "Lost" : "Found"}
           required
           autoFocus
         >
@@ -35,7 +36,7 @@ export default function ItemForm({
           <option value="Found">Found</option>
         </Select>
       </CategoryWrapper>
-      {formType === "add" ? (
+      {formtype === "add" ? (
         <>
           <Label htmlFor="user-name">User name:</Label>
           <Input
@@ -61,7 +62,7 @@ export default function ItemForm({
         minLength="2"
         maxLength="30"
         required
-        defaultValue={formType === "edit" ? title : ""}
+        defaultValue={formtype === "edit" ? title : ""}
       />
       <Label htmlFor="description">Description:</Label>
       <Textarea
@@ -72,13 +73,17 @@ export default function ItemForm({
         minLength="3"
         maxLength="500"
         required
-        defaultValue={formType === "edit" ? description : ""}
+        defaultValue={formtype === "edit" ? description : ""}
       />
       <ButtonsWrapper>
-        <StyledLinkButton href={"/"} aria-label="cancel" pageType="add-form">
+        <StyledLinkButton
+          href={`/items/${id}`}
+          aria-label="cancel"
+          pagetype="add-form"
+        >
           Cancel
         </StyledLinkButton>
-        <StyledSubmitButton type="submit" pageType="add-form">
+        <StyledSubmitButton type="submit" pagetype="add-form">
           Submit
         </StyledSubmitButton>
       </ButtonsWrapper>

@@ -38,7 +38,8 @@ export default function EditPage() {
   return (
     <ItemForm
       onSubmit={editItem}
-      formType="edit"
+      formtype="edit"
+      id={id}
       title={item.title}
       description={item.description}
       userName={item.userName}
