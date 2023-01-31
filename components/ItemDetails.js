@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import styled from "styled-components";
 import Link from "next/link";
 
@@ -11,6 +12,9 @@ export default function ItemDetails({
   userName,
   onHandleStatus,
 }) {
+  const router = useRouter();
+  const { id } = router.query;
+
   return (
     <DetailsWrapper>
       <Container>
@@ -36,6 +40,12 @@ export default function ItemDetails({
           ? "I found it"
           : "That's mine"}
       </StyledButton>
+      <ButtonsWrapper>
+        <BackLink href="/" aria-label="cancel">
+          Delete
+        </BackLink>
+        <EditLink href={`/items/${id}/edit`}>Edit</EditLink>
+      </ButtonsWrapper>
     </DetailsWrapper>
   );
 }
@@ -95,4 +105,41 @@ const StyledButton = styled.button`
   background-color: ${({ isFound }) =>
     isFound ? "var(--finished-color)" : "var(--finished-pastel-color)"};
   color: ${({ isFound }) => (isFound ? "#FFFFFF" : "var(--font-color)")};
+`;
+
+// ------------
+
+const ButtonsWrapper = styled.div`
+  padding-top: 2rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+const BackLink = styled(Link)`
+  text-decoration: none;
+  color: var(--font-color);
+  background-color: var(--lost-pastel-color);
+  border-radius: 0.6rem;
+  padding: 0.6rem 2.4rem;
+  font-size: 1.2rem;
+  font-weight: 500;
+  :hover {
+    cursor: pointer;
+  }
+`;
+
+const EditLink = styled(Link)`
+  text-decoration: none;
+  border: none;
+  background-color: var(--lightgrey-color);
+  border-radius: 0.6rem;
+  padding: 0.6rem 2.4rem;
+  font-size: 1.2rem;
+  color: var(--font-color);
+  font-weight: 500;
+  :hover {
+    cursor: pointer;
+  }
 `;

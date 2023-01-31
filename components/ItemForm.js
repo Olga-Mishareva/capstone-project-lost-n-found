@@ -1,7 +1,15 @@
 import styled from "styled-components";
 import Link from "next/link";
+import { Tillana } from "@next/font/google";
 
-export default function ItemForm({ onSubmit }) {
+export default function ItemForm({
+  formType,
+  title,
+  description,
+  userName,
+  category,
+  onSubmit,
+}) {
   function handleSubmit(event) {
     event.preventDefault();
     const data = Object.fromEntries(new FormData(event.target));
@@ -13,23 +21,46 @@ export default function ItemForm({ onSubmit }) {
     <Form onSubmit={handleSubmit}>
       <CategoryWrapper>
         <Label htmlFor="category-select">Category:</Label>
-        <Select name="category" id="category-select" required autoFocus>
+        <Select
+          name="initiallyLost"
+          id="category-select"
+          defaultValue={formType === "add" ? "" : category ? "Lost" : "Found"}
+          required
+          autoFocus
+        >
           <option value="">Choose</option>
           <option value="Lost">Lost</option>
           <option value="Found">Found</option>
         </Select>
       </CategoryWrapper>
-      <Label htmlFor="user-name">User name:</Label>
+      {formType === "add" ? (
+        <>
+          <Label htmlFor="user-name">User name:</Label>
+          <Input
+            type="text"
+            name="userName"
+            id="user-name"
+            minLength="2"
+            maxLength="30"
+            required
+          />
+        </>
+      ) : (
+        <>
+          <p>User name:</p>
+          <p>{userName}</p>
+        </>
+      )}
+
+      <Label htmlFor="title">Title of item:</Label>
       <Input
-        type="text"
-        name="userName"
-        id="user-name"
+        name="title"
+        id="title"
         minLength="2"
         maxLength="30"
         required
+        defaultValue={formType === "edit" ? title : ""}
       />
-      <Label htmlFor="title">Title of item:</Label>
-      <Input name="title" id="title" minLength="2" maxLength="30" required />
       <Label htmlFor="description">Description:</Label>
       <Textarea
         type="text"
@@ -39,9 +70,10 @@ export default function ItemForm({ onSubmit }) {
         minLength="3"
         maxLength="500"
         required
+        defaultValue={formType === "edit" ? description : ""}
       />
       <ButtonsWrapper>
-        <BackLink href="/" aria-label="cancel">
+        <BackLink href={"/"} aria-label="cancel">
           Cancel
         </BackLink>
         <SubmitButton type="submit">Submit</SubmitButton>

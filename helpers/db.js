@@ -38,10 +38,10 @@ async function getItem(id) {
 async function updateItem(id, item) {
   await connectDatabase();
 
-  const newItem = await Item.findOneAndUpdate({ itemId: id }, item, {
+  const updatedItem = await Item.findOneAndUpdate({ itemId: id }, item, {
     new: true,
   });
-  return newItem;
+  return updatedItem;
 }
 
 async function createItem(item) {
@@ -51,4 +51,20 @@ async function createItem(item) {
   return newItem;
 }
 
-export { getAllItems, getItem, updateItem, createItem };
+async function editItem(id, item) {
+  await connectDatabase();
+
+  const editedItem = await Item.findOneAndUpdate({ itemId: id }, item, {
+    new: true,
+  });
+  return editedItem;
+}
+
+async function deleteItem(id) {
+  await connectDatabase();
+
+  const deletedItem = await Item.findOneAndRemove({ itemId: id });
+  return deletedItem;
+}
+
+export { getAllItems, getItem, updateItem, createItem, editItem, deleteItem };

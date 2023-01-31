@@ -1,4 +1,4 @@
-import { getItem, updateItem } from "@/helpers/db";
+import { getItem, updateItem, editItem } from "@/helpers/db";
 
 export default async function handler(request, response) {
   switch (request.method) {
@@ -14,23 +14,39 @@ export default async function handler(request, response) {
       response.status(200).json(item);
       break;
     }
+
     case "PUT": {
       const item = JSON.parse(request.body);
-      const newItem = await updateItem(request.query.id, item);
-      if (!newItem) {
+      const updatedItem = await updateItem(request.query.id, item);
+      if (!updatedItem) {
         response.status(404).json({
           message: `Item ${request.query.id} was not found.`,
         });
         return;
       }
 
-      response.status(200).json(newItem);
+      response.status(200).json(updatedItem);
       break;
     }
+
+    case "PATCH": {
+      const item = JSON.parse(request.body);
+      const editedItem = await editItem(request.query.id, item);
+      if (!editedItem) {
+        response.status(404).json({
+          message: `Item ${request.query.id} was not found.`,
+        });
+        return;
+      }
+
+      response.status(200).json(editedItem);
+      break;
+    }
+
     default: {
       res
         .status(405)
-        .setHeader("Allow", "GET, PUT")
+        .setHeader("Allow", "GET, PUT, PATCH")
         .json(
           `Error: request method ${request.method} on ${request.url} is not allowed `
         );
