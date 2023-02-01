@@ -3,9 +3,8 @@ import styled from "styled-components";
 import Link from "next/link";
 
 import SVGIcon from "@/components/SVGIcon";
-import { StyledLinkButton } from "@/components/StyledLinkButton";
-import { StyledSubmitButton } from "@/components/StyledSubmitButton";
-import { ButtonsWrapper } from "@/components/ButtonsWrapper";
+
+import SubmitButtonsSet from "@/components/SubmitButtonsSet";
 
 export default function ItemDetails({
   title,
@@ -29,6 +28,8 @@ export default function ItemDetails({
     }
   }
 
+  console.log(id);
+
   return (
     <DetailsWrapper>
       <Container>
@@ -49,29 +50,28 @@ export default function ItemDetails({
       </UserName>
       <ItemTitle>{title}</ItemTitle>
       <ItemDescription>{description}</ItemDescription>
-      <StyledButton onClick={onHandleStatus} type="button" isFound={isFound}>
+      <StyledFoundButton
+        onClick={onHandleStatus}
+        type="button"
+        isFound={isFound}
+      >
         {isFound
           ? "Found its owner"
           : initialStatus
           ? "I found it"
           : "That's mine"}
-      </StyledButton>
-      <ButtonsWrapper>
-        <StyledSubmitButton
-          type="button"
-          onClick={handleDelete}
-          pagetype="details-page"
-        >
-          Delete
-        </StyledSubmitButton>
-        <StyledLinkButton
-          href={`/items/${id}/edit`}
-          aria-label="edit"
-          pagetype="details-page"
-        >
-          Edit
-        </StyledLinkButton>
-      </ButtonsWrapper>
+      </StyledFoundButton>
+
+      <SubmitButtonsSet
+        variant="details"
+        type="button"
+        onDelete={handleDelete}
+        pagetype="details-page"
+        link={`/items/${id}/edit`}
+        ariaLabel="edit"
+        buttonName="Delete"
+        linkName="Edit"
+      />
     </DetailsWrapper>
   );
 }
@@ -127,7 +127,7 @@ const ItemDescription = styled.p`
   padding: 1rem 0;
 `;
 
-const StyledButton = styled.button`
+const StyledFoundButton = styled.button`
   min-width: 100%;
   margin: 5em 0;
   padding: 1em;

@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 
-import SubmitButtons from "@/components/SubmitButtons";
+import SubmitButtonsSet from "@/components/SubmitButtonsSet";
 
 export default function ItemForm({
   formtype,
@@ -73,7 +73,7 @@ export default function ItemForm({
         required
         defaultValue={formtype === "edit" ? description : ""}
       />
-      <SubmitButtons
+      <SubmitButtonsSet
         variant="form"
         type="submit"
         pagetype="add-form"
@@ -82,19 +82,6 @@ export default function ItemForm({
         buttonName="Submit"
         linkName="Cancel"
       />
-
-      {/* <SubmitButtonsWrapper>
-        <StyledLinkButton
-          href={id ? `/items/${id}` : "/"}
-          aria-label="cancel"
-          pagetype="add-form"
-        >
-          Cancel
-        </StyledLinkButton>
-        <StyledSubmitButton type="submit" pagetype="add-form">
-          Submit
-        </StyledSubmitButton>
-      </SubmitButtonsWrapper> */}
     </Form>
   );
 }
