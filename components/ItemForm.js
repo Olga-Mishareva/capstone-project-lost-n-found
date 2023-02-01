@@ -1,8 +1,6 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
-import { StyledLinkButton } from "@/components/StyledLinkButton";
-import { StyledSubmitButton } from "@/components/StyledSubmitButton";
-import { ButtonsWrapper } from "@/components/ButtonsWrapper";
+import SubmitButtons from "@/components/SubmitButtons";
 
 export default function ItemForm({
   formtype,
@@ -22,7 +20,7 @@ export default function ItemForm({
 
   return (
     <Form onSubmit={handleSubmit}>
-      <CategoryWrapper>
+      <Wrapper variant="category">
         <Label htmlFor="category-select">Category:</Label>
         <Select
           name="initiallyLost"
@@ -35,7 +33,7 @@ export default function ItemForm({
           <option value="Lost">Lost</option>
           <option value="Found">Found</option>
         </Select>
-      </CategoryWrapper>
+      </Wrapper>
       {formtype === "add" ? (
         <>
           <Label htmlFor="user-name">User name:</Label>
@@ -49,10 +47,10 @@ export default function ItemForm({
           />
         </>
       ) : (
-        <UserNameContainer>
+        <Wrapper variant="username">
           <UserNameLabel id="user-name">User name:</UserNameLabel>
           <UserName aria-labelledby="user-name">{userName}</UserName>
-        </UserNameContainer>
+        </Wrapper>
       )}
 
       <Label htmlFor="title">Title of item:</Label>
@@ -75,9 +73,19 @@ export default function ItemForm({
         required
         defaultValue={formtype === "edit" ? description : ""}
       />
-      <ButtonsWrapper>
+      <SubmitButtons
+        variant="form"
+        type="submit"
+        pagetype="add-form"
+        link={id ? `/items/${id}` : "/"}
+        ariaLabel="cancel"
+        buttonName="Submit"
+        linkName="Cancel"
+      />
+
+      {/* <SubmitButtonsWrapper>
         <StyledLinkButton
-          href={`/items/${id}`}
+          href={id ? `/items/${id}` : "/"}
           aria-label="cancel"
           pagetype="add-form"
         >
@@ -86,7 +94,7 @@ export default function ItemForm({
         <StyledSubmitButton type="submit" pagetype="add-form">
           Submit
         </StyledSubmitButton>
-      </ButtonsWrapper>
+      </SubmitButtonsWrapper> */}
     </Form>
   );
 }
@@ -98,12 +106,24 @@ const Form = styled.form`
   padding: 1rem 0;
 `;
 
-const CategoryWrapper = styled.div`
+const Wrapper = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  align-items: baseline;
-  padding-bottom: 0.5rem;
+
+  ${({ variant }) =>
+    variant === "category" &&
+    css`
+      align-items: baseline;
+      padding-bottom: 0.5rem;
+    `};
+
+  ${({ variant }) =>
+    variant === "username" &&
+    css`
+      align-items: center;
+      padding: 1rem 0;
+    `};
 `;
 
 const Label = styled.label`
@@ -148,13 +168,6 @@ const Textarea = styled.textarea`
     border: 1px solid var(--found-color);
     background-color: var(--input-color);
   }
-`;
-
-const UserNameContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 1rem 0;
 `;
 
 const UserName = styled.p`
