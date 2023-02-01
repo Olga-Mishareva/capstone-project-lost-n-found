@@ -14,7 +14,6 @@ const StyledHeader = styled.header`
   display: flex;
   justify-content: center;
   align-items: center;
-  border-bottom: 2px solid var(--lightgrey-color);
 `;
 
 const Headline = styled.h1`
