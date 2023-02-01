@@ -6,7 +6,6 @@ export default function CreatePage() {
   const router = useRouter();
 
   async function addItem(data) {
-    console.log(data);
     try {
       await fetch("api/items", {
         method: "POST",
