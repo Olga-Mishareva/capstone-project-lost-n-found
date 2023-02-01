@@ -113,6 +113,7 @@ const Span = styled.span`
 const UserName = styled.p`
   margin: 0;
   font-weight: 600;
+  word-break: break-word;
 `;
 
 const ItemTitle = styled.h2`
@@ -120,11 +121,13 @@ const ItemTitle = styled.h2`
   font-size: 1.5rem;
   padding: 2.2rem 0 1.5rem;
   text-align: center;
+  word-break: break-word;
 `;
 
 const ItemDescription = styled.p`
   margin: 0;
   padding: 1rem 0;
+  word-break: break-word;
 `;
 
 const StyledFoundButton = styled.button`
