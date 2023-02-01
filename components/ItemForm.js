@@ -1,7 +1,16 @@
-import styled from "styled-components";
-import Link from "next/link";
+import styled, { css } from "styled-components";
 
-export default function ItemForm({ onSubmit }) {
+import SubmitButtonsSet from "@/components/SubmitButtonsSet";
+
+export default function ItemForm({
+  formtype,
+  id,
+  title,
+  description,
+  userName,
+  category,
+  onSubmit,
+}) {
   function handleSubmit(event) {
     event.preventDefault();
     const data = Object.fromEntries(new FormData(event.target));
@@ -11,25 +20,48 @@ export default function ItemForm({ onSubmit }) {
 
   return (
     <Form onSubmit={handleSubmit}>
-      <CategoryWrapper>
+      <Wrapper variant="category">
         <Label htmlFor="category-select">Category:</Label>
-        <Select name="category" id="category-select" required autoFocus>
+        <Select
+          name="initiallyLost"
+          id="category-select"
+          defaultValue={formtype === "add" ? "" : category ? "Lost" : "Found"}
+          required
+          autoFocus
+        >
           <option value="">Choose</option>
           <option value="Lost">Lost</option>
           <option value="Found">Found</option>
         </Select>
-      </CategoryWrapper>
-      <Label htmlFor="user-name">User name:</Label>
+      </Wrapper>
+      {formtype === "add" ? (
+        <>
+          <Label htmlFor="user-name">User name:</Label>
+          <Input
+            type="text"
+            name="userName"
+            id="user-name"
+            minLength="2"
+            maxLength="20"
+            required
+          />
+        </>
+      ) : (
+        <Wrapper variant="username">
+          <UserNameLabel id="user-name">User name:</UserNameLabel>
+          <UserName aria-labelledby="user-name">{userName}</UserName>
+        </Wrapper>
+      )}
+
+      <Label htmlFor="title">Title of item:</Label>
       <Input
-        type="text"
-        name="userName"
-        id="user-name"
+        name="title"
+        id="title"
         minLength="2"
         maxLength="30"
         required
+        defaultValue={formtype === "edit" ? title : ""}
       />
-      <Label htmlFor="title">Title of item:</Label>
-      <Input name="title" id="title" minLength="2" maxLength="30" required />
       <Label htmlFor="description">Description:</Label>
       <Textarea
         type="text"
@@ -39,30 +71,46 @@ export default function ItemForm({ onSubmit }) {
         minLength="3"
         maxLength="500"
         required
+        defaultValue={formtype === "edit" ? description : ""}
       />
-      <ButtonsWrapper>
-        <BackLink href="/" aria-label="cancel">
-          Cancel
-        </BackLink>
-        <SubmitButton type="submit">Submit</SubmitButton>
-      </ButtonsWrapper>
+      <SubmitButtonsSet
+        variant="form"
+        type="submit"
+        pagetype="add-form"
+        link={id ? `/items/${id}` : "/"}
+        ariaLabel="cancel"
+        buttonName="Submit"
+        linkName="Cancel"
+      />
     </Form>
   );
 }
 
 const Form = styled.form`
-  min-width: 18rem;
+  min-width: 18.5rem;
   display: flex;
   flex-direction: column;
   padding: 1rem 0;
 `;
 
-const CategoryWrapper = styled.div`
+const Wrapper = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  align-items: baseline;
-  padding-bottom: 0.5rem;
+
+  ${({ variant }) =>
+    variant === "category" &&
+    css`
+      align-items: baseline;
+      padding-bottom: 0.5rem;
+    `};
+
+  ${({ variant }) =>
+    variant === "username" &&
+    css`
+      align-items: center;
+      padding: 1rem 0;
+    `};
 `;
 
 const Label = styled.label`
@@ -89,6 +137,7 @@ const Input = styled.input`
   border-radius: 0.2rem;
   min-height: 1.8rem;
   padding: 0.5rem;
+  font-family: var(--inter-font);
   font-size: 1rem;
   :focus {
     border: 1px solid var(--found-color);
@@ -100,6 +149,7 @@ const Textarea = styled.textarea`
   border: 1px solid var(--lightgrey-color);
   border-radius: 0.2rem;
   padding: 0.4rem;
+  font-family: var(--inter-font);
   font-size: 1rem;
   :focus {
     border: 1px solid var(--found-color);
@@ -107,36 +157,11 @@ const Textarea = styled.textarea`
   }
 `;
 
-const ButtonsWrapper = styled.div`
-  padding-top: 2rem;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
+const UserName = styled.p`
+  margin: 0;
+  font-weight: 600;
 `;
 
-const BackLink = styled(Link)`
-  text-decoration: none;
-  color: var(--font-color);
-  background-color: var(--lost-pastel-color);
-  border-radius: 0.6rem;
-  padding: 0.6rem 2.4rem;
-  font-size: 1.2rem;
+const UserNameLabel = styled.span`
   font-weight: 500;
-  :hover {
-    cursor: pointer;
-  }
-`;
-
-const SubmitButton = styled.button`
-  border: none;
-  background-color: var(--finished-pastel-color);
-  border-radius: 0.6rem;
-  padding: 0.6rem 2.4rem;
-  font-size: 1.2rem;
-  color: var(--font-color);
-  font-weight: 500;
-  :hover {
-    cursor: pointer;
-  }
 `;

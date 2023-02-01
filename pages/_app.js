@@ -6,7 +6,7 @@ import GlobalStyle from "@/styles";
 import { Layout } from "@/components/Layout";
 import fetcher from "@/lib/fetcher";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ["latin"], variable: "--inter-font" });
 
 export default function App({ Component, pageProps }) {
   return (
