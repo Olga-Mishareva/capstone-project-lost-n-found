@@ -16,7 +16,11 @@ export default function HomePage({ listView }) {
 
   return (
     <>
-      {!listView ? (
+      {isLoading ? (
+        <li>
+          <h2>Loading...</h2>
+        </li>
+      ) : !listView ? (
         <Map items={items} listView={listView} />
       ) : (
         <>
@@ -24,25 +28,19 @@ export default function HomePage({ listView }) {
             <StyledLinkTitle>Add item</StyledLinkTitle>
           </AddItemLink>
           <StyledList>
-            {isLoading ? (
-              <li>
-                <h2>Loading...</h2>
-              </li>
-            ) : (
-              items
-                .slice() // temporary reverse function!
-                .reverse()
-                .map((item) => (
-                  <li key={item.itemId}>
-                    <ItemLink href={`/items/${item.itemId}`}>
-                      <Item
-                        title={item.title}
-                        initialStatus={item.initiallyLost}
-                      />
-                    </ItemLink>
-                  </li>
-                ))
-            )}
+            {items
+              .slice() // temporary reverse function!
+              .reverse()
+              .map((item) => (
+                <li key={item.itemId}>
+                  <ItemLink href={`/items/${item.itemId}`}>
+                    <Item
+                      title={item.title}
+                      initialStatus={item.initiallyLost}
+                    />
+                  </ItemLink>
+                </li>
+              ))}
           </StyledList>
         </>
       )}
