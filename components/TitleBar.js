@@ -36,6 +36,9 @@ const StyledHeader = styled.header`
   display: flex;
   justify-content: center;
   align-items: center;
+
+  // !!!!! prop listView is not working for styles!!! ?????
+
   /* border-bottom: ${({ listView }) =>
     !listView ? "none" : "3px solid var(--lightgrey-color)"}; */
 `;

@@ -13,6 +13,7 @@ export default function ItemDetails({
   isFound,
   userName,
   onHandleStatus,
+  listView,
 }) {
   const router = useRouter();
   const { id } = router.query;
@@ -34,6 +35,7 @@ export default function ItemDetails({
         <Category initialStatus={initialStatus} isFound={isFound}>
           {isFound ? "Waiting for pick-up" : initialStatus ? "Lost" : "Found"}
         </Category>
+
         <StyledLink href="/">
           <SVGIcon
             variant="close"
@@ -76,6 +78,12 @@ export default function ItemDetails({
 
 const DetailsWrapper = styled.div`
   min-width: 18.5rem;
+  max-width: calc(100vw - 4rem);
+
+  /* min-width: ${({ listView }) => (!listView ? "12rem" : "18.5rem")};
+  max-height: ${({ listView }) => (!listView ? "25rem" : "")}; */
+  /* max-width: ${({ listView }) =>
+    listView ? "calc(100vw - 4rem)" : "14rem"}; */
 `;
 
 const Container = styled.div`
@@ -83,7 +91,6 @@ const Container = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  padding: 1.8rem 0 1rem;
 `;
 
 const Category = styled.p`
