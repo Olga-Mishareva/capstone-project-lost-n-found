@@ -1,5 +1,6 @@
 import useSWR from "swr";
 import { useRouter } from "next/router";
+import { usePathname } from "next/navigation";
 
 import ItemDetails from "@/components/ItemDetails";
 

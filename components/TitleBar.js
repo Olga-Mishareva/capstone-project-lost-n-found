@@ -1,30 +1,38 @@
 import styled from "styled-components";
+import { usePathname } from "next/navigation";
 
 import SVGIcon from "@/components/SVGIcon";
 
 export function TitleBar({ onToggle, listView }) {
+  const pathName = usePathname();
   console.log(listView);
+
   return (
     <StyledHeader>
-      <ViewToggleButton type="button" onClick={onToggle}>
-        {listView ? (
-          <SVGIcon
-            variant="map"
-            width="48px"
-            height="48px"
-            label="map"
-            color="var(--font-color)"
-          />
-        ) : (
-          <SVGIcon
-            variant="list"
-            width="48px"
-            height="48px"
-            label="list"
-            color="var(--font-color)"
-          />
-        )}
-      </ViewToggleButton>
+      {pathName === "/" ? (
+        <ViewToggleButton type="button" onClick={onToggle}>
+          {listView ? (
+            <SVGIcon
+              variant="map"
+              width="48px"
+              height="48px"
+              label="map"
+              color="var(--font-color)"
+            />
+          ) : (
+            <SVGIcon
+              variant="list"
+              width="48px"
+              height="48px"
+              label="list"
+              color="var(--font-color)"
+            />
+          )}
+        </ViewToggleButton>
+      ) : (
+        <></>
+      )}
+
       <Headline>
         <LostSpan>Lost</LostSpan>-n-<FoundSpan>Found</FoundSpan>
       </Headline>
@@ -39,8 +47,8 @@ const StyledHeader = styled.header`
 
   // !!!!! prop listView is not working for styles!!! ?????
 
-  /* border-bottom: ${({ listView }) =>
-    !listView ? "none" : "3px solid var(--lightgrey-color)"}; */
+  border-bottom: ${({ listView }) =>
+    listView ? "3px solid var(--lightgrey-color)" : "none"};
 `;
 
 const ViewToggleButton = styled.button`
