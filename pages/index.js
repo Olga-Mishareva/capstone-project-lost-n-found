@@ -7,7 +7,7 @@ import Item from "@/components/Item";
 
 const Map = dynamic(() => import("@/components/Map/Map"), { ssr: false });
 
-export default function HomePage() {
+export default function HomePage({ listView }) {
   const { data: items, isLoading, error } = useSWR("/api/items");
 
   if (error) {
@@ -16,28 +16,36 @@ export default function HomePage() {
 
   return (
     <>
-      <Map />
-      <AddItemLink href="/create">
-        <StyledLinkTitle>Add item</StyledLinkTitle>
-      </AddItemLink>
-      <StyledList>
-        {isLoading ? (
-          <li>
-            <h2>Loading...</h2>
-          </li>
-        ) : (
-          items
-            .slice() // temporary reverse function!
-            .reverse()
-            .map((item) => (
-              <li key={item.itemId}>
-                <ItemLink href={`/items/${item.itemId}`}>
-                  <Item title={item.title} initialStatus={item.initiallyLost} />
-                </ItemLink>
+      {!listView ? (
+        <Map items={items} listView={listView} />
+      ) : (
+        <>
+          <AddItemLink href="/create">
+            <StyledLinkTitle>Add item</StyledLinkTitle>
+          </AddItemLink>
+          <StyledList>
+            {isLoading ? (
+              <li>
+                <h2>Loading...</h2>
               </li>
-            ))
-        )}
-      </StyledList>
+            ) : (
+              items
+                .slice() // temporary reverse function!
+                .reverse()
+                .map((item) => (
+                  <li key={item.itemId}>
+                    <ItemLink href={`/items/${item.itemId}`}>
+                      <Item
+                        title={item.title}
+                        initialStatus={item.initiallyLost}
+                      />
+                    </ItemLink>
+                  </li>
+                ))
+            )}
+          </StyledList>
+        </>
+      )}
     </>
   );
 }
@@ -46,9 +54,9 @@ const StyledList = styled.ul`
   list-style: none;
   display: flex;
   flex-direction: column;
-  row-gap: 2rem;
+  row-gap: 1.5rem;
   margin: 0;
-  padding: 2rem 0;
+  padding: 1.5rem 0;
   word-break: break-word;
 `;
 
@@ -58,7 +66,7 @@ const ItemLink = styled(Link)`
 `;
 
 const AddItemLink = styled(ItemLink)`
-  margin-top: 2em;
+  margin-top: 1em;
   min-width: 18em;
   min-height: 3em;
   border: 3px solid var(--lightgrey-color);

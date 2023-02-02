@@ -2,10 +2,10 @@ import styled from "styled-components";
 
 import { TitleBar } from "./TitleBar";
 
-export function Layout({ children }) {
+export function Layout({ children, onToggle, listView }) {
   return (
     <Wrapper>
-      <TitleBar></TitleBar>
+      <TitleBar onToggle={onToggle} listView={listView} />
       <StyledMain>{children}</StyledMain>
       <Footer>
         <Copyright>&copy; OM</Copyright>
@@ -15,13 +15,14 @@ export function Layout({ children }) {
 }
 
 const Wrapper = styled.div`
-  padding: 0 2rem;
+  padding: 0 1rem;
   display: grid;
   grid-template-rows: 80px auto 36px;
   height: 100vh;
 `;
 
 const StyledMain = styled.main`
+  padding: 1rem 0;
   overflow-y: scroll;
   margin: 0 auto;
 
