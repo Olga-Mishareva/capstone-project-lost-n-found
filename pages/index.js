@@ -1,8 +1,11 @@
 import styled from "styled-components";
 import useSWR from "swr";
 import Link from "next/link";
+import dynamic from "next/dynamic";
 
 import Item from "@/components/Item";
+
+const Map = dynamic(() => import("@/components/Map/Map"), { ssr: false });
 
 export default function HomePage() {
   const { data: items, isLoading, error } = useSWR("/api/items");
@@ -13,6 +16,7 @@ export default function HomePage() {
 
   return (
     <>
+      <Map />
       <AddItemLink href="/create">
         <StyledLinkTitle>Add item</StyledLinkTitle>
       </AddItemLink>
@@ -42,9 +46,9 @@ const StyledList = styled.ul`
   list-style: none;
   display: flex;
   flex-direction: column;
-  row-gap: 2em;
+  row-gap: 2rem;
   margin: 0;
-  padding: 2em 0;
+  padding: 2rem 0;
   word-break: break-word;
 `;
 

@@ -28,8 +28,6 @@ export default function ItemDetails({
     }
   }
 
-  console.log(id);
-
   return (
     <DetailsWrapper>
       <Container>
