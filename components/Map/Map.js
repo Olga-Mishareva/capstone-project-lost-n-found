@@ -11,7 +11,7 @@ import { lostIcon, foundIcon, finishedIcon, locationIcon } from "@/lib/icons";
 export default function Map({ items }) {
   return (
     <StyledMapContainer
-      center={[13.388517, 52.5202038]}
+      center={[52.518623, 13.388517]}
       zoom={12}
       scrollWheelZoom
     >
