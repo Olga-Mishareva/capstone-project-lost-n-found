@@ -14,13 +14,13 @@ export default function HomePage({ listView }) {
     return <h2>{error.message}</h2>;
   }
 
+  if (isLoading) {
+    return <h2>Loading...</h2>;
+  }
+
   return (
     <>
-      {isLoading ? (
-        <li>
-          <h2>Loading...</h2>
-        </li>
-      ) : !listView ? (
+      {!listView ? (
         <Map items={items} listView={listView} />
       ) : (
         <>
