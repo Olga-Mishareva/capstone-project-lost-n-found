@@ -5,27 +5,26 @@ import SVGIcon from "@/components/SVGIcon";
 
 export function TitleBar({ onToggle, listView }) {
   const pathName = usePathname();
-  console.log(listView);
 
   return (
-    <StyledHeader>
+    <StyledHeader listView={listView}>
       {pathName === "/" ? (
-        <ViewToggleButton type="button" onClick={onToggle}>
+        <ViewToggleButton type="button" listView={listView} onClick={onToggle}>
           {listView ? (
             <SVGIcon
               variant="map"
-              width="48px"
-              height="48px"
+              width="36px"
+              height="36px"
               label="map"
-              color="var(--font-color)"
+              color="var(--lightgrey-color)"
             />
           ) : (
             <SVGIcon
               variant="list"
-              width="48px"
-              height="48px"
+              width="36px"
+              height="36px"
               label="list"
-              color="var(--font-color)"
+              color="var(--lightgrey-color)"
             />
           )}
         </ViewToggleButton>
@@ -44,9 +43,6 @@ const StyledHeader = styled.header`
   display: flex;
   justify-content: center;
   align-items: center;
-
-  // !!!!! prop listView is not working for styles!!! ?????
-
   border-bottom: ${({ listView }) =>
     listView ? "3px solid var(--lightgrey-color)" : "none"};
 `;
@@ -55,7 +51,7 @@ const ViewToggleButton = styled.button`
   width: 48px;
   height: 48px;
   margin: 0;
-  padding: 0;
+  padding: ${({ listView }) => (!listView ? "0.25rem 0.2rem 0 0" : "0")};
   border: 3px solid var(--lightgrey-color);
   border-radius: 0.7em;
   background-color: #ffffff;
