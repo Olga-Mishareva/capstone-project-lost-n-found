@@ -13,7 +13,6 @@ export default function ItemDetails({
   isFound,
   userName,
   onHandleStatus,
-  listView,
 }) {
   const router = useRouter();
   const { id } = router.query;

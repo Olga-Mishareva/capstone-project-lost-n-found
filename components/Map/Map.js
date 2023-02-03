@@ -3,7 +3,6 @@ import "leaflet/dist/leaflet.css";
 import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
 import "leaflet-defaulticon-compatibility";
 import styled from "styled-components";
-import Link from "next/link";
 
 import LocationMarker from "./LocationMarker";
 import MyPopup from "../MyPopup";
