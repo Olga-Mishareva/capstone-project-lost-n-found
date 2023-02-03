@@ -6,6 +6,7 @@ import styled from "styled-components";
 import Link from "next/link";
 
 import LocationMarker from "./LocationMarker";
+import MyPopup from "../MyPopup";
 import { lostIcon, foundIcon, finishedIcon, locationIcon } from "@/lib/icons";
 
 export default function Map({ items }) {
@@ -34,8 +35,7 @@ export default function Map({ items }) {
             }
           >
             <Popup>
-              <h2>{item.title}</h2>
-              <Link href={`/items/${item.itemId}`}>More details</Link>
+              <MyPopup item={item} />
             </Popup>
           </Marker>
         );

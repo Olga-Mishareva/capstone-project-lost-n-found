@@ -17,7 +17,9 @@ export default function LocationMarker({ icon }) {
   return (
     position && (
       <Marker position={position} icon={icon}>
-        <Popup>You are here</Popup>
+        <Popup>
+          <p>You are here</p>
+        </Popup>
       </Marker>
     )
   );

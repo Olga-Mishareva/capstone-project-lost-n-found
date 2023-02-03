@@ -79,11 +79,6 @@ export default function ItemDetails({
 const DetailsWrapper = styled.div`
   min-width: 18.5rem;
   max-width: calc(100vw - 4rem);
-
-  /* min-width: ${({ listView }) => (!listView ? "12rem" : "18.5rem")};
-  max-height: ${({ listView }) => (!listView ? "25rem" : "")}; */
-  /* max-width: ${({ listView }) =>
-    listView ? "calc(100vw - 4rem)" : "14rem"}; */
 `;
 
 const Container = styled.div`
