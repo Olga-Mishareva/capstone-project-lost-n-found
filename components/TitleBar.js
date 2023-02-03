@@ -2,16 +2,16 @@ import styled from "styled-components";
 
 import SVGIcon from "@/components/SVGIcon";
 
-export function TitleBar({ onToggle, listView, pathName }) {
+export function TitleBar({ onToggle, listView, showViewButton }) {
   return (
     <StyledHeader listView={listView}>
-      {pathName === "/" ? (
+      {showViewButton ? (
         <ViewToggleButton type="button" listView={listView} onClick={onToggle}>
           {listView ? (
             <SVGIcon
               variant="map"
-              width="36px"
-              height="36px"
+              width="32px"
+              height="32px"
               label="map"
               color="var(--lightgrey-color)"
             />

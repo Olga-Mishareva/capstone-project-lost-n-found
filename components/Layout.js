@@ -2,10 +2,14 @@ import styled from "styled-components";
 
 import { TitleBar } from "./TitleBar";
 
-export function Layout({ children, onToggle, listView, pathName }) {
+export function Layout({ children, onToggle, listView, showViewButton }) {
   return (
     <Wrapper>
-      <TitleBar onToggle={onToggle} listView={listView} pathName={pathName} />
+      <TitleBar
+        onToggle={onToggle}
+        listView={listView}
+        showViewButton={showViewButton}
+      />
       <StyledMain>{children}</StyledMain>
       <Footer>
         <Copyright>&copy; OM</Copyright>
