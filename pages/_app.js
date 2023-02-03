@@ -6,10 +6,13 @@ import { useState } from "react";
 import GlobalStyle from "@/styles";
 import { Layout } from "@/components/Layout";
 import fetcher from "@/lib/fetcher";
+import { usePathname } from "next/navigation";
 
 const inter = Inter({ subsets: ["latin"], variable: "--inter-font" });
 
 export default function App({ Component, pageProps }) {
+  const pathName = usePathname();
+
   const [listView, setListView] = useState(false);
 
   function handleToggleView() {
@@ -23,7 +26,11 @@ export default function App({ Component, pageProps }) {
           <title>Lost-n-Found</title>
         </Head>
         <GlobalStyle />
-        <Layout onToggle={handleToggleView} listView={listView}>
+        <Layout
+          onToggle={handleToggleView}
+          listView={listView}
+          pathName={pathName}
+        >
           <Component {...pageProps} listView={listView} />
         </Layout>
       </div>

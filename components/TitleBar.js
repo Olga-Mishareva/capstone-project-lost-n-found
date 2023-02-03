@@ -1,11 +1,8 @@
 import styled from "styled-components";
-import { usePathname } from "next/navigation";
 
 import SVGIcon from "@/components/SVGIcon";
 
-export function TitleBar({ onToggle, listView }) {
-  const pathName = usePathname();
-
+export function TitleBar({ onToggle, listView, pathName }) {
   return (
     <StyledHeader listView={listView}>
       {pathName === "/" ? (
