@@ -7,7 +7,7 @@ import Item from "@/components/Item";
 
 const Map = dynamic(() => import("@/components/Map/Map"), { ssr: false });
 
-export default function HomePage({ listView }) {
+export default function HomePage({ listView, onPosition, clickPosition }) {
   const { data: items, isLoading, error } = useSWR("/api/items");
 
   if (error) {
@@ -21,7 +21,12 @@ export default function HomePage({ listView }) {
   return (
     <>
       {!listView ? (
-        <Map items={items} listView={listView} />
+        <Map
+          items={items}
+          listView={listView}
+          onPosition={onPosition}
+          clickPosition={clickPosition}
+        />
       ) : (
         <>
           <AddItemLink href="/create">

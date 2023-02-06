@@ -13,8 +13,13 @@ const inter = Inter({ subsets: ["latin"], variable: "--inter-font" });
 export default function App({ Component, pageProps }) {
   const [showViewButton, setShowViewButton] = useState(false);
   const [listView, setListView] = useState(false);
+  const [clickPosition, setClickPosition] = useState([]);
 
   const pathName = usePathname();
+
+  function getCoordinates(data) {
+    setClickPosition(data);
+  }
 
   useEffect(() => {
     if (pathName === "/") {
@@ -35,10 +40,17 @@ export default function App({ Component, pageProps }) {
         <GlobalStyle />
         <Layout
           onToggle={handleToggleView}
+          // onPosition={getCoordinates}
+          // clickPosition={clickPosition}
           listView={listView}
           showViewButton={showViewButton}
         >
-          <Component {...pageProps} listView={listView} />
+          <Component
+            {...pageProps}
+            listView={listView}
+            onPosition={getCoordinates}
+            clickPosition={clickPosition}
+          />
         </Layout>
       </div>
     </SWRConfig>

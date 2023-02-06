@@ -3,29 +3,44 @@ import "leaflet/dist/leaflet.css";
 import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
 import "leaflet-defaulticon-compatibility";
 import styled from "styled-components";
+import { useRouter } from "next/router";
 
 import LocationMarker from "./LocationMarker";
 import MyPopup from "../MyPopup";
+import ConfirmPopup from "../ConfirmPopup";
 import Click from "./Click";
 import { lostIcon, foundIcon, finishedIcon, locationIcon } from "@/lib/icons";
 import { useState } from "react";
 
-export default function Map({ items }) {
-  const [clickPosition, setClickPosition] = useState([]);
+export default function Map({ items, clickPosition, onPosition }) {
+  const router = useRouter();
 
-  function getCoordinates(data) {
-    setClickPosition(data);
+  const [isClicked, setIsClicked] = useState(false);
+
+  function handleConfirm() {
+    setIsClicked(false);
+    router.push("/create");
   }
 
-  console.log(clickPosition);
+  function handleClose() {
+    setIsClicked(false);
+  }
 
+  console.log(isClicked);
   return (
     <StyledMapContainer
       center={[52.518623, 13.388517]}
       zoom={12}
       scrollWheelZoom
     >
-      <Click onPosition={getCoordinates}></Click>
+      <Click onPosition={onPosition} setIsClicked={setIsClicked} />
+
+      {isClicked && (
+        <Popup position={clickPosition} closeButton={false}>
+          <ConfirmPopup onConfirm={handleConfirm} onClose={handleClose} />
+        </Popup>
+      )}
+
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://api.maptiler.com/maps/bright-v2/{z}/{x}/{y}.png?key=LNcdyb0REf1mYIYz1asv"

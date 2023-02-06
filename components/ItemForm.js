@@ -10,12 +10,13 @@ export default function ItemForm({
   userName,
   category,
   onSubmit,
+  clickPosition,
 }) {
   function handleSubmit(event) {
     event.preventDefault();
     const data = Object.fromEntries(new FormData(event.target));
 
-    onSubmit(data);
+    onSubmit(data, clickPosition);
   }
 
   return (
