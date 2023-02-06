@@ -5,11 +5,13 @@ import "leaflet-defaulticon-compatibility";
 import styled from "styled-components";
 
 import LocationMarker from "./LocationMarker";
+import MyPopup from "../MyPopup";
+import { lostIcon, foundIcon, finishedIcon, locationIcon } from "@/lib/icons";
 
-export default function Map() {
+export default function Map({ items }) {
   return (
     <StyledMapContainer
-      center={[13.388517, 52.5202038]}
+      center={[52.518623, 13.388517]}
       zoom={12}
       scrollWheelZoom
     >
@@ -17,16 +19,36 @@ export default function Map() {
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://api.maptiler.com/maps/bright-v2/{z}/{x}/{y}.png?key=LNcdyb0REf1mYIYz1asv"
       />
-      <LocationMarker />
+
+      {items.map((item) => {
+        return (
+          <Marker
+            key={item.itemId}
+            position={[parseFloat(item.latitude), parseFloat(item.longitude)]}
+            icon={
+              item.inDiscuss
+                ? finishedIcon
+                : item.initiallyLost
+                ? lostIcon
+                : foundIcon
+            }
+          >
+            <Popup>
+              <MyPopup item={item} />
+            </Popup>
+          </Marker>
+        );
+      })}
+      <LocationMarker icon={locationIcon} />
     </StyledMapContainer>
   );
 }
 
 const StyledMapContainer = styled(MapContainer)`
-  width: calc(100vw - 4rem);
-  height: 50%;
+  width: calc(100vw - 2rem);
+  height: 100%;
   min-width: 18.5rem;
-  min-height: 17rem;
+  min-height: 100%;
   margin: 0 auto;
   border-radius: 1rem;
 `;

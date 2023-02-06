@@ -34,6 +34,7 @@ export default function ItemDetails({
         <Category initialStatus={initialStatus} isFound={isFound}>
           {isFound ? "Waiting for pick-up" : initialStatus ? "Lost" : "Found"}
         </Category>
+
         <StyledLink href="/">
           <SVGIcon
             variant="close"
@@ -76,6 +77,7 @@ export default function ItemDetails({
 
 const DetailsWrapper = styled.div`
   min-width: 18.5rem;
+  max-width: calc(100vw - 4rem);
 `;
 
 const Container = styled.div`
@@ -83,7 +85,6 @@ const Container = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  padding: 1.8rem 0 1rem;
 `;
 
 const Category = styled.p`
