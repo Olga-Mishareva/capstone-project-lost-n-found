@@ -15,27 +15,30 @@ import { useState } from "react";
 export default function Map({ items, clickPosition, onPosition }) {
   const router = useRouter();
 
-  const [isClicked, setIsClicked] = useState(false);
+  const [isConfirmPopupOpen, setIsConfirmPopupOpen] = useState(false);
 
   function handleConfirm() {
-    setIsClicked(false);
+    setIsConfirmPopupOpen(false);
     router.push("/create");
   }
 
   function handleClose() {
-    setIsClicked(false);
+    setIsConfirmPopupOpen(false);
   }
 
-  console.log(isClicked);
+  console.log(isConfirmPopupOpen);
   return (
     <StyledMapContainer
       center={[52.518623, 13.388517]}
       zoom={12}
       scrollWheelZoom
     >
-      <Click onPosition={onPosition} setIsClicked={setIsClicked} />
+      <Click
+        onPosition={onPosition}
+        setIsConfirmPopupOpen={setIsConfirmPopupOpen}
+      />
 
-      {isClicked && (
+      {isConfirmPopupOpen && (
         <Popup position={clickPosition} closeButton={false}>
           <ConfirmPopup onConfirm={handleConfirm} onClose={handleClose} />
         </Popup>
