@@ -28,26 +28,18 @@ export default function HomePage({ listView, onPosition, clickPosition }) {
           clickPosition={clickPosition}
         />
       ) : (
-        <>
-          <AddItemLink href="/create">
-            <StyledLinkTitle>Add item</StyledLinkTitle>
-          </AddItemLink>
-          <StyledList>
-            {items
-              .slice() // temporary reverse function!
-              .reverse()
-              .map((item) => (
-                <li key={item.itemId}>
-                  <ItemLink href={`/items/${item.itemId}`}>
-                    <Item
-                      title={item.title}
-                      initialStatus={item.initiallyLost}
-                    />
-                  </ItemLink>
-                </li>
-              ))}
-          </StyledList>
-        </>
+        <StyledList>
+          {items
+            .slice() // temporary reverse function!
+            .reverse()
+            .map((item) => (
+              <li key={item.itemId}>
+                <ItemLink href={`/items/${item.itemId}`}>
+                  <Item title={item.title} initialStatus={item.initiallyLost} />
+                </ItemLink>
+              </li>
+            ))}
+        </StyledList>
       )}
     </>
   );
