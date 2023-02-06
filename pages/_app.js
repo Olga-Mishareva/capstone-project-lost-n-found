@@ -40,8 +40,6 @@ export default function App({ Component, pageProps }) {
         <GlobalStyle />
         <Layout
           onToggle={handleToggleView}
-          // onPosition={getCoordinates}
-          // clickPosition={clickPosition}
           listView={listView}
           showViewButton={showViewButton}
         >
