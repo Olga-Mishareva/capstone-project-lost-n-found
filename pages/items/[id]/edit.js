@@ -1,13 +1,30 @@
 import { useRouter } from "next/router";
 import useSWR from "swr";
+import useSWRMutation from "swr/mutation";
 
 import ItemForm from "@/components/ItemForm";
+
+async function fetcher(url, { arg }) {
+  const response = await fetch(url, {
+    method: arg.method,
+    body: JSON.stringify(arg.body),
+  });
+  if (!response.ok) {
+    throw new Error(`Error: status code ${response.status}`);
+  }
+  return response.json();
+}
 
 export default function EditPage() {
   const router = useRouter();
   const { id } = router.query;
 
   const { data: item, mutate, isLoading, error } = useSWR(`/api/items/${id}`);
+
+  const { trigger: triggerPatch, isMutating: isUpdating } = useSWRMutation(
+    `/api/items/${id}`,
+    fetcher
+  );
 
   async function editItem(data) {
     const editedItem = {
@@ -16,14 +33,14 @@ export default function EditPage() {
       initiallyLost: `${data.initiallyLost}` === "Lost" ? true : false,
     };
     try {
-      await fetch(`/api/items/${id}`, {
-        method: "PATCH",
-        body: JSON.stringify(editedItem),
-      });
+      await triggerPatch({ method: "PATCH", body: editedItem });
       mutate();
-      router.push(`/items/${id}`);
     } catch (error) {
-      throw new Error({ message: error });
+      throw new Error(error.message);
+    }
+
+    if (!error) {
+      router.push(`/items/${id}`);
     }
   }
 
@@ -38,6 +55,7 @@ export default function EditPage() {
   return (
     <ItemForm
       onSubmit={editItem}
+      isMutating={isUpdating}
       formtype="edit"
       id={id}
       title={item.title}
