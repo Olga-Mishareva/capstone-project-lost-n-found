@@ -11,6 +11,7 @@ export default function ItemForm({
   category,
   onSubmit,
   clickPosition,
+  isMutating,
 }) {
   function handleSubmit(event) {
     event.preventDefault();
@@ -82,6 +83,7 @@ export default function ItemForm({
         ariaLabel="cancel"
         buttonName="Submit"
         linkName="Cancel"
+        isMutating={isMutating}
       />
     </Form>
   );

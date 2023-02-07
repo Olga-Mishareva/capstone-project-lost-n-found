@@ -10,6 +10,7 @@ export default function SubmitButtonsSet({
   linkName,
   onDelete,
   variant,
+  isMutating,
 }) {
   return (
     <SubmitButtonsWrapper variant={variant}>
@@ -18,6 +19,7 @@ export default function SubmitButtonsSet({
         type={type}
         onClick={onDelete}
         pagetype={pagetype}
+        disabled={isMutating}
       >
         {buttonName}
       </StyledSubmitButton>
