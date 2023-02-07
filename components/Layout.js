@@ -23,6 +23,7 @@ const Wrapper = styled.div`
   display: grid;
   grid-template-rows: 80px auto 36px;
   height: 100vh;
+  position: relative;
 `;
 
 const StyledMain = styled.main`

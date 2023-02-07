@@ -1,9 +1,13 @@
 import styled, { css } from "styled-components";
 
-export default function ConfirmPopup({ onConfirm, onClose }) {
+export default function ConfirmPopup({ onConfirm, onClose, variant }) {
   return (
-    <Wrapper onClick={(event) => event.stopPropagation()}>
-      <ConfirmQuestion>Do you want to notice new item? </ConfirmQuestion>
+    <Wrapper variant={variant} onClick={(event) => event.stopPropagation()}>
+      <ConfirmQuestion variant={variant}>
+        {variant === "delete"
+          ? "Do you really want to delete this item?"
+          : "Do you want to notice new item?"}
+      </ConfirmQuestion>
       <ButtonsWrapper>
         <Button type="button" variant="confirm" onClick={onConfirm}>
           Confirm
@@ -18,7 +22,24 @@ export default function ConfirmPopup({ onConfirm, onClose }) {
 
 const Wrapper = styled.div`
   min-width: 200px;
-  height: 70px;
+  min-height: 70px;
+
+  ${({ variant }) =>
+    variant === "delete" &&
+    css`
+      width: 320px;
+      height: 200px;
+      padding: 1.8rem;
+      background-color: #ffffff;
+      border-radius: 0.8rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: space-between;
+      position: fixed;
+      top: calc((100% - 150px) / 2);
+      left: calc((100% - 320px) / 2);
+    `};
 `;
 
 const ConfirmQuestion = styled.p`
@@ -26,6 +47,14 @@ const ConfirmQuestion = styled.p`
   font-weight: 700;
   font-family: var(--inter-font);
   color: var(--font-color);
+
+  ${({ variant }) =>
+    variant === "delete" &&
+    css`
+      font-size: 1.1rem;
+      font-weight: 700;
+      text-align: center;
+    `};
 `;
 
 const ButtonsWrapper = styled.div`
@@ -37,7 +66,7 @@ const Button = styled.button`
   border: none;
   border-radius: 0.3rem;
   min-width: 7rem;
-  min-height: 2rem;
+  min-height: 2.5rem;
   font-weight: 500;
   font-family: var(--inter-font);
 
