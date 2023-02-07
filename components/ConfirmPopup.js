@@ -2,13 +2,13 @@ import styled, { css } from "styled-components";
 
 export default function ConfirmPopup({ onConfirm, onClose }) {
   return (
-    <Wrapper onClick={(e) => e.stopPropagation()}>
+    <Wrapper onClick={(event) => event.stopPropagation()}>
       <ConfirmQuestion>Do you want to notice new item? </ConfirmQuestion>
       <ButtonsWrapper>
-        <Button variant="confirm" onClick={onConfirm}>
+        <Button type="button" variant="confirm" onClick={onConfirm}>
           Confirm
         </Button>
-        <Button variant="close" onClick={onClose}>
+        <Button type="button" variant="close" onClick={onClose}>
           Close
         </Button>
       </ButtonsWrapper>
