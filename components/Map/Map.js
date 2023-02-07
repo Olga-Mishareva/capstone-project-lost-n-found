@@ -6,15 +6,17 @@ import styled from "styled-components";
 
 import LocationMarker from "./LocationMarker";
 import MyPopup from "../MyPopup";
+import Click from "./Click";
 import { lostIcon, foundIcon, finishedIcon, locationIcon } from "@/lib/icons";
 
-export default function Map({ items }) {
+export default function Map({ items, onPosition }) {
   return (
     <StyledMapContainer
       center={[52.518623, 13.388517]}
       zoom={12}
       scrollWheelZoom
     >
+      <Click onPosition={onPosition} />
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://api.maptiler.com/maps/bright-v2/{z}/{x}/{y}.png?key=LNcdyb0REf1mYIYz1asv"
