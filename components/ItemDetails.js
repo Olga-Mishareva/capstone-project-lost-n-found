@@ -1,10 +1,21 @@
 import { useRouter } from "next/router";
 import styled from "styled-components";
 import Link from "next/link";
+import useSWRMutation from "swr/mutation";
 
 import SVGIcon from "@/components/SVGIcon";
 
 import SubmitButtonsSet from "@/components/SubmitButtonsSet";
+
+async function fetcher(url, { arg }) {
+  const response = await fetch(url, {
+    method: arg.method,
+  });
+  if (!response.ok) {
+    throw new Error(`Error: status code ${response.status}`);
+  }
+  return response.json();
+}
 
 export default function ItemDetails({
   title,
@@ -13,18 +24,25 @@ export default function ItemDetails({
   isFound,
   userName,
   onHandleStatus,
+  isMutating,
 }) {
   const router = useRouter();
   const { id } = router.query;
 
+  const {
+    trigger: triggerDelete,
+    isMutating: isDeleting,
+    error,
+  } = useSWRMutation(`/api/items/${id}`, fetcher);
+
   async function handleDelete() {
     try {
-      await fetch(`/api/items/${id}`, {
-        method: "DELETE",
-      });
-      router.push("/");
+      triggerDelete({ method: "DELETE" });
     } catch (error) {
-      throw new Error({ message: error });
+      throw new Error(error.message);
+    }
+    if (!error) {
+      router.push("/");
     }
   }
 
@@ -53,6 +71,7 @@ export default function ItemDetails({
         onClick={onHandleStatus}
         type="button"
         isFound={isFound}
+        disabled={isMutating}
       >
         {isFound
           ? "Found its owner"
@@ -70,6 +89,7 @@ export default function ItemDetails({
         ariaLabel="edit"
         buttonName="Delete"
         linkName="Edit"
+        isMutating={isDeleting}
       />
     </DetailsWrapper>
   );
