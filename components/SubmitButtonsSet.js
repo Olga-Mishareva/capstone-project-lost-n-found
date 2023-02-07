@@ -28,6 +28,7 @@ export default function SubmitButtonsSet({
         href={link}
         aria-label={ariaLabel}
         pagetype={pagetype}
+        ismutating={isMutating}
       >
         {linkName}
       </StyledLinkButton>
@@ -67,15 +68,18 @@ const StyledSubmitButton = styled.button`
   :hover {
     cursor: pointer;
   }
+  background-color: var(--very-lightgrey-color);
 
-  ${({ variant }) =>
+  ${({ variant, ismutating }) =>
     variant === "details" &&
+    !ismutating &&
     css`
       background-color: var(--lost-pastel-color);
     `};
 
-  ${({ variant }) =>
+  ${({ variant, ismutating }) =>
     variant === "form" &&
+    !ismutating &&
     css`
       background-color: var(--finished-pastel-color);
     `};
