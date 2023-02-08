@@ -1,11 +1,14 @@
 import styled from "styled-components";
 
 import ConfirmPopup from "@/components/ConfirmPopup";
+import useConfirmStore from "@/hooks/useConfirmStore";
 
-export default function Overlay() {
+export default function Overlay({ onDelete }) {
+  const handleClosePopup = useConfirmStore((state) => state.handleClosePopup);
+
   return (
-    <StyledOverlay>
-      <ConfirmPopup variant="delete" />
+    <StyledOverlay onClick={handleClosePopup}>
+      <ConfirmPopup variant="delete" onDelete={onDelete} />
     </StyledOverlay>
   );
 }

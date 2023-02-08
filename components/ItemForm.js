@@ -1,6 +1,7 @@
 import styled, { css } from "styled-components";
 
 import SubmitButtonsSet from "@/components/SubmitButtonsSet";
+// import useConfirmStore from "@/hooks/useConfirmStore";
 
 export default function ItemForm({
   formtype,
@@ -13,6 +14,8 @@ export default function ItemForm({
   clickPosition,
   isMutating,
 }) {
+  // const handleOpenPopup = useConfirmStore((state) => state.handleOpenPopup);
+
   function handleSubmit(event) {
     event.preventDefault();
     const data = Object.fromEntries(new FormData(event.target));

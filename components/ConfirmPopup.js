@@ -1,6 +1,16 @@
 import styled, { css } from "styled-components";
 
-export default function ConfirmPopup({ onConfirm, onClose, variant }) {
+import useConfirmStore from "@/hooks/useConfirmStore";
+
+export default function ConfirmPopup({
+  onConfirm,
+  onClose,
+  onDelete,
+  variant,
+}) {
+  // const handleClosePopup = useConfirmStore((state) => state.handleClosePopup);
+  // const handleConfirm = useConfirmStore((state) => state.handleConfirm);
+
   return (
     <Wrapper variant={variant} onClick={(event) => event.stopPropagation()}>
       <ConfirmQuestion variant={variant}>
@@ -9,10 +19,18 @@ export default function ConfirmPopup({ onConfirm, onClose, variant }) {
           : "Do you want to notice new item?"}
       </ConfirmQuestion>
       <ButtonsWrapper>
-        <Button type="button" variant="confirm" onClick={onConfirm}>
+        <Button
+          type="button"
+          variant="confirm"
+          onClick={variant === "delete" ? onDelete : onConfirm}
+        >
           Confirm
         </Button>
-        <Button type="button" variant="close" onClick={onClose}>
+        <Button
+          type="button"
+          variant="close"
+          onClick={variant === "delete" ? handleClosePopup : onClose}
+        >
           Close
         </Button>
       </ButtonsWrapper>

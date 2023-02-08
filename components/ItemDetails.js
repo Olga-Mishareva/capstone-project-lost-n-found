@@ -4,8 +4,10 @@ import Link from "next/link";
 import useSWRMutation from "swr/mutation";
 
 import SVGIcon from "@/components/SVGIcon";
-
+import ConfirmPopup from "@/components/Overlay";
 import SubmitButtonsSet from "@/components/SubmitButtonsSet";
+import Overlay from "@/components/Overlay";
+import useConfirmStore from "@/hooks/useConfirmStore";
 
 async function fetcher(url, { arg }) {
   const response = await fetch(url, {
@@ -14,6 +16,7 @@ async function fetcher(url, { arg }) {
   if (!response.ok) {
     throw new Error(`Error: status code ${response.status}`);
   }
+  console.log(response);
   return response.json();
 }
 
@@ -26,76 +29,87 @@ export default function ItemDetails({
   onHandleStatus,
   isMutating,
 }) {
+  // const popupIsOpen = useConfirmStore((state) => state.popupIsOpen);
+
   const router = useRouter();
   const { id } = router.query;
 
   const {
     trigger: triggerDelete,
     isMutating: isDeleting,
-    error,
+    error: fetchingError,
   } = useSWRMutation(`/api/items/${id}`, fetcher);
 
   async function handleDelete() {
     try {
-      triggerDelete({ method: "DELETE" });
+      await triggerDelete({ method: "DELETE" });
     } catch (error) {
       throw new Error(error.message);
     }
-    if (!error) {
+    if (!fetchingError) {
+      console.log("no error!!!");
       router.push("/");
     }
   }
 
+  if (fetchingError) {
+    return <h2>{fetchingError}</h2>;
+  }
+
   return (
-    <DetailsWrapper>
-      <Container>
-        <Category initialStatus={initialStatus} isFound={isFound}>
-          {isFound ? "Waiting for pick-up" : initialStatus ? "Lost" : "Found"}
-        </Category>
+    <>
+      <DetailsWrapper>
+        <Container>
+          <Category initialStatus={initialStatus} isFound={isFound}>
+            {isFound ? "Waiting for pick-up" : initialStatus ? "Lost" : "Found"}
+          </Category>
 
-        <StyledLink href="/">
-          <SVGIcon
-            variant="close"
-            width="48px"
-            label="close"
-            color="var(--font-color)"
-          />
-        </StyledLink>
-      </Container>
-      <UserName>
-        <Span>by</Span> {userName}
-      </UserName>
-      <ItemTitle>{title}</ItemTitle>
-      <ItemDescription>{description}</ItemDescription>
-      <StyledFoundButton
-        onClick={onHandleStatus}
-        type="button"
-        isFound={isFound}
-        disabled={isMutating}
-      >
-        {isFound
-          ? "Found its owner"
-          : initialStatus
-          ? "I found it"
-          : "That's mine"}
-      </StyledFoundButton>
+          <StyledLink href="/">
+            <SVGIcon
+              variant="close"
+              width="48px"
+              label="close"
+              color="var(--font-color)"
+            />
+          </StyledLink>
+        </Container>
+        <UserName>
+          <Span>by</Span> {userName}
+        </UserName>
+        <ItemTitle>{title}</ItemTitle>
+        <ItemDescription>{description}</ItemDescription>
+        <StyledFoundButton
+          onClick={onHandleStatus}
+          type="button"
+          isFound={isFound}
+          disabled={isMutating}
+        >
+          {isFound
+            ? "Found its owner"
+            : initialStatus
+            ? "I found it"
+            : "That's mine"}
+        </StyledFoundButton>
 
-      <SubmitButtonsSet
-        variant="details"
-        type="button"
-        onDelete={handleDelete}
-        pagetype="details-page"
-        link={`/items/${id}/edit`}
-        ariaLabel="edit"
-        buttonName="Delete"
-        linkName="Edit"
-        isMutating={isDeleting}
-      />
-    </DetailsWrapper>
+        <SubmitButtonsSet
+          variant="details"
+          type="button"
+          onDelete={handleDelete}
+          pagetype="details-page"
+          link={`/items/${id}/edit`}
+          ariaLabel="edit"
+          buttonName="Delete"
+          linkName="Edit"
+          isMutating={isDeleting}
+        />
+      </DetailsWrapper>
+      {/* {popupIsOpen && <Overlay onDelete={handleDelete} />} */}
+    </>
   );
 }
 
 const DetailsWrapper = styled.div`
+  margin: 0 auto;
   min-width: 18.5rem;
   max-width: calc(100vw - 4rem);
 `;
