@@ -49,7 +49,7 @@ export default function EditPage() {
   }
 
   if (error) {
-    return <h2>{error}</h2>;
+    return <h2>{JSON.stringify(fetchingError)}</h2>;
   }
 
   return (

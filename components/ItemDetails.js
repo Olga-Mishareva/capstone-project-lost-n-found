@@ -1,24 +1,11 @@
 import { useRouter } from "next/router";
 import styled from "styled-components";
 import Link from "next/link";
-import useSWRMutation from "swr/mutation";
+import { useState } from "react";
 
 import SVGIcon from "@/components/SVGIcon";
-import ConfirmPopup from "@/components/Overlay";
 import SubmitButtonsSet from "@/components/SubmitButtonsSet";
 import Overlay from "@/components/Overlay";
-import useConfirmStore from "@/hooks/useConfirmStore";
-
-async function fetcher(url, { arg }) {
-  const response = await fetch(url, {
-    method: arg.method,
-  });
-  if (!response.ok) {
-    throw new Error(`Error: status code ${response.status}`);
-  }
-  console.log(response);
-  return response.json();
-}
 
 export default function ItemDetails({
   title,
@@ -27,34 +14,21 @@ export default function ItemDetails({
   isFound,
   userName,
   onHandleStatus,
+  onDelete,
   isMutating,
 }) {
-  // const popupIsOpen = useConfirmStore((state) => state.popupIsOpen);
+  const [showPopup, setShowPopup] = useState(false);
+
+  function handleOpenPopup() {
+    setShowPopup(true);
+  }
+
+  function handleClosePopup() {
+    setShowPopup(false);
+  }
 
   const router = useRouter();
   const { id } = router.query;
-
-  const {
-    trigger: triggerDelete,
-    isMutating: isDeleting,
-    error: fetchingError,
-  } = useSWRMutation(`/api/items/${id}`, fetcher);
-
-  async function handleDelete() {
-    try {
-      await triggerDelete({ method: "DELETE" });
-    } catch (error) {
-      throw new Error(error.message);
-    }
-    if (!fetchingError) {
-      console.log("no error!!!");
-      router.push("/");
-    }
-  }
-
-  if (fetchingError) {
-    return <h2>{fetchingError}</h2>;
-  }
 
   return (
     <>
@@ -94,16 +68,16 @@ export default function ItemDetails({
         <SubmitButtonsSet
           variant="details"
           type="button"
-          onDelete={handleDelete}
           pagetype="details-page"
           link={`/items/${id}/edit`}
           ariaLabel="edit"
           buttonName="Delete"
           linkName="Edit"
-          isMutating={isDeleting}
+          isMutating={isMutating}
+          onOpen={handleOpenPopup}
         />
       </DetailsWrapper>
-      {/* {popupIsOpen && <Overlay onDelete={handleDelete} />} */}
+      {showPopup && <Overlay onConfirm={onDelete} onClose={handleClosePopup} />}
     </>
   );
 }

@@ -7,7 +7,7 @@ import ItemDetails from "@/components/ItemDetails";
 async function fetcher(url, { arg }) {
   const response = await fetch(url, {
     method: arg.method,
-    body: JSON.stringify(arg.body),
+    body: arg.body ? JSON.stringify(arg.body) : undefined,
   });
   if (!response.ok) {
     throw new Error(`Error: status code ${response.status}`);
@@ -21,18 +21,30 @@ export default function DetailsPage() {
 
   const { data: item, mutate, isLoading, error } = useSWR(`/api/items/${id}`);
 
-  const { trigger: triggerPut, isMutating: isUpdating } = useSWRMutation(
-    `/api/items/${id}`,
-    fetcher
-  );
+  const {
+    trigger,
+    isMutating,
+    error: fetchError,
+  } = useSWRMutation(`/api/items/${id}`, fetcher);
 
   async function handleStatus() {
     const updatedItem = { ...item, inDiscuss: !item.inDiscuss };
     try {
-      await triggerPut({ method: "PUT", body: updatedItem });
+      await trigger({ method: "PUT", body: updatedItem });
       mutate();
     } catch (error) {
       throw new Error(error.message);
+    }
+  }
+
+  async function handleDelete() {
+    try {
+      await trigger({ method: "DELETE" }, { revalidate: false });
+    } catch (error) {
+      throw new Error(error.message);
+    }
+    if (!fetchError) {
+      router.push("/");
     }
   }
 
@@ -40,8 +52,8 @@ export default function DetailsPage() {
     return <h2>Loading...</h2>;
   }
 
-  if (error) {
-    return <h2>{error}</h2>;
+  if (error || fetchError) {
+    return <h2>{JSON.stringify(error)}</h2>;
   }
 
   return (
@@ -52,7 +64,8 @@ export default function DetailsPage() {
       isFound={item.inDiscuss}
       userName={item.userName}
       onHandleStatus={handleStatus}
-      isMutating={isUpdating}
+      onDelete={handleDelete}
+      isMutating={isMutating}
     />
   );
 }
