@@ -10,7 +10,10 @@ const Map = dynamic(() => import("@/components/Map/Map"), { ssr: false });
 export default function HomePage({ listView, onPosition, clickPosition }) {
   const { data: items, isLoading, error } = useSWR("/api/items");
 
+  console.log(items);
+
   if (error) {
+    console.log("error!!!");
     return <h2>{error.message}</h2>;
   }
 
