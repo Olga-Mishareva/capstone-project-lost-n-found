@@ -18,7 +18,7 @@ export default function Click({ onPosition }) {
     setPosition(null);
   }
 
-  const map = useMapEvents({
+  useMapEvents({
     click: (event) => {
       onPosition(event.latlng);
       setPosition(event.latlng);
@@ -28,7 +28,9 @@ export default function Click({ onPosition }) {
   return (
     position && (
       <Popup position={position} closeButton={false}>
-        <ConfirmPopup onConfirm={handleConfirm} onClose={handleClose} />
+        <ConfirmPopup onConfirm={handleConfirm} onClose={handleClose}>
+          Do you want to add a new item?
+        </ConfirmPopup>
       </Popup>
     )
   );

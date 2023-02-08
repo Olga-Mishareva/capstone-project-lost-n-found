@@ -1,46 +1,39 @@
 import styled, { css } from "styled-components";
 
-import useConfirmStore from "@/hooks/useConfirmStore";
-
 export default function ConfirmPopup({
   onConfirm,
   onClose,
-  onDelete,
   variant,
+  children,
 }) {
-  // const handleClosePopup = useConfirmStore((state) => state.handleClosePopup);
-  // const handleConfirm = useConfirmStore((state) => state.handleConfirm);
-
   return (
-    <Wrapper variant={variant} onClick={(event) => event.stopPropagation()}>
-      <ConfirmQuestion variant={variant}>
-        {variant === "delete"
-          ? "Do you really want to delete this item?"
-          : "Do you want to notice new item?"}
-      </ConfirmQuestion>
+    <PopupWrapper
+      variant={variant}
+      onClick={(event) => event.stopPropagation()}
+    >
+      <ConfirmQuestion variant={variant}>{children}</ConfirmQuestion>
       <ButtonsWrapper>
         <Button
           type="button"
           variant="confirm"
-          onClick={variant === "delete" ? onDelete : onConfirm}
+          onClick={() => {
+            onConfirm();
+            onClose();
+          }}
         >
           Confirm
         </Button>
-        <Button
-          type="button"
-          variant="close"
-          onClick={variant === "delete" ? handleClosePopup : onClose}
-        >
+        <Button type="button" variant="close" onClick={onClose}>
           Close
         </Button>
       </ButtonsWrapper>
-    </Wrapper>
+    </PopupWrapper>
   );
 }
 
-const Wrapper = styled.div`
-  min-width: 200px;
-  min-height: 70px;
+const PopupWrapper = styled.div`
+  min-width: 250px;
+  min-height: 80px;
 
   ${({ variant }) =>
     variant === "delete" &&
@@ -54,9 +47,6 @@ const Wrapper = styled.div`
       flex-direction: column;
       justify-content: space-between;
       align-items: space-between;
-      position: fixed;
-      top: calc((100% - 150px) / 2);
-      left: calc((100% - 320px) / 2);
     `};
 `;
 

@@ -1,8 +1,6 @@
 import styled, { css } from "styled-components";
 import Link from "next/link";
 
-import useConfirmStore from "@/hooks/useConfirmStore";
-
 export default function SubmitButtonsSet({
   type,
   pagetype,
@@ -10,20 +8,16 @@ export default function SubmitButtonsSet({
   ariaLabel,
   buttonName,
   linkName,
-  onDelete,
+  onOpen,
   variant,
   isMutating,
 }) {
-  // const confirm = useConfirmStore((state) => state.confirm);
-  // const handleOpenPopup = useConfirmStore((state) => state.handleOpenPopup);
-
   return (
     <SubmitButtonsWrapper variant={variant}>
       <StyledSubmitButton
         variant={variant}
         type={type}
-        onClick={onDelete}
-        // onClick={handleOpenPopup}
+        onClick={onOpen}
         pagetype={pagetype}
         disabled={isMutating}
       >
@@ -74,7 +68,7 @@ const StyledSubmitButton = styled.button`
   :hover {
     cursor: pointer;
   }
-  background-color: var(--very-lightgrey-color);
+  background-color: var(--disabled-color);
 
   ${({ variant, ismutating }) =>
     variant === "details" &&

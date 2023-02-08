@@ -1,14 +1,13 @@
 import styled from "styled-components";
 
 import ConfirmPopup from "@/components/ConfirmPopup";
-import useConfirmStore from "@/hooks/useConfirmStore";
 
-export default function Overlay({ onDelete }) {
-  const handleClosePopup = useConfirmStore((state) => state.handleClosePopup);
-
+export default function Overlay({ onConfirm, onClose }) {
   return (
-    <StyledOverlay onClick={handleClosePopup}>
-      <ConfirmPopup variant="delete" onDelete={onDelete} />
+    <StyledOverlay onClick={onClose}>
+      <ConfirmPopup variant="delete" onConfirm={onConfirm} onClose={onClose}>
+        Do you really want to delete this item?
+      </ConfirmPopup>
     </StyledOverlay>
   );
 }
@@ -16,8 +15,11 @@ export default function Overlay({ onDelete }) {
 const StyledOverlay = styled.div`
   width: 100vw;
   height: 100vh;
-  background-color: var(--lightgrey-color);
-  position: fixed;
+  background-color: var(--overlay-color);
+  position: absolute;
   top: 0;
   left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;

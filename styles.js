@@ -18,7 +18,8 @@ export default createGlobalStyle`
     --finished-pastel-color: rgba(68, 140, 116, 0.5);
     --font-color: #262626;
     --lightgrey-color: rgba(26, 26, 26, 0.3);
-    --very-lightgrey-color: rgba(26, 26, 26, 0.1);
+    --overlay-color: rgba(26, 26, 26, 0.7);
+    --disabled-color: rgba(26, 26, 26, 0.1);
     --input-color: rgba(63, 127, 202, 0.1);
   }
 
