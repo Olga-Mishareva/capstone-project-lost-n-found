@@ -1,8 +1,10 @@
 import styled from "styled-components";
+import { useSession, signIn, signOut } from "next-auth/react";
 
 import SVGIcon from "@/components/SVGIcon";
 
 export function TitleBar({ onToggle, listView, showViewButton }) {
+  const { data: session } = useSession();
   return (
     <StyledHeader listView={listView}>
       {showViewButton ? (
@@ -32,14 +34,35 @@ export function TitleBar({ onToggle, listView, showViewButton }) {
       <Headline>
         <LostSpan>Lost</LostSpan>-n-<FoundSpan>Found</FoundSpan>
       </Headline>
+
+      <AuthToggleButton type="button" onClick={() => {}}>
+        {!listView ? (
+          <SVGIcon
+            variant="login"
+            width="36px"
+            height="36px"
+            label="login"
+            color="var(--lightgrey-color)"
+          />
+        ) : (
+          <SVGIcon
+            variant="logout"
+            width="36px"
+            height="36px"
+            label="logout"
+            color="var(--lightgrey-color)"
+          />
+        )}
+      </AuthToggleButton>
     </StyledHeader>
   );
 }
 
 const StyledHeader = styled.header`
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
+  padding: 1em 0 0.5rem;
   border-bottom: ${({ listView }) =>
     listView ? "3px solid var(--lightgrey-color)" : "none"};
 `;
@@ -59,7 +82,7 @@ const Headline = styled.h1`
   font-size: 2rem;
   font-weight: 600;
   line-height: 2.2rem;
-  padding: 0.6em 0 0.6em 0.6em;
+
   text-align: center;
 `;
 
@@ -69,4 +92,13 @@ const LostSpan = styled.span`
 
 const FoundSpan = styled.span`
   color: var(--found-color);
+`;
+
+const AuthToggleButton = styled.button`
+  width: 48px;
+  height: 48px;
+  border: 3px solid var(--lightgrey-color);
+  border-radius: 0.7em;
+  background-color: #ffffff;
+  padding: 0.1rem 0.1rem 0 0;
 `;

@@ -21,7 +21,7 @@ export function Layout({ children, onToggle, listView, showViewButton }) {
 const Wrapper = styled.div`
   padding: 0 1rem;
   display: grid;
-  grid-template-rows: 80px auto 36px;
+  grid-template-rows: 85px auto 36px;
   height: 100vh;
   position: relative;
 `;
