@@ -5,6 +5,7 @@ import SVGIcon from "@/components/SVGIcon";
 
 export function TitleBar({ onToggle, listView, showViewButton }) {
   const { data: session } = useSession();
+
   return (
     <StyledHeader listView={listView}>
       {showViewButton ? (
@@ -35,8 +36,13 @@ export function TitleBar({ onToggle, listView, showViewButton }) {
         <LostSpan>Lost</LostSpan>-n-<FoundSpan>Found</FoundSpan>
       </Headline>
 
-      <AuthToggleButton type="button" onClick={() => {}}>
-        {!listView ? (
+      <AuthToggleButton
+        type="button"
+        onClick={() => {
+          session ? signOut() : signIn();
+        }}
+      >
+        {!session ? (
           <SVGIcon
             variant="login"
             width="36px"
