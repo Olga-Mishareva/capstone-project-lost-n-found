@@ -3,6 +3,7 @@ import { Inter } from "@next/font/google";
 import { SWRConfig } from "swr";
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
+import { SessionProvider } from "next-auth/react";
 
 import GlobalStyle from "@/styles";
 import { Layout } from "@/components/Layout";
@@ -10,7 +11,10 @@ import fetcher from "@/lib/fetcher";
 
 const inter = Inter({ subsets: ["latin"], variable: "--inter-font" });
 
-export default function App({ Component, pageProps }) {
+export default function App({
+  Component,
+  pageProps: { session, ...pageProps },
+}) {
   const [showViewButton, setShowViewButton] = useState(false);
   const [listView, setListView] = useState(false);
   const [clickPosition, setClickPosition] = useState([]);
@@ -32,25 +36,27 @@ export default function App({ Component, pageProps }) {
   }
 
   return (
-    <SWRConfig value={{ fetcher }}>
-      <div className={inter.className}>
-        <Head>
-          <title>Lost-n-Found</title>
-        </Head>
-        <GlobalStyle />
-        <Layout
-          onToggle={handleToggleView}
-          listView={listView}
-          showViewButton={showViewButton}
-        >
-          <Component
-            {...pageProps}
+    <SessionProvider session={session}>
+      <SWRConfig value={{ fetcher }}>
+        <div className={inter.className}>
+          <Head>
+            <title>Lost-n-Found</title>
+          </Head>
+          <GlobalStyle />
+          <Layout
+            onToggle={handleToggleView}
             listView={listView}
-            onPosition={getCoordinates}
-            clickPosition={clickPosition}
-          />
-        </Layout>
-      </div>
-    </SWRConfig>
+            showViewButton={showViewButton}
+          >
+            <Component
+              {...pageProps}
+              listView={listView}
+              onPosition={getCoordinates}
+              clickPosition={clickPosition}
+            />
+          </Layout>
+        </div>
+      </SWRConfig>
+    </SessionProvider>
   );
 }

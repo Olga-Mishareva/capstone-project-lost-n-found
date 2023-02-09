@@ -2,12 +2,14 @@ import styled from "styled-components";
 import useSWR from "swr";
 import Link from "next/link";
 import dynamic from "next/dynamic";
+import { useSession, signIn, signOut } from "next-auth/react";
 
 import Item from "@/components/Item";
 
 const Map = dynamic(() => import("@/components/Map/Map"), { ssr: false });
 
 export default function HomePage({ listView, onPosition, clickPosition }) {
+  const { data: session } = useSession();
   const { data: items, isLoading, error } = useSWR("/api/items");
 
   if (error) {
@@ -51,7 +53,7 @@ const StyledList = styled.ul`
   flex-direction: column;
   row-gap: 1.5rem;
   margin: 0;
-  padding: 1.5rem 0;
+  padding: 1rem 0;
   word-break: break-word;
 `;
 
