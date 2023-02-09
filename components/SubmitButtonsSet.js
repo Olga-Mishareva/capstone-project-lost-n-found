@@ -8,16 +8,18 @@ export default function SubmitButtonsSet({
   ariaLabel,
   buttonName,
   linkName,
-  onDelete,
+  onOpen,
   variant,
+  isMutating,
 }) {
   return (
     <SubmitButtonsWrapper variant={variant}>
       <StyledSubmitButton
         variant={variant}
         type={type}
-        onClick={onDelete}
+        onClick={onOpen}
         pagetype={pagetype}
+        disabled={isMutating}
       >
         {buttonName}
       </StyledSubmitButton>
@@ -26,6 +28,7 @@ export default function SubmitButtonsSet({
         href={link}
         aria-label={ariaLabel}
         pagetype={pagetype}
+        ismutating={isMutating ? "true" : ""}
       >
         {linkName}
       </StyledLinkButton>
@@ -65,15 +68,18 @@ const StyledSubmitButton = styled.button`
   :hover {
     cursor: pointer;
   }
+  background-color: var(--disabled-color);
 
-  ${({ variant }) =>
+  ${({ variant, ismutating }) =>
     variant === "details" &&
+    ismutating !== "true" &&
     css`
       background-color: var(--lost-pastel-color);
     `};
 
-  ${({ variant }) =>
+  ${({ variant, ismutating }) =>
     variant === "form" &&
+    ismutating !== "true" &&
     css`
       background-color: var(--finished-pastel-color);
     `};

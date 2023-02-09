@@ -1,7 +1,19 @@
 import useSWR from "swr";
 import { useRouter } from "next/router";
+import useSWRMutation from "swr/mutation";
 
 import ItemDetails from "@/components/ItemDetails";
+
+async function fetcher(url, { arg }) {
+  const response = await fetch(url, {
+    method: arg.method,
+    body: arg.body ? JSON.stringify(arg.body) : undefined,
+  });
+  if (!response.ok) {
+    throw new Error(`Error: status code ${response.status}`);
+  }
+  return response.json();
+}
 
 export default function DetailsPage() {
   const router = useRouter();
@@ -9,16 +21,30 @@ export default function DetailsPage() {
 
   const { data: item, mutate, isLoading, error } = useSWR(`/api/items/${id}`);
 
+  const {
+    trigger,
+    isMutating,
+    error: fetchError,
+  } = useSWRMutation(`/api/items/${id}`, fetcher);
+
   async function handleStatus() {
     const updatedItem = { ...item, inDiscuss: !item.inDiscuss };
     try {
-      await fetch(`/api/items/${id}`, {
-        method: "PUT",
-        body: JSON.stringify(updatedItem),
-      });
+      await trigger({ method: "PUT", body: updatedItem });
       mutate();
     } catch (error) {
-      throw new Error({ message: error });
+      throw new Error(error.message);
+    }
+  }
+
+  async function handleDelete() {
+    try {
+      await trigger({ method: "DELETE" }, { revalidate: false });
+    } catch (error) {
+      throw new Error(error.message);
+    }
+    if (!fetchError) {
+      router.push("/");
     }
   }
 
@@ -26,8 +52,8 @@ export default function DetailsPage() {
     return <h2>Loading...</h2>;
   }
 
-  if (error) {
-    return <h2>{error}</h2>;
+  if (error || fetchError) {
+    return <h2>{JSON.stringify(error)}</h2>;
   }
 
   return (
@@ -38,6 +64,8 @@ export default function DetailsPage() {
       isFound={item.inDiscuss}
       userName={item.userName}
       onHandleStatus={handleStatus}
+      onDelete={handleDelete}
+      isMutating={isMutating}
     />
   );
 }

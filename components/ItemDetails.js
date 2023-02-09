@@ -1,10 +1,11 @@
 import { useRouter } from "next/router";
 import styled from "styled-components";
 import Link from "next/link";
+import { useState } from "react";
 
 import SVGIcon from "@/components/SVGIcon";
-
 import SubmitButtonsSet from "@/components/SubmitButtonsSet";
+import Overlay from "@/components/Overlay";
 
 export default function ItemDetails({
   title,
@@ -13,69 +14,76 @@ export default function ItemDetails({
   isFound,
   userName,
   onHandleStatus,
+  onDelete,
+  isMutating,
 }) {
+  const [showPopup, setShowPopup] = useState(false);
+
+  function handleOpenPopup() {
+    setShowPopup(true);
+  }
+
+  function handleClosePopup() {
+    setShowPopup(false);
+  }
+
   const router = useRouter();
   const { id } = router.query;
 
-  async function handleDelete() {
-    try {
-      await fetch(`/api/items/${id}`, {
-        method: "DELETE",
-      });
-      router.push("/");
-    } catch (error) {
-      throw new Error({ message: error });
-    }
-  }
-
   return (
-    <DetailsWrapper>
-      <Container>
-        <Category initialStatus={initialStatus} isFound={isFound}>
-          {isFound ? "Waiting for pick-up" : initialStatus ? "Lost" : "Found"}
-        </Category>
+    <>
+      <DetailsWrapper>
+        <Container>
+          <Category initialStatus={initialStatus} isFound={isFound}>
+            {isFound ? "Waiting for pick-up" : initialStatus ? "Lost" : "Found"}
+          </Category>
 
-        <StyledLink href="/">
-          <SVGIcon
-            variant="close"
-            width="48px"
-            label="close"
-            color="var(--font-color)"
-          />
-        </StyledLink>
-      </Container>
-      <UserName>
-        <Span>by</Span> {userName}
-      </UserName>
-      <ItemTitle>{title}</ItemTitle>
-      <ItemDescription>{description}</ItemDescription>
-      <StyledFoundButton
-        onClick={onHandleStatus}
-        type="button"
-        isFound={isFound}
-      >
-        {isFound
-          ? "Found its owner"
-          : initialStatus
-          ? "I found it"
-          : "That's mine"}
-      </StyledFoundButton>
+          <StyledLink href="/">
+            <SVGIcon
+              variant="close"
+              width="48px"
+              label="close"
+              color="var(--font-color)"
+            />
+          </StyledLink>
+        </Container>
+        <UserName>
+          <Span>by</Span> {userName}
+        </UserName>
+        <ItemTitle>{title}</ItemTitle>
+        <ItemDescription>{description}</ItemDescription>
+        <StyledFoundButton
+          onClick={onHandleStatus}
+          type="button"
+          isFound={isFound}
+          disabled={isMutating}
+        >
+          {isFound
+            ? "Found its owner"
+            : initialStatus
+            ? "I found it"
+            : "That's mine"}
+        </StyledFoundButton>
 
-      <SubmitButtonsSet
-        variant="details"
-        type="button"
-        onDelete={handleDelete}
-        pagetype="details-page"
-        link={`/items/${id}/edit`}
-        ariaLabel="edit"
-        buttonName="Delete"
-        linkName="Edit"
-      />
-    </DetailsWrapper>
+        <SubmitButtonsSet
+          variant="details"
+          type="button"
+          pagetype="details-page"
+          link={`/items/${id}/edit`}
+          ariaLabel="edit"
+          buttonName="Delete"
+          linkName="Edit"
+          isMutating={isMutating}
+          onOpen={handleOpenPopup}
+        />
+      </DetailsWrapper>
+      {showPopup && <Overlay onConfirm={onDelete} onClose={handleClosePopup} />}
+    </>
   );
 }
 
 const DetailsWrapper = styled.div`
+  margin: 0 auto;
   min-width: 18.5rem;
   max-width: calc(100vw - 4rem);
 `;

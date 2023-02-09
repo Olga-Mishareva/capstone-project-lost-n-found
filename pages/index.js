@@ -11,7 +11,7 @@ export default function HomePage({ listView, onPosition, clickPosition }) {
   const { data: items, isLoading, error } = useSWR("/api/items");
 
   if (error) {
-    return <h2>{error.message}</h2>;
+    return <h2>{JSON.stringify(error)}</h2>;
   }
 
   if (isLoading) {

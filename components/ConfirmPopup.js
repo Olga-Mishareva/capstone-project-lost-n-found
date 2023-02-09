@@ -1,24 +1,53 @@
 import styled, { css } from "styled-components";
 
-export default function ConfirmPopup({ onConfirm, onClose }) {
+export default function ConfirmPopup({
+  onConfirm,
+  onClose,
+  variant,
+  children,
+}) {
   return (
-    <Wrapper onClick={(event) => event.stopPropagation()}>
-      <ConfirmQuestion>Do you want to notice new item? </ConfirmQuestion>
+    <PopupWrapper
+      variant={variant}
+      onClick={(event) => event.stopPropagation()}
+    >
+      <ConfirmQuestion variant={variant}>{children}</ConfirmQuestion>
       <ButtonsWrapper>
-        <Button type="button" variant="confirm" onClick={onConfirm}>
+        <Button
+          type="button"
+          variant="confirm"
+          onClick={() => {
+            onConfirm();
+            onClose();
+          }}
+        >
           Confirm
         </Button>
         <Button type="button" variant="close" onClick={onClose}>
           Close
         </Button>
       </ButtonsWrapper>
-    </Wrapper>
+    </PopupWrapper>
   );
 }
 
-const Wrapper = styled.div`
-  min-width: 200px;
-  height: 70px;
+const PopupWrapper = styled.div`
+  min-width: 250px;
+  min-height: 80px;
+
+  ${({ variant }) =>
+    variant === "delete" &&
+    css`
+      width: 320px;
+      height: 200px;
+      padding: 1.8rem;
+      background-color: #ffffff;
+      border-radius: 0.8rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: space-between;
+    `};
 `;
 
 const ConfirmQuestion = styled.p`
@@ -26,6 +55,14 @@ const ConfirmQuestion = styled.p`
   font-weight: 700;
   font-family: var(--inter-font);
   color: var(--font-color);
+
+  ${({ variant }) =>
+    variant === "delete" &&
+    css`
+      font-size: 1.1rem;
+      font-weight: 700;
+      text-align: center;
+    `};
 `;
 
 const ButtonsWrapper = styled.div`
@@ -37,7 +74,7 @@ const Button = styled.button`
   border: none;
   border-radius: 0.3rem;
   min-width: 7rem;
-  min-height: 2rem;
+  min-height: 2.5rem;
   font-weight: 500;
   font-family: var(--inter-font);
 
