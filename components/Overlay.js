@@ -1,12 +1,17 @@
 import styled from "styled-components";
+import { useSession, signIn, signOut } from "next-auth/react";
 
 import ConfirmPopup from "@/components/ConfirmPopup";
 
 export default function Overlay({ onConfirm, onClose }) {
+  const { data: session } = useSession();
+
   return (
     <StyledOverlay onClick={onClose}>
       <ConfirmPopup variant="delete" onConfirm={onConfirm} onClose={onClose}>
-        Do you really want to delete this item?
+        {session
+          ? "Do you really want to delete this item?"
+          : "You have to log in to go on."}
       </ConfirmPopup>
     </StyledOverlay>
   );

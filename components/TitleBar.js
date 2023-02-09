@@ -38,6 +38,7 @@ export function TitleBar({ onToggle, listView, showViewButton }) {
 
       <AuthToggleButton
         type="button"
+        session={session}
         onClick={() => {
           session ? signOut() : signIn();
         }}
@@ -106,5 +107,5 @@ const AuthToggleButton = styled.button`
   border: 3px solid var(--lightgrey-color);
   border-radius: 0.7em;
   background-color: #ffffff;
-  padding: 0.1rem 0.1rem 0 0;
+  padding: ${({ session }) => (!session ? "0.15rem 0 0 .1rem" : "0.2rem 0 0")};
 `;

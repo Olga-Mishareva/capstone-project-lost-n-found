@@ -2,6 +2,8 @@ import { useRouter } from "next/router";
 import styled from "styled-components";
 import Link from "next/link";
 import { useState } from "react";
+import { usePathname } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 import SVGIcon from "@/components/SVGIcon";
 import SubmitButtonsSet from "@/components/SubmitButtonsSet";
@@ -17,6 +19,8 @@ export default function ItemDetails({
   onDelete,
   isMutating,
 }) {
+  const { data: session } = useSession();
+  const pathName = usePathname();
   const [showPopup, setShowPopup] = useState(false);
 
   function handleOpenPopup() {
@@ -53,9 +57,10 @@ export default function ItemDetails({
         <ItemTitle>{title}</ItemTitle>
         <ItemDescription>{description}</ItemDescription>
         <StyledFoundButton
-          onClick={onHandleStatus}
+          onClick={session ? onHandleStatus : handleOpenPopup}
           type="button"
           isFound={isFound}
+          session={session}
           disabled={isMutating}
         >
           {isFound
@@ -74,6 +79,7 @@ export default function ItemDetails({
           buttonName="Delete"
           linkName="Edit"
           isMutating={isMutating}
+          pathName={pathName}
           onOpen={handleOpenPopup}
         />
       </DetailsWrapper>
@@ -143,6 +149,7 @@ const StyledFoundButton = styled.button`
   padding: 1em;
   border: none;
   border-radius: 1em;
+  cursor: pointer;
   background-color: ${({ isFound }) =>
     isFound ? "var(--finished-color)" : "var(--finished-pastel-color)"};
   color: ${({ isFound }) => (isFound ? "#FFFFFF" : "var(--font-color)")};

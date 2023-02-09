@@ -1,5 +1,6 @@
 import styled, { css } from "styled-components";
 import Link from "next/link";
+import { useSession } from "next-auth/react";
 
 export default function SubmitButtonsSet({
   type,
@@ -11,7 +12,10 @@ export default function SubmitButtonsSet({
   onOpen,
   variant,
   isMutating,
+  pathName,
 }) {
+  const { data: session } = useSession();
+
   return (
     <SubmitButtonsWrapper variant={variant}>
       <StyledSubmitButton
@@ -25,10 +29,11 @@ export default function SubmitButtonsSet({
       </StyledSubmitButton>
       <StyledLinkButton
         variant={variant}
-        href={link}
+        href={session ? link : pathName}
         aria-label={ariaLabel}
         pagetype={pagetype}
         ismutating={isMutating ? "true" : ""}
+        onClick={!session ? onOpen : () => {}}
       >
         {linkName}
       </StyledLinkButton>
@@ -103,7 +108,7 @@ export const StyledLinkButton = styled(Link)`
   ${({ variant }) =>
     variant === "details" &&
     css`
-      background-color: var(--lightgrey-color);
+      background-color: var(--more-lightgrey-color);
     `};
 
   ${({ variant }) =>

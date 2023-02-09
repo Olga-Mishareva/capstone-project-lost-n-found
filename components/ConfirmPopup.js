@@ -1,11 +1,15 @@
 import styled, { css } from "styled-components";
+import { useSession, signIn, signOut } from "next-auth/react";
 
 export default function ConfirmPopup({
   onConfirm,
   onClose,
   variant,
   children,
+  type,
 }) {
+  const { data: session } = useSession();
+
   return (
     <PopupWrapper
       variant={variant}
@@ -16,12 +20,19 @@ export default function ConfirmPopup({
         <Button
           type="button"
           variant="confirm"
-          onClick={() => {
-            onConfirm();
-            onClose();
-          }}
+          onClick={
+            session
+              ? () => {
+                  onConfirm();
+                  onClose();
+                }
+              : () => {
+                  onClose();
+                  signIn();
+                }
+          }
         >
-          Confirm
+          {session ? "Confirm" : "Login"}
         </Button>
         <Button type="button" variant="close" onClick={onClose}>
           Close
@@ -72,7 +83,7 @@ const ButtonsWrapper = styled.div`
 
 const Button = styled.button`
   border: none;
-  border-radius: 0.3rem;
+  border-radius: 0.8rem;
   min-width: 7rem;
   min-height: 2.5rem;
   font-weight: 500;
