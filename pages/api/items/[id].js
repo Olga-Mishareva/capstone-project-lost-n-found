@@ -45,7 +45,6 @@ export default async function handler(request, response) {
 
     case "DELETE": {
       const deletedItem = await deleteItem(request.query.id);
-      console.log(deletedItem);
       if (!deletedItem) {
         response.status(404).json({
           message: `Item ${request.query.id} was not found.`,
