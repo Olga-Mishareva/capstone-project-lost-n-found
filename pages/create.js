@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
 import useSWRMutation from "swr/mutation";
+import { useSession } from "next-auth/react";
 
 import ItemForm from "@/components/ItemForm";
 
@@ -15,6 +16,7 @@ async function fetcher(url, { arg }) {
 }
 
 export default function CreatePage({ clickPosition }) {
+  const { data: session } = useSession();
   const router = useRouter();
 
   const {
@@ -29,6 +31,7 @@ export default function CreatePage({ clickPosition }) {
       initiallyLost: `${data.initiallyLost}` === "Lost" ? true : false,
       itemId: crypto.randomUUID(),
       userId: "",
+      userName: "",
       userRole: "user",
       longitude: latlng.lng,
       latitude: latlng.lat,
@@ -53,6 +56,7 @@ export default function CreatePage({ clickPosition }) {
       isMutating={isCreating}
       clickPosition={clickPosition}
       formtype="add"
+      userName={session.user.name}
     />
   );
 }

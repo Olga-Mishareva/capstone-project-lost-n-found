@@ -4,7 +4,8 @@ import { getToken } from "next-auth/jwt";
 export default async function handler(request, response) {
   const token = await getToken({ req: request });
   const userId = token?.sub;
-  console.log(userId);
+  const userName = token?.name;
+  console.log(userName);
 
   switch (request.method) {
     case "GET": {
@@ -16,11 +17,12 @@ export default async function handler(request, response) {
       response.status(200).json(items);
       break;
     }
+    //
 
     case "POST": {
       if (token) {
         const item = JSON.parse(request.body);
-        const newItem = await createItem({ ...item, userId });
+        const newItem = await createItem({ ...item, userId, userName });
         if (!newItem) {
           response.status(500).json({ message: "Internal server error." });
           return;

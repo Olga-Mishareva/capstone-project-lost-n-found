@@ -36,9 +36,9 @@ export default function ItemForm({
           <option value="Found">Found</option>
         </Select>
       </Wrapper>
-      {formtype === "add" ? (
-        <>
-          <Label htmlFor="user-name">User name:</Label>
+      {/* {formtype === "add" ? ( */}
+      <>
+        {/* <Label htmlFor="user-name">User name:</Label>
           <Input
             type="text"
             name="userName"
@@ -46,14 +46,14 @@ export default function ItemForm({
             minLength="2"
             maxLength="20"
             required
-          />
-        </>
-      ) : (
-        <Wrapper variant="username">
-          <UserNameLabel id="user-name">User name:</UserNameLabel>
-          <UserName aria-labelledby="user-name">{userName}</UserName>
-        </Wrapper>
-      )}
+          /> */}
+      </>
+      {/* ) : ( */}
+      <Wrapper variant="username">
+        <UserNameLabel id="user-name">User name: </UserNameLabel>
+        <UserName aria-labelledby="user-name">{userName}</UserName>
+      </Wrapper>
+      {/* )} */}
 
       <Label htmlFor="title">Title of item:</Label>
       <Input
@@ -112,13 +112,14 @@ const Wrapper = styled.div`
     variant === "username" &&
     css`
       align-items: center;
-      padding: 1rem 0;
+      padding: 1rem 0 0.5rem;
+      border-bottom: 1px solid var(--lightgrey-color);
     `};
 `;
 
 const Label = styled.label`
   margin: 0;
-  padding: 1rem 0 0.5rem;
+  padding: 1.5rem 0 0.5rem;
   font-weight: 500;
 `;
 
