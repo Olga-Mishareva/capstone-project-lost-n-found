@@ -61,19 +61,3 @@ const ItemLink = styled(Link)`
   text-decoration: none;
   color: var(--font-color);
 `;
-
-const AddItemLink = styled(ItemLink)`
-  margin-top: 1em;
-  min-width: 18em;
-  min-height: 3em;
-  border: 3px solid var(--lightgrey-color);
-  border-radius: 0.7em;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const StyledLinkTitle = styled.h2`
-  font-size: 1.5rem;
-  font-weight: 600;
-`;
