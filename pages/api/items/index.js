@@ -5,7 +5,6 @@ export default async function handler(request, response) {
   const token = await getToken({ req: request });
   const userId = token?.sub;
   const userName = token?.name;
-  console.log(userName);
 
   switch (request.method) {
     case "GET": {

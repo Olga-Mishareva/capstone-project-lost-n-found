@@ -36,24 +36,11 @@ export default function ItemForm({
           <option value="Found">Found</option>
         </Select>
       </Wrapper>
-      {/* {formtype === "add" ? ( */}
-      <>
-        {/* <Label htmlFor="user-name">User name:</Label>
-          <Input
-            type="text"
-            name="userName"
-            id="user-name"
-            minLength="2"
-            maxLength="20"
-            required
-          /> */}
-      </>
-      {/* ) : ( */}
+
       <Wrapper variant="username">
         <UserNameLabel id="user-name">User name: </UserNameLabel>
         <UserName aria-labelledby="user-name">{userName}</UserName>
       </Wrapper>
-      {/* )} */}
 
       <Label htmlFor="title">Title of item:</Label>
       <Input
