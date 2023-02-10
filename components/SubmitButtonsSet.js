@@ -42,7 +42,7 @@ export default function SubmitButtonsSet({
 }
 
 const SubmitButtonsWrapper = styled.div`
-  padding-top: 2rem;
+  padding-top: 3rem;
   display: flex;
   justify-content: space-between;
   align-items: center;

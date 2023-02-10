@@ -53,7 +53,7 @@ const StyledList = styled.ul`
   flex-direction: column;
   row-gap: 1.5rem;
   margin: 0;
-  padding: 1rem 0;
+  padding: 1.8rem 0 1rem;
   word-break: break-word;
 `;
 

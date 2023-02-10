@@ -106,6 +106,7 @@ const Container = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  padding: 1.5rem 0 1rem;
 `;
 
 const Category = styled.p`
@@ -139,7 +140,7 @@ const UserName = styled.p`
 const ItemTitle = styled.h2`
   margin: 0;
   font-size: 1.5rem;
-  padding: 2.2rem 0 1.5rem;
+  padding: 2.5rem 0 1.5rem;
   text-align: center;
   word-break: break-word;
 `;
@@ -152,7 +153,7 @@ const ItemDescription = styled.p`
 
 const StyledFoundButton = styled.button`
   min-width: 100%;
-  margin: 5em 0;
+  margin-top: 5em;
   padding: 1em;
   border: none;
   border-radius: 1em;
