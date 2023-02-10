@@ -15,7 +15,6 @@ export default function App({
   Component,
   pageProps: { session, ...pageProps },
 }) {
-  const [showViewButton, setShowViewButton] = useState(false);
   const [listView, setListView] = useState(false);
   const [clickPosition, setClickPosition] = useState([]);
 
@@ -24,12 +23,6 @@ export default function App({
   function getCoordinates(data) {
     setClickPosition(data);
   }
-
-  useEffect(() => {
-    if (pathName === "/") {
-      setShowViewButton(true);
-    } else setShowViewButton(false);
-  }, [pathName]);
 
   function handleToggleView() {
     setListView((prevView) => !prevView);
@@ -46,7 +39,7 @@ export default function App({
           <Layout
             onToggle={handleToggleView}
             listView={listView}
-            showViewButton={showViewButton}
+            pathName={pathName}
           >
             <Component
               {...pageProps}
