@@ -2,7 +2,7 @@ import styled from "styled-components";
 import useSWR from "swr";
 import Link from "next/link";
 import dynamic from "next/dynamic";
-import { useSession, signIn, signOut } from "next-auth/react";
+import { useSession } from "next-auth/react";
 
 import Item from "@/components/Item";
 

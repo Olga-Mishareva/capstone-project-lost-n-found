@@ -1,6 +1,7 @@
 import { useRouter } from "next/router";
 import useSWR from "swr";
 import useSWRMutation from "swr/mutation";
+import { useSession } from "next-auth/react";
 
 import ItemForm from "@/components/ItemForm";
 import Overlay from "@/components/Overlay";
@@ -17,6 +18,7 @@ async function fetcher(url, { arg }) {
 }
 
 export default function EditPage() {
+  const { data: session } = useSession();
   const router = useRouter();
   const { id } = router.query;
 
