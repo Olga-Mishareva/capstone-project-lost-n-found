@@ -3,6 +3,7 @@ import { getToken } from "next-auth/jwt";
 
 export default async function handler(request, response) {
   const token = await getToken({ req: request });
+  const userId = token?.sub;
 
   switch (request.method) {
     case "GET": {
@@ -21,47 +22,61 @@ export default async function handler(request, response) {
     case "PUT": {
       if (token) {
         const item = JSON.parse(request.body);
-        const updatedItem = await updateItem(request.query.id, item);
-        if (!updatedItem) {
-          response.status(404).json({
-            message: `Item ${request.query.id} was not found.`,
-          });
-          return;
+        if (userId !== item.userId) {
+          const updatedItem = await updateItem(request.query.id, item);
+          if (!updatedItem) {
+            response.status(404).json({
+              message: `Item ${request.query.id} was not found.`,
+            });
+            return;
+          }
+          response.status(200).json(updatedItem);
+          break;
         }
-
-        response.status(200).json(updatedItem);
-        break;
+        response.status(403).json({
+          message: `Forbidden error: user with id ${userId} has no right for this action.`,
+        });
       }
     }
 
     case "PATCH": {
       if (token) {
         const item = JSON.parse(request.body);
-        const editedItem = await editItem(request.query.id, item);
-        if (!editedItem) {
-          response.status(404).json({
-            message: `Item ${request.query.id} was not found.`,
-          });
-          return;
+        if (userId === item.userId) {
+          const editedItem = await editItem(request.query.id, item);
+          if (!editedItem) {
+            response.status(404).json({
+              message: `Item ${request.query.id} was not found.`,
+            });
+            return;
+          }
+          response.status(200).json(editedItem);
+          break;
         }
-
-        response.status(200).json(editedItem);
-        break;
+        response.status(403).json({
+          message: `Forbidden error: user with id ${userId} has no right for this action.`,
+        });
       }
     }
 
     case "DELETE": {
       if (token) {
-        const deletedItem = await deleteItem(request.query.id);
-        if (!deletedItem) {
-          response.status(404).json({
-            message: `Item ${request.query.id} was not found.`,
-          });
-          return;
-        }
+        const item = JSON.parse(request.body);
+        if (userId === item.userId) {
+          const deletedItem = await deleteItem(request.query.id);
+          if (!deletedItem) {
+            response.status(404).json({
+              message: `Item ${request.query.id} was not found.`,
+            });
+            return;
+          }
 
-        response.status(200).json(deletedItem);
-        break;
+          response.status(200).json(deletedItem);
+          break;
+        }
+        response.status(403).json({
+          message: `Forbidden error: user with id ${userId} has no right for this action.`,
+        });
       }
     }
 

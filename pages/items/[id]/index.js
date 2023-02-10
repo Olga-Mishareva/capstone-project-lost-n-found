@@ -39,7 +39,7 @@ export default function DetailsPage() {
 
   async function handleDelete() {
     try {
-      await trigger({ method: "DELETE" }, { revalidate: false });
+      await trigger({ method: "DELETE", body: item }, { revalidate: false });
     } catch (error) {
       throw new Error(error.message);
     }
