@@ -6,7 +6,6 @@ export default function ConfirmPopup({
   onClose,
   variant,
   children,
-  type,
 }) {
   const { data: session } = useSession();
 

@@ -3,6 +3,7 @@ import useSWR from "swr";
 import useSWRMutation from "swr/mutation";
 
 import ItemForm from "@/components/ItemForm";
+import Overlay from "@/components/Overlay";
 
 async function fetcher(url, { arg }) {
   const response = await fetch(url, {
@@ -53,15 +54,21 @@ export default function EditPage() {
   }
 
   return (
-    <ItemForm
-      onSubmit={editItem}
-      isMutating={isUpdating}
-      formtype="edit"
-      id={id}
-      title={item.title}
-      description={item.description}
-      userName={item.userName}
-      category={item.initiallyLost}
-    />
+    <>
+      {session ? (
+        <ItemForm
+          onSubmit={editItem}
+          isMutating={isUpdating}
+          formtype="edit"
+          id={id}
+          title={item.title}
+          description={item.description}
+          userName={item.userName}
+          category={item.initiallyLost}
+        />
+      ) : (
+        <></>
+      )}
+    </>
   );
 }

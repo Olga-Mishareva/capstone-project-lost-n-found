@@ -3,6 +3,7 @@ import useSWRMutation from "swr/mutation";
 import { useSession } from "next-auth/react";
 
 import ItemForm from "@/components/ItemForm";
+import Overlay from "@/components/Overlay";
 
 async function fetcher(url, { arg }) {
   const response = await fetch(url, {
@@ -51,12 +52,19 @@ export default function CreatePage({ clickPosition }) {
   }
 
   return (
-    <ItemForm
-      onSubmit={addItem}
-      isMutating={isCreating}
-      clickPosition={clickPosition}
-      formtype="add"
-      userName={session.user.name}
-    />
+    <>
+      {session ? (
+        <ItemForm
+          onSubmit={addItem}
+          isMutating={isCreating}
+          clickPosition={clickPosition}
+          formtype="add"
+          userName={session.user.name}
+        />
+      ) : (
+        <></>
+        // <Overlay />
+      )}
+    </>
   );
 }

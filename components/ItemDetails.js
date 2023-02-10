@@ -36,61 +36,73 @@ export default function ItemDetails({
 
   return (
     <>
-      <DetailsWrapper>
-        <Container>
-          <Category initialStatus={initialStatus} isFound={isFound}>
-            {isFound ? "Waiting for pick-up" : initialStatus ? "Lost" : "Found"}
-          </Category>
+      {session ? (
+        <>
+          <DetailsWrapper>
+            <Container>
+              <Category initialStatus={initialStatus} isFound={isFound}>
+                {isFound
+                  ? "Waiting for pick-up"
+                  : initialStatus
+                  ? "Lost"
+                  : "Found"}
+              </Category>
 
-          <StyledLink href="/">
-            <SVGIcon
-              variant="close"
-              width="48px"
-              label="close"
-              color="var(--font-color)"
-            />
-          </StyledLink>
-        </Container>
-        <UserName>
-          <Span>by</Span> {userName}
-        </UserName>
-        <ItemTitle>{title}</ItemTitle>
-        <ItemDescription>{description}</ItemDescription>
-        {session?.user.name === userName ? (
-          <></>
-        ) : (
-          <StyledFoundButton
-            onClick={session ? onHandleStatus : handleOpenPopup}
-            type="button"
-            isFound={isFound}
-            session={session}
-            disabled={isMutating}
-          >
-            {isFound
-              ? "Found its owner"
-              : initialStatus
-              ? "I found it"
-              : "That's mine"}
-          </StyledFoundButton>
-        )}
-        {session?.user.name == userName ? (
-          <SubmitButtonsSet
-            variant="details"
-            type="button"
-            pagetype="details-page"
-            link={`/items/${id}/edit`}
-            ariaLabel="edit"
-            buttonName="Delete"
-            linkName="Edit"
-            isMutating={isMutating}
-            pathName={pathName}
-            onOpen={handleOpenPopup}
-          />
-        ) : (
-          <></>
-        )}
-      </DetailsWrapper>
-      {showPopup && <Overlay onConfirm={onDelete} onClose={handleClosePopup} />}
+              <StyledLink href="/">
+                <SVGIcon
+                  variant="close"
+                  width="48px"
+                  label="close"
+                  color="var(--font-color)"
+                />
+              </StyledLink>
+            </Container>
+            <UserName>
+              <Span>by</Span> {userName}
+            </UserName>
+            <ItemTitle>{title}</ItemTitle>
+            <ItemDescription>{description}</ItemDescription>
+            {session?.user.name === userName ? (
+              <></>
+            ) : (
+              <StyledFoundButton
+                onClick={session ? onHandleStatus : handleOpenPopup}
+                type="button"
+                isFound={isFound}
+                session={session}
+                disabled={isMutating}
+              >
+                {isFound
+                  ? "Found its owner"
+                  : initialStatus
+                  ? "I found it"
+                  : "That's mine"}
+              </StyledFoundButton>
+            )}
+            {session?.user.name == userName ? (
+              <SubmitButtonsSet
+                variant="details"
+                type="button"
+                pagetype="details-page"
+                link={`/items/${id}/edit`}
+                ariaLabel="edit"
+                buttonName="Delete"
+                linkName="Edit"
+                isMutating={isMutating}
+                pathName={pathName}
+                onOpen={handleOpenPopup}
+              />
+            ) : (
+              <></>
+            )}
+          </DetailsWrapper>
+          {showPopup && (
+            <Overlay onConfirm={onDelete} onClose={handleClosePopup} />
+          )}
+        </>
+      ) : (
+        <></>
+      )}
     </>
   );
 }

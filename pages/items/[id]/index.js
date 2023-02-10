@@ -53,7 +53,7 @@ export default function DetailsPage() {
   }
 
   if (error || fetchError) {
-    return <h2>{JSON.stringify(error)}</h2>;
+    return <h2>Something goes wrong.</h2>;
   }
 
   return (

@@ -7,16 +7,20 @@ export default async function handler(request, response) {
 
   switch (request.method) {
     case "GET": {
-      const item = await getItem(request.query.id);
-      if (!item) {
-        response.status(404).json({
-          message: `Item ${request.query.id} was not found.`,
-        });
-        return;
+      if (token) {
+        const item = await getItem(request.query.id);
+        if (!item) {
+          response.status(404).json({
+            message: `Item ${request.query.id} was not found.`,
+          });
+          return;
+        }
+        response.status(200).json(item);
+        break;
       }
-
-      response.status(200).json(item);
-      break;
+      response.status(401).json({
+        message: "Unauthorized: authentication is required.",
+      });
     }
 
     case "PUT": {
@@ -37,6 +41,9 @@ export default async function handler(request, response) {
           message: `Forbidden error: user with id ${userId} has no right for this action.`,
         });
       }
+      response.status(401).json({
+        message: "Unauthorized: authentication is required.",
+      });
     }
 
     case "PATCH": {
@@ -57,6 +64,9 @@ export default async function handler(request, response) {
           message: `Forbidden error: user with id ${userId} has no right for this action.`,
         });
       }
+      response.status(401).json({
+        message: "Unauthorized: authentication is required.",
+      });
     }
 
     case "DELETE": {
@@ -78,6 +88,9 @@ export default async function handler(request, response) {
           message: `Forbidden error: user with id ${userId} has no right for this action.`,
         });
       }
+      response.status(401).json({
+        message: "Unauthorized: authentication is required.",
+      });
     }
 
     default: {
