@@ -11,7 +11,7 @@ export default function Overlay({ onConfirm, onClose }) {
       <ConfirmPopup variant="delete" onConfirm={onConfirm} onClose={onClose}>
         {session
           ? "Do you really want to delete this item?"
-          : "You have to log in to go on."}
+          : "You have to login to go on."}
       </ConfirmPopup>
     </StyledOverlay>
   );

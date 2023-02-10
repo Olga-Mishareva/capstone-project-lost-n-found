@@ -20,7 +20,7 @@ export default async function handler(request, response) {
     case "POST": {
       if (token) {
         const item = JSON.parse(request.body);
-        const newItem = await createItem(item);
+        const newItem = await createItem({ ...item, userId });
         if (!newItem) {
           response.status(500).json({ message: "Internal server error." });
           return;

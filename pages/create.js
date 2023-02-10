@@ -28,7 +28,7 @@ export default function CreatePage({ clickPosition }) {
       ...data,
       initiallyLost: `${data.initiallyLost}` === "Lost" ? true : false,
       itemId: crypto.randomUUID(),
-      userId: "cde299f9-dacf-4761-902c-61ed6614fab0", // temporarily hardcoded
+      userId: "",
       userRole: "user",
       longitude: latlng.lng,
       latitude: latlng.lat,
