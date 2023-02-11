@@ -1,13 +1,15 @@
 import styled, { css } from "styled-components";
-import { useSession, signIn, signOut } from "next-auth/react";
+import { useSession, signIn } from "next-auth/react";
+import { useRouter } from "next/router";
 
 export default function ConfirmPopup({
-  onConfirm,
+  onConfirm = () => {},
   onClose,
   variant,
   children,
 }) {
   const { data: session } = useSession();
+  const router = useRouter();
 
   return (
     <PopupWrapper
@@ -33,7 +35,20 @@ export default function ConfirmPopup({
         >
           {session ? "Confirm" : "Login"}
         </Button>
-        <Button type="button" variant="close" onClick={onClose}>
+        <Button
+          type="button"
+          variant="close"
+          onClick={
+            session
+              ? () => {
+                  onClose();
+                }
+              : () => {
+                  onClose();
+                  router.push("/");
+                }
+          }
+        >
           Close
         </Button>
       </ButtonsWrapper>

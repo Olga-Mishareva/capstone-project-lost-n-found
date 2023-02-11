@@ -12,7 +12,6 @@ export default function SubmitButtonsSet({
   onOpen,
   variant,
   isMutating,
-  pathName,
 }) {
   const { data: session } = useSession();
 
@@ -29,7 +28,7 @@ export default function SubmitButtonsSet({
       </StyledSubmitButton>
       <StyledLinkButton
         variant={variant}
-        href={session ? link : pathName}
+        href={session ? link : "/"}
         aria-label={ariaLabel}
         pagetype={pagetype}
         ismutating={isMutating ? "true" : ""}
