@@ -1,7 +1,7 @@
 import Head from "next/head";
 import { Inter } from "@next/font/google";
 import { SWRConfig } from "swr";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { usePathname } from "next/navigation";
 import { SessionProvider } from "next-auth/react";
 
@@ -15,10 +15,19 @@ export default function App({
   Component,
   pageProps: { session, ...pageProps },
 }) {
+  const pathName = usePathname();
+
   const [listView, setListView] = useState(false);
   const [clickPosition, setClickPosition] = useState([]);
+  const [showPopup, setShowPopup] = useState(false);
 
-  const pathName = usePathname();
+  function handleOpenPopup() {
+    setShowPopup(true);
+  }
+
+  function handleClosePopup() {
+    setShowPopup(false);
+  }
 
   function getCoordinates(data) {
     setClickPosition(data);
@@ -46,6 +55,9 @@ export default function App({
               listView={listView}
               onPosition={getCoordinates}
               clickPosition={clickPosition}
+              showPopup={showPopup}
+              onShowPopup={handleOpenPopup}
+              onClosePopup={handleClosePopup}
             />
           </Layout>
         </div>
