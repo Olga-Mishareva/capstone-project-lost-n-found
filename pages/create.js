@@ -1,6 +1,7 @@
 import { useRouter } from "next/router";
 import useSWRMutation from "swr/mutation";
 import { useSession } from "next-auth/react";
+import { useEffect } from "react";
 
 import ItemForm from "@/components/ItemForm";
 import Overlay from "@/components/Overlay";
@@ -16,9 +17,20 @@ async function fetcher(url, { arg }) {
   return response.json();
 }
 
-export default function CreatePage({ clickPosition }) {
+export default function CreatePage({
+  clickPosition,
+  showPopup,
+  onShowPopup,
+  onClosePopup,
+}) {
   const { data: session } = useSession();
   const router = useRouter();
+
+  useEffect(() => {
+    if (!session) {
+      onShowPopup();
+    } else onClosePopup();
+  }, [session]);
 
   const {
     trigger: triggerPost,
@@ -53,17 +65,16 @@ export default function CreatePage({ clickPosition }) {
 
   return (
     <>
-      {session ? (
+      {showPopup ? (
+        <Overlay onClose={onClosePopup} />
+      ) : (
         <ItemForm
           onSubmit={addItem}
           isMutating={isCreating}
           clickPosition={clickPosition}
           formtype="add"
-          userName={session.user.name}
+          userName={session?.user.name}
         />
-      ) : (
-        <></>
-        // <Overlay />
       )}
     </>
   );

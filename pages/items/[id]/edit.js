@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 import useSWR from "swr";
 import useSWRMutation from "swr/mutation";
 import { useSession } from "next-auth/react";
+import { useEffect } from "react";
 
 import ItemForm from "@/components/ItemForm";
 import Overlay from "@/components/Overlay";
@@ -17,10 +18,16 @@ async function fetcher(url, { arg }) {
   return response.json();
 }
 
-export default function EditPage() {
+export default function EditPage({ onClosePopup, showPopup, onShowPopup }) {
   const { data: session } = useSession();
   const router = useRouter();
   const { id } = router.query;
+
+  useEffect(() => {
+    if (!session) {
+      onShowPopup();
+    } else onClosePopup();
+  }, [session]);
 
   const { data: item, mutate, isLoading, error } = useSWR(`/api/items/${id}`);
 
@@ -52,12 +59,14 @@ export default function EditPage() {
   }
 
   if (error) {
-    return <h2>{JSON.stringify(fetchingError)}</h2>;
+    return <h2>Something goes wrong.</h2>;
   }
 
   return (
     <>
-      {session ? (
+      {showPopup ? (
+        <Overlay onClose={onClosePopup} />
+      ) : (
         <ItemForm
           onSubmit={editItem}
           isMutating={isUpdating}
@@ -68,8 +77,6 @@ export default function EditPage() {
           userName={item.userName}
           category={item.initiallyLost}
         />
-      ) : (
-        <></>
       )}
     </>
   );

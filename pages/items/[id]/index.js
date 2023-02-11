@@ -15,7 +15,7 @@ async function fetcher(url, { arg }) {
   return response.json();
 }
 
-export default function DetailsPage() {
+export default function DetailsPage({ showPopup, onShowPopup, onClosePopup }) {
   const router = useRouter();
   const { id } = router.query;
 
@@ -66,6 +66,9 @@ export default function DetailsPage() {
       onHandleStatus={handleStatus}
       onDelete={handleDelete}
       isMutating={isMutating}
+      showPopup={showPopup}
+      onShowPopup={onShowPopup}
+      onClosePopup={onClosePopup}
     />
   );
 }
