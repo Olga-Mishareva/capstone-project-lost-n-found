@@ -7,20 +7,15 @@ export default async function handler(request, response) {
 
   switch (request.method) {
     case "GET": {
-      if (token) {
-        const item = await getItem(request.query.id);
-        if (!item) {
-          response.status(404).json({
-            message: `Item ${request.query.id} was not found.`,
-          });
-          return;
-        }
-        response.status(200).json(item);
-        break;
+      const item = await getItem(request.query.id);
+      if (!item) {
+        response.status(404).json({
+          message: `Item ${request.query.id} was not found.`,
+        });
+        return;
       }
-      response.status(401).json({
-        message: "Unauthorized: authentication is required.",
-      });
+      response.status(200).json(item);
+      break;
     }
 
     case "PUT": {
