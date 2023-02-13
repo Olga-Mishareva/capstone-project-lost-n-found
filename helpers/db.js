@@ -16,7 +16,8 @@ const ItemSchema = new Schema({
 });
 
 const MessageSchema = new Schema({
-  userId: { type: String, ref: "Item" },
+  item: { type: Schema.Types.ObjectId, ref: "Item" },
+  userId: String,
   userName: String,
   text: String,
 });
