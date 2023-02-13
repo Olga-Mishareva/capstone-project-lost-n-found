@@ -2,14 +2,10 @@ import styled from "styled-components";
 
 import { TitleBar } from "./TitleBar";
 
-export function Layout({ children, onToggle, listView, showViewButton }) {
+export function Layout({ children, onToggle, listView, pathName }) {
   return (
     <Wrapper>
-      <TitleBar
-        onToggle={onToggle}
-        listView={listView}
-        showViewButton={showViewButton}
-      />
+      <TitleBar onToggle={onToggle} listView={listView} pathName={pathName} />
       <StyledMain>{children}</StyledMain>
       <Footer>
         <Copyright>&copy; OM</Copyright>
@@ -19,17 +15,17 @@ export function Layout({ children, onToggle, listView, showViewButton }) {
 }
 
 const Wrapper = styled.div`
-  padding: 0 1rem;
+  /* padding: 0 1rem; */
   display: grid;
-  grid-template-rows: 80px auto 36px;
+  grid-template-rows: 90px auto 36px;
   height: 100vh;
   position: relative;
 `;
 
 const StyledMain = styled.main`
-  padding: 1rem 0;
   overflow-y: scroll;
   margin: 0 auto;
+  padding: 0 1rem;
 
   ::-webkit-scrollbar {
     width: 0;
@@ -40,6 +36,7 @@ const Footer = styled.footer`
   display: flex;
   align-items: center;
   justify-content: flex-end;
+  padding: 0 1rem;
 `;
 
 const Copyright = styled.p`

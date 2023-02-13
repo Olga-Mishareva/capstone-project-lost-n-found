@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
-export default function Item({ title, initialStatus }) {
+export default function Item({ title, initialStatus, isFound }) {
   return (
-    <StyledItem initialStatus={initialStatus}>
+    <StyledItem initialStatus={initialStatus} isFound={isFound}>
       <Title>{title}</Title>
     </StyledItem>
   );
@@ -11,12 +11,17 @@ export default function Item({ title, initialStatus }) {
 const StyledItem = styled.div`
   min-width: 18em;
   min-height: 3em;
-  background-color: ${({ initialStatus }) =>
-    initialStatus ? "var(--lost-pastel-color)" : "var(--found-pastel-color)"};
+  background-color: ${({ initialStatus, isFound }) =>
+    isFound
+      ? "var(--finished-pastel-color)"
+      : initialStatus
+      ? "var(--lost-pastel-color)"
+      : "var(--found-pastel-color)"};
   border-radius: 0.7em;
   display: flex;
   justify-content: center;
   align-items: center;
+  box-shadow: 5px 5px 15px 0px var(--more-lightgrey-color);
 `;
 
 const Title = styled.h2`

@@ -1,7 +1,10 @@
 import { useRouter } from "next/router";
 import useSWRMutation from "swr/mutation";
+import { useSession } from "next-auth/react";
+import { useEffect } from "react";
 
 import ItemForm from "@/components/ItemForm";
+import Overlay from "@/components/Overlay";
 
 async function fetcher(url, { arg }) {
   const response = await fetch(url, {
@@ -14,8 +17,20 @@ async function fetcher(url, { arg }) {
   return response.json();
 }
 
-export default function CreatePage({ clickPosition }) {
+export default function CreatePage({
+  clickPosition,
+  showPopup,
+  onShowPopup,
+  onClosePopup,
+}) {
+  const { data: session } = useSession();
   const router = useRouter();
+
+  useEffect(() => {
+    if (!session) {
+      onShowPopup();
+    } else onClosePopup();
+  }, [session]);
 
   const {
     trigger: triggerPost,
@@ -28,7 +43,8 @@ export default function CreatePage({ clickPosition }) {
       ...data,
       initiallyLost: `${data.initiallyLost}` === "Lost" ? true : false,
       itemId: crypto.randomUUID(),
-      userId: "cde299f9-dacf-4761-902c-61ed6614fab0", // temporarily hardcoded
+      userId: "",
+      userName: "",
       userRole: "user",
       longitude: latlng.lng,
       latitude: latlng.lat,
@@ -48,11 +64,18 @@ export default function CreatePage({ clickPosition }) {
   }
 
   return (
-    <ItemForm
-      onSubmit={addItem}
-      isMutating={isCreating}
-      clickPosition={clickPosition}
-      formtype="add"
-    />
+    <>
+      {showPopup ? (
+        <Overlay onClose={onClosePopup} />
+      ) : (
+        <ItemForm
+          onSubmit={addItem}
+          isMutating={isCreating}
+          clickPosition={clickPosition}
+          formtype="add"
+          userName={session?.user.name}
+        />
+      )}
+    </>
   );
 }

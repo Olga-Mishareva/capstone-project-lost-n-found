@@ -1,7 +1,8 @@
 import { useRouter } from "next/router";
 import styled from "styled-components";
 import Link from "next/link";
-import { useState } from "react";
+import { usePathname } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 import SVGIcon from "@/components/SVGIcon";
 import SubmitButtonsSet from "@/components/SubmitButtonsSet";
@@ -16,16 +17,12 @@ export default function ItemDetails({
   onHandleStatus,
   onDelete,
   isMutating,
+  showPopup,
+  onShowPopup,
+  onClosePopup,
 }) {
-  const [showPopup, setShowPopup] = useState(false);
-
-  function handleOpenPopup() {
-    setShowPopup(true);
-  }
-
-  function handleClosePopup() {
-    setShowPopup(false);
-  }
+  const { data: session } = useSession();
+  const pathName = usePathname();
 
   const router = useRouter();
   const { id } = router.query;
@@ -38,46 +35,55 @@ export default function ItemDetails({
             {isFound ? "Waiting for pick-up" : initialStatus ? "Lost" : "Found"}
           </Category>
 
-          <StyledLink href="/">
+          <StyledCancelLink href="/">
             <SVGIcon
               variant="close"
               width="48px"
               label="close"
               color="var(--font-color)"
             />
-          </StyledLink>
+          </StyledCancelLink>
         </Container>
         <UserName>
           <Span>by</Span> {userName}
         </UserName>
         <ItemTitle>{title}</ItemTitle>
         <ItemDescription>{description}</ItemDescription>
-        <StyledFoundButton
-          onClick={onHandleStatus}
-          type="button"
-          isFound={isFound}
-          disabled={isMutating}
-        >
-          {isFound
-            ? "Found its owner"
-            : initialStatus
-            ? "I found it"
-            : "That's mine"}
-        </StyledFoundButton>
-
-        <SubmitButtonsSet
-          variant="details"
-          type="button"
-          pagetype="details-page"
-          link={`/items/${id}/edit`}
-          ariaLabel="edit"
-          buttonName="Delete"
-          linkName="Edit"
-          isMutating={isMutating}
-          onOpen={handleOpenPopup}
-        />
+        {session?.user.name === userName ? (
+          <></>
+        ) : (
+          <StyledFoundButton
+            onClick={session ? onHandleStatus : onShowPopup}
+            type="button"
+            isFound={isFound}
+            session={session}
+            disabled={isMutating}
+          >
+            {isFound
+              ? "Found its owner"
+              : initialStatus
+              ? "I found it"
+              : "That's mine"}
+          </StyledFoundButton>
+        )}
+        {session?.user.name == userName ? (
+          <SubmitButtonsSet
+            variant="details"
+            type="button"
+            pagetype="details-page"
+            link={`/items/${id}/edit`}
+            ariaLabel="edit"
+            buttonName="Delete"
+            linkName="Edit"
+            isMutating={isMutating}
+            pathName={pathName}
+            onOpen={onShowPopup}
+          />
+        ) : (
+          <></>
+        )}
       </DetailsWrapper>
-      {showPopup && <Overlay onConfirm={onDelete} onClose={handleClosePopup} />}
+      {showPopup && <Overlay onConfirm={onDelete} onClose={onClosePopup} />}
     </>
   );
 }
@@ -93,6 +99,7 @@ const Container = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  padding: 1.5rem 0 1rem;
 `;
 
 const Category = styled.p`
@@ -107,7 +114,7 @@ const Category = styled.p`
       : "var(--found-color)"};
 `;
 
-const StyledLink = styled(Link)`
+const StyledCancelLink = styled(Link)`
   :hover {
     cursor: pointer;
   }
@@ -126,7 +133,7 @@ const UserName = styled.p`
 const ItemTitle = styled.h2`
   margin: 0;
   font-size: 1.5rem;
-  padding: 2.2rem 0 1.5rem;
+  padding: 2.5rem 0 1.5rem;
   text-align: center;
   word-break: break-word;
 `;
@@ -139,11 +146,23 @@ const ItemDescription = styled.p`
 
 const StyledFoundButton = styled.button`
   min-width: 100%;
-  margin: 5em 0;
+  margin-top: 5em;
   padding: 1em;
   border: none;
   border-radius: 1em;
   background-color: ${({ isFound }) =>
-    isFound ? "var(--finished-color)" : "var(--finished-pastel-color)"};
+    isFound ? "var(--finished-color)" : "var(--middle-finished-color)"};
   color: ${({ isFound }) => (isFound ? "#FFFFFF" : "var(--font-color)")};
+  box-shadow: 5px 5px 15px 0px var(--more-lightgrey-color);
+  transition: opacity 0.2s ease-in;
+
+  :hover {
+    cursor: pointer;
+    opacity: 0.9;
+    transition: opacity 0.2s ease-in;
+  }
+
+  :active {
+    box-shadow: none;
+  }
 `;

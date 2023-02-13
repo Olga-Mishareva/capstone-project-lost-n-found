@@ -2,12 +2,14 @@ import styled from "styled-components";
 import useSWR from "swr";
 import Link from "next/link";
 import dynamic from "next/dynamic";
+import { useSession } from "next-auth/react";
 
 import Item from "@/components/Item";
 
 const Map = dynamic(() => import("@/components/Map/Map"), { ssr: false });
 
 export default function HomePage({ listView, onPosition, clickPosition }) {
+  const { data: session } = useSession();
   const { data: items, isLoading, error } = useSWR("/api/items");
 
   if (error) {
@@ -35,7 +37,11 @@ export default function HomePage({ listView, onPosition, clickPosition }) {
             .map((item) => (
               <li key={item.itemId}>
                 <ItemLink href={`/items/${item.itemId}`}>
-                  <Item title={item.title} initialStatus={item.initiallyLost} />
+                  <Item
+                    title={item.title}
+                    initialStatus={item.initiallyLost}
+                    isFound={item.inDiscuss}
+                  />
                 </ItemLink>
               </li>
             ))}
@@ -51,27 +57,11 @@ const StyledList = styled.ul`
   flex-direction: column;
   row-gap: 1.5rem;
   margin: 0;
-  padding: 1.5rem 0;
+  padding: 1.8rem 1rem 1rem;
   word-break: break-word;
 `;
 
 const ItemLink = styled(Link)`
   text-decoration: none;
   color: var(--font-color);
-`;
-
-const AddItemLink = styled(ItemLink)`
-  margin-top: 1em;
-  min-width: 18em;
-  min-height: 3em;
-  border: 3px solid var(--lightgrey-color);
-  border-radius: 0.7em;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const StyledLinkTitle = styled.h2`
-  font-size: 1.5rem;
-  font-weight: 600;
 `;

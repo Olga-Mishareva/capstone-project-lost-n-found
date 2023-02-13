@@ -1,6 +1,10 @@
 import { getItem, updateItem, editItem, deleteItem } from "@/helpers/db";
+import { getToken } from "next-auth/jwt";
 
 export default async function handler(request, response) {
+  const token = await getToken({ req: request });
+  const userId = token?.sub;
+
   switch (request.method) {
     case "GET": {
       const item = await getItem(request.query.id);
@@ -10,51 +14,78 @@ export default async function handler(request, response) {
         });
         return;
       }
-
       response.status(200).json(item);
       break;
     }
 
     case "PUT": {
-      const item = JSON.parse(request.body);
-      const updatedItem = await updateItem(request.query.id, item);
-      if (!updatedItem) {
-        response.status(404).json({
-          message: `Item ${request.query.id} was not found.`,
+      if (token) {
+        const item = JSON.parse(request.body);
+        if (userId !== item.userId) {
+          const updatedItem = await updateItem(request.query.id, item);
+          if (!updatedItem) {
+            response.status(404).json({
+              message: `Item ${request.query.id} was not found.`,
+            });
+            return;
+          }
+          response.status(200).json(updatedItem);
+          break;
+        }
+        response.status(403).json({
+          message: `Forbidden error: user with id ${userId} has no right for this action.`,
         });
-        return;
       }
-
-      response.status(200).json(updatedItem);
-      break;
+      response.status(401).json({
+        message: "Unauthorized: authentication is required.",
+      });
     }
 
     case "PATCH": {
-      const item = JSON.parse(request.body);
-      const editedItem = await editItem(request.query.id, item);
-      if (!editedItem) {
-        response.status(404).json({
-          message: `Item ${request.query.id} was not found.`,
+      if (token) {
+        const item = JSON.parse(request.body);
+        if (userId === item.userId) {
+          const editedItem = await editItem(request.query.id, item);
+          if (!editedItem) {
+            response.status(404).json({
+              message: `Item ${request.query.id} was not found.`,
+            });
+            return;
+          }
+          response.status(200).json(editedItem);
+          break;
+        }
+        response.status(403).json({
+          message: `Forbidden error: user with id ${userId} has no right for this action.`,
         });
-        return;
       }
-
-      response.status(200).json(editedItem);
-      break;
+      response.status(401).json({
+        message: "Unauthorized: authentication is required.",
+      });
     }
 
     case "DELETE": {
-      const deletedItem = await deleteItem(request.query.id);
-      console.log(deletedItem);
-      if (!deletedItem) {
-        response.status(404).json({
-          message: `Item ${request.query.id} was not found.`,
-        });
-        return;
-      }
+      if (token) {
+        const item = JSON.parse(request.body);
+        if (userId === item.userId) {
+          const deletedItem = await deleteItem(request.query.id);
+          if (!deletedItem) {
+            response.status(404).json({
+              message: `Item ${request.query.id} was not found.`,
+            });
+            return;
+          }
 
-      response.status(200).json(deletedItem);
-      break;
+          response.status(200).json(deletedItem);
+          break;
+        }
+        response.status(403).json({
+          message: `Forbidden error: user with id ${userId} has no right for this action.`,
+        });
+      }
+      response.status(401).json({
+        message: "Unauthorized: authentication is required.",
+      });
     }
 
     default: {

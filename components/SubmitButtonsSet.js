@@ -1,5 +1,6 @@
 import styled, { css } from "styled-components";
 import Link from "next/link";
+import { useSession } from "next-auth/react";
 
 export default function SubmitButtonsSet({
   type,
@@ -12,6 +13,8 @@ export default function SubmitButtonsSet({
   variant,
   isMutating,
 }) {
+  const { data: session } = useSession();
+
   return (
     <SubmitButtonsWrapper variant={variant}>
       <StyledSubmitButton
@@ -25,10 +28,11 @@ export default function SubmitButtonsSet({
       </StyledSubmitButton>
       <StyledLinkButton
         variant={variant}
-        href={link}
+        href={session ? link : "/"}
         aria-label={ariaLabel}
         pagetype={pagetype}
         ismutating={isMutating ? "true" : ""}
+        onClick={!session ? onOpen : () => {}}
       >
         {linkName}
       </StyledLinkButton>
@@ -37,8 +41,9 @@ export default function SubmitButtonsSet({
 }
 
 const SubmitButtonsWrapper = styled.div`
-  padding-top: 2rem;
+  padding-top: 3rem;
   display: flex;
+  column-gap: 1rem;
   justify-content: space-between;
   align-items: center;
 
@@ -65,10 +70,19 @@ const StyledSubmitButton = styled.button`
   font-family: var(--inter-font);
   font-size: 1.2rem;
   font-weight: 500;
+  background-color: var(--disabled-color);
+  box-shadow: 5px 5px 15px 0px var(--more-lightgrey-color);
+  transition: opacity 0.2s ease-in;
+
+  :active {
+    box-shadow: none;
+  }
+
   :hover {
     cursor: pointer;
+    opacity: 0.9;
+    transition: opacity 0.2s ease-in;
   }
-  background-color: var(--disabled-color);
 
   ${({ variant, ismutating }) =>
     variant === "details" &&
@@ -96,14 +110,23 @@ export const StyledLinkButton = styled(Link)`
   text-align: center;
   color: var(--font-color);
   font-weight: 500;
+  box-shadow: 5px 5px 15px 0px var(--more-lightgrey-color);
+  transition: opacity 0.2s ease-in;
+
   :hover {
     cursor: pointer;
+    opacity: 0.9;
+    transition: opacity 0.2s ease-in;
+  }
+
+  :active {
+    box-shadow: none;
   }
 
   ${({ variant }) =>
     variant === "details" &&
     css`
-      background-color: var(--lightgrey-color);
+      background-color: var(--more-lightgrey-color);
     `};
 
   ${({ variant }) =>

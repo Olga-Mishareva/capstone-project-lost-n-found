@@ -15,7 +15,7 @@ async function fetcher(url, { arg }) {
   return response.json();
 }
 
-export default function DetailsPage() {
+export default function DetailsPage({ showPopup, onShowPopup, onClosePopup }) {
   const router = useRouter();
   const { id } = router.query;
 
@@ -39,7 +39,7 @@ export default function DetailsPage() {
 
   async function handleDelete() {
     try {
-      await trigger({ method: "DELETE" }, { revalidate: false });
+      await trigger({ method: "DELETE", body: item }, { revalidate: false });
     } catch (error) {
       throw new Error(error.message);
     }
@@ -53,7 +53,7 @@ export default function DetailsPage() {
   }
 
   if (error || fetchError) {
-    return <h2>{JSON.stringify(error)}</h2>;
+    return <h2>Something goes wrong.</h2>;
   }
 
   return (
@@ -66,6 +66,9 @@ export default function DetailsPage() {
       onHandleStatus={handleStatus}
       onDelete={handleDelete}
       isMutating={isMutating}
+      showPopup={showPopup}
+      onShowPopup={onShowPopup}
+      onClosePopup={onClosePopup}
     />
   );
 }
