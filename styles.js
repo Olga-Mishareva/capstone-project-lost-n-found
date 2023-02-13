@@ -15,6 +15,7 @@ export default createGlobalStyle`
     --inDiscuss-color: #EDCB50;
     --inDiscuss-pastel-color: rgba(237, 203, 80, 0.5);
     --finished-color: #448C74;
+    --middle-finished-color: rgba(68, 140, 116, 0.75);
     --finished-pastel-color: rgba(68, 140, 116, 0.5);
     --font-color: #262626;
     --lightgrey-color: rgba(26, 26, 26, 0.4);

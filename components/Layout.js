@@ -15,7 +15,7 @@ export function Layout({ children, onToggle, listView, pathName }) {
 }
 
 const Wrapper = styled.div`
-  padding: 0 1rem;
+  /* padding: 0 1rem; */
   display: grid;
   grid-template-rows: 90px auto 36px;
   height: 100vh;
@@ -25,6 +25,7 @@ const Wrapper = styled.div`
 const StyledMain = styled.main`
   overflow-y: scroll;
   margin: 0 auto;
+  padding: 0 1rem;
 
   ::-webkit-scrollbar {
     width: 0;
@@ -35,6 +36,7 @@ const Footer = styled.footer`
   display: flex;
   align-items: center;
   justify-content: flex-end;
+  padding: 0 1rem;
 `;
 
 const Copyright = styled.p`

@@ -37,7 +37,11 @@ export default function HomePage({ listView, onPosition, clickPosition }) {
             .map((item) => (
               <li key={item.itemId}>
                 <ItemLink href={`/items/${item.itemId}`}>
-                  <Item title={item.title} initialStatus={item.initiallyLost} />
+                  <Item
+                    title={item.title}
+                    initialStatus={item.initiallyLost}
+                    isFound={item.inDiscuss}
+                  />
                 </ItemLink>
               </li>
             ))}
@@ -53,7 +57,7 @@ const StyledList = styled.ul`
   flex-direction: column;
   row-gap: 1.5rem;
   margin: 0;
-  padding: 1.8rem 0 1rem;
+  padding: 1.8rem 1rem 1rem;
   word-break: break-word;
 `;
 

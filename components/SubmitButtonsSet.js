@@ -43,6 +43,7 @@ export default function SubmitButtonsSet({
 const SubmitButtonsWrapper = styled.div`
   padding-top: 3rem;
   display: flex;
+  column-gap: 1rem;
   justify-content: space-between;
   align-items: center;
 
@@ -69,10 +70,19 @@ const StyledSubmitButton = styled.button`
   font-family: var(--inter-font);
   font-size: 1.2rem;
   font-weight: 500;
+  background-color: var(--disabled-color);
+  box-shadow: 5px 5px 15px 0px var(--more-lightgrey-color);
+  transition: opacity 0.2s ease-in;
+
+  :active {
+    box-shadow: none;
+  }
+
   :hover {
     cursor: pointer;
+    opacity: 0.9;
+    transition: opacity 0.2s ease-in;
   }
-  background-color: var(--disabled-color);
 
   ${({ variant, ismutating }) =>
     variant === "details" &&
@@ -100,8 +110,17 @@ export const StyledLinkButton = styled(Link)`
   text-align: center;
   color: var(--font-color);
   font-weight: 500;
+  box-shadow: 5px 5px 15px 0px var(--more-lightgrey-color);
+  transition: opacity 0.2s ease-in;
+
   :hover {
     cursor: pointer;
+    opacity: 0.9;
+    transition: opacity 0.2s ease-in;
+  }
+
+  :active {
+    box-shadow: none;
   }
 
   ${({ variant }) =>

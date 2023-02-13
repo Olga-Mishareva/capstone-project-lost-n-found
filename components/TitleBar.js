@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import Link from "next/link";
 import { useSession, signIn, signOut } from "next-auth/react";
 
@@ -10,7 +10,12 @@ export function TitleBar({ onToggle, listView, pathName }) {
   return (
     <StyledHeader listView={listView} pathName={pathName}>
       {pathName === "/" ? (
-        <ViewToggleButton type="button" listView={listView} onClick={onToggle}>
+        <TitleBarButton
+          type="button"
+          variant="view"
+          listView={listView}
+          onClick={onToggle}
+        >
           {listView ? (
             <SVGIcon
               variant="map"
@@ -28,7 +33,7 @@ export function TitleBar({ onToggle, listView, pathName }) {
               color="var(--lightgrey-color)"
             />
           )}
-        </ViewToggleButton>
+        </TitleBarButton>
       ) : (
         <></>
       )}
@@ -37,8 +42,9 @@ export function TitleBar({ onToggle, listView, pathName }) {
         <LostSpan>Lost</LostSpan>-n-<FoundSpan>Found</FoundSpan>
       </Headline>
 
-      <AuthToggleButton
+      <TitleBarButton
         type="button"
+        variant="auth"
         session={session}
         onClick={() => {
           session ? signOut() : signIn();
@@ -61,7 +67,7 @@ export function TitleBar({ onToggle, listView, pathName }) {
             color="var(--lightgrey-color)"
           />
         )}
-      </AuthToggleButton>
+      </TitleBarButton>
     </StyledHeader>
   );
 }
@@ -72,28 +78,44 @@ const StyledHeader = styled.header`
   justify-content: center;
   align-items: center;
   padding: 0.7em 0;
+  margin: 0 1rem;
+
   border-bottom: ${({ listView, pathName }) =>
     pathName !== "/" || listView ? "3px solid var(--lightgrey-color)" : "none"};
 `;
 
-const ViewToggleButton = styled.button`
+const TitleBarButton = styled.button`
   position: absolute;
   top: 22px;
-  left: 0;
   width: 48px;
   height: 48px;
   margin: 0;
-  padding: ${({ listView }) => (!listView ? "0.25rem 0.2rem 0 0" : "0")};
-  border: 3px solid var(--lightgrey-color);
+  border: 3px solid rgba(26, 26, 26, 0.6);
   border-radius: 0.7em;
-  background-color: #ffffff;
+  background-color: transparent;
   cursor: pointer;
+  box-shadow: 5px 5px 10px 0px var(--disabled-color);
+
+  ${({ variant }) =>
+    variant === "view" &&
+    css`
+      left: 0;
+      padding: ${({ listView }) => (!listView ? "0.25rem 0.2rem 0 0" : "0")};
+    `};
+
+  ${({ variant }) =>
+    variant === "auth" &&
+    css`
+      right: 0;
+      padding: ${({ session }) =>
+        !session ? "0.15rem 0 0 .1rem" : "0.2rem 0 0"};
+    `};
 `;
 
 const Headline = styled(Link)`
   text-decoration: none;
   margin: 0;
-  font-size: 2rem;
+  font-size: 1.9rem;
   font-weight: 600;
   line-height: 2.2rem;
   color: var(--font-color);
@@ -106,17 +128,4 @@ const LostSpan = styled.span`
 
 const FoundSpan = styled.span`
   color: var(--found-color);
-`;
-
-const AuthToggleButton = styled.button`
-  position: absolute;
-  top: 22px;
-  right: 0;
-  width: 48px;
-  height: 48px;
-  border: 3px solid var(--lightgrey-color);
-  border-radius: 0.7em;
-  background-color: #ffffff;
-  padding: ${({ session }) => (!session ? "0.15rem 0 0 .1rem" : "0.2rem 0 0")};
-  cursor: pointer;
 `;

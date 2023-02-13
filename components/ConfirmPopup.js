@@ -28,6 +28,7 @@ export default function ConfirmPopup({
                   onClose();
                 }
               : () => {
+                  // router.push("/");
                   onClose();
                   signIn();
                 }
@@ -40,9 +41,7 @@ export default function ConfirmPopup({
           variant="close"
           onClick={
             session
-              ? () => {
-                  onClose();
-                }
+              ? onClose
               : () => {
                   onClose();
                   router.push("/");
@@ -97,11 +96,24 @@ const ButtonsWrapper = styled.div`
 
 const Button = styled.button`
   border: none;
-  border-radius: 0.8rem;
+  color: var(--font-color);
+  border-radius: 0.5rem;
   min-width: 7rem;
   min-height: 2.5rem;
   font-weight: 500;
   font-family: var(--inter-font);
+  box-shadow: 5px 5px 15px 0px var(--more-lightgrey-color);
+  transition: opacity 0.2s ease-in;
+
+  :hover {
+    cursor: pointer;
+    opacity: 0.9;
+    transition: opacity 0.2s ease-in;
+  }
+
+  :active {
+    box-shadow: none;
+  }
 
   ${({ variant }) =>
     variant === "confirm" &&

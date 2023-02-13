@@ -35,14 +35,14 @@ export default function ItemDetails({
             {isFound ? "Waiting for pick-up" : initialStatus ? "Lost" : "Found"}
           </Category>
 
-          <StyledLink href="/">
+          <StyledCancelLink href="/">
             <SVGIcon
               variant="close"
               width="48px"
               label="close"
               color="var(--font-color)"
             />
-          </StyledLink>
+          </StyledCancelLink>
         </Container>
         <UserName>
           <Span>by</Span> {userName}
@@ -114,7 +114,7 @@ const Category = styled.p`
       : "var(--found-color)"};
 `;
 
-const StyledLink = styled(Link)`
+const StyledCancelLink = styled(Link)`
   :hover {
     cursor: pointer;
   }
@@ -150,8 +150,19 @@ const StyledFoundButton = styled.button`
   padding: 1em;
   border: none;
   border-radius: 1em;
-  cursor: pointer;
   background-color: ${({ isFound }) =>
-    isFound ? "var(--finished-color)" : "var(--finished-pastel-color)"};
+    isFound ? "var(--finished-color)" : "var(--middle-finished-color)"};
   color: ${({ isFound }) => (isFound ? "#FFFFFF" : "var(--font-color)")};
+  box-shadow: 5px 5px 15px 0px var(--more-lightgrey-color);
+  transition: opacity 0.2s ease-in;
+
+  :hover {
+    cursor: pointer;
+    opacity: 0.9;
+    transition: opacity 0.2s ease-in;
+  }
+
+  :active {
+    box-shadow: none;
+  }
 `;
