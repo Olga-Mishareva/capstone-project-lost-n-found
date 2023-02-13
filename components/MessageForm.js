@@ -7,12 +7,20 @@ export default function MessageForm({
   isMutating,
   onStopDiscuss,
   inDiscuss,
+  onSubmitMessage,
 }) {
+  function handleSubmit(event) {
+    event.preventDefault();
+    const data = Object.fromEntries(new FormData(event.target));
+
+    onSubmitMessage(data);
+  }
+
   return (
-    <Form>
+    <Form onSubmit={handleSubmit}>
       <Label htmlFor="message">Leave a message:</Label>
       <Textarea
-        name="message"
+        name="text"
         id="message"
         rows="3"
         minLength="3"

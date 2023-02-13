@@ -1,9 +1,16 @@
-import { getItem, updateItem, editItem, deleteItem } from "@/helpers/db";
+import {
+  getItem,
+  updateItem,
+  editItem,
+  deleteItem,
+  createMessage,
+} from "@/helpers/db";
 import { getToken } from "next-auth/jwt";
 
 export default async function handler(request, response) {
   const token = await getToken({ req: request });
   const userId = token?.sub;
+  const userName = token?.name;
 
   switch (request.method) {
     case "GET": {
@@ -18,23 +25,47 @@ export default async function handler(request, response) {
       break;
     }
 
+    // case "PUT": {
+    //   if (token) {
+    //     const item = JSON.parse(request.body);
+
+    //     const updatedItem = await updateItem(request.query.id, item);
+    //     if (!updatedItem) {
+    //       response.status(404).json({
+    //         message: `Item ${request.query.id} was not found.`,
+    //       });
+    //       return;
+    //     }
+    //     response.status(200).json(updatedItem);
+    //     break;
+    //   }
+    //   response.status(401).json({
+    //     message: "Unauthorized: authentication is required.",
+    //   });
+    // }
+
     case "PUT": {
       if (token) {
-        const item = JSON.parse(request.body);
-        if (userId !== item.userId) {
-          const updatedItem = await updateItem(request.query.id, item);
-          if (!updatedItem) {
-            response.status(404).json({
-              message: `Item ${request.query.id} was not found.`,
-            });
-            return;
-          }
-          response.status(200).json(updatedItem);
-          break;
+        const message = JSON.parse(request.body);
+
+        const newMessage = await createMessage(message);
+
+        const updatedItem = await updateItem(
+          request.query.id,
+          userId,
+          newMessage
+        );
+
+        console.log(updatedItem); // get object without text!!
+
+        if (!updatedItem) {
+          response.status(404).json({
+            message: `Item ${request.query.id} was not found.`,
+          });
+          return;
         }
-        response.status(403).json({
-          message: `Forbidden error: user with id ${userId} has no right for this action.`,
-        });
+        response.status(200).json(updatedItem);
+        break;
       }
       response.status(401).json({
         message: "Unauthorized: authentication is required.",

@@ -1,6 +1,7 @@
 import useSWR from "swr";
 import { useRouter } from "next/router";
 import useSWRMutation from "swr/mutation";
+import { useSession } from "next-auth/react";
 
 import ItemDetails from "@/components/ItemDetails";
 
@@ -16,6 +17,7 @@ async function fetcher(url, { arg }) {
 }
 
 export default function DetailsPage({ showPopup, onShowPopup, onClosePopup }) {
+  const { data: session } = useSession();
   const router = useRouter();
   const { id } = router.query;
 
@@ -27,10 +29,26 @@ export default function DetailsPage({ showPopup, onShowPopup, onClosePopup }) {
     error: fetchError,
   } = useSWRMutation(`/api/items/${id}`, fetcher);
 
-  async function handleStatus() {
-    const updatedItem = { ...item, inDiscuss: !item.inDiscuss };
+  // async function handleStatus() {
+  //   const updatedItem = { ...item, inDiscuss: !item.inDiscuss };
+  //   try {
+  //     await trigger({ method: "PUT", body: updatedItem });
+  //     mutate();
+  //   } catch (error) {
+  //     throw new Error(error.message);
+  //   }
+  // }
+
+  async function handleMessages(data) {
+    console.log(data);
+    const newMessage = {
+      text: data.text,
+      userName: session.user.name,
+      userId: item._id,
+    };
+    console.log(newMessage);
     try {
-      await trigger({ method: "PUT", body: updatedItem });
+      await trigger({ method: "PUT", body: newMessage });
       mutate();
     } catch (error) {
       throw new Error(error.message);
@@ -62,8 +80,10 @@ export default function DetailsPage({ showPopup, onShowPopup, onClosePopup }) {
       description={item.description}
       initialStatus={item.initiallyLost}
       isFound={item.inDiscuss}
+      messages={item.messages}
       userName={item.userName}
-      onHandleStatus={handleStatus}
+      // onHandleStatus={handleStatus}
+      onHandleMessages={handleMessages}
       onDelete={handleDelete}
       isMutating={isMutating}
       showPopup={showPopup}

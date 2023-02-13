@@ -3,18 +3,22 @@ import styled from "styled-components";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useSession } from "next-auth/react";
+import { useState } from "react";
 
 import SVGIcon from "@/components/SVGIcon";
 import SubmitButtonsSet from "@/components/SubmitButtonsSet";
 import Overlay from "@/components/Overlay";
+import MessageForm from "@/components/MessageForm";
+import Message from "@/components/Message";
 
 export default function ItemDetails({
   title,
   description,
   initialStatus,
   isFound,
+  messages,
   userName,
-  onHandleStatus,
+  onHandleMessages,
   onDelete,
   isMutating,
   showPopup,
@@ -26,6 +30,16 @@ export default function ItemDetails({
 
   const router = useRouter();
   const { id } = router.query;
+
+  const [inDiscuss, setInDiscuss] = useState(false);
+
+  function handleStartDiscuss() {
+    setInDiscuss(true);
+  }
+
+  function handleStopDiscuss() {
+    setInDiscuss(false);
+  }
 
   return (
     <>
@@ -49,11 +63,12 @@ export default function ItemDetails({
         </UserName>
         <ItemTitle>{title}</ItemTitle>
         <ItemDescription>{description}</ItemDescription>
+
         {session?.user.name === userName ? (
           <></>
-        ) : (
+        ) : !inDiscuss ? (
           <StyledFoundButton
-            onClick={session ? onHandleStatus : onShowPopup}
+            onClick={session ? handleStartDiscuss : onShowPopup}
             type="button"
             isFound={isFound}
             session={session}
@@ -65,12 +80,19 @@ export default function ItemDetails({
               ? "I found it"
               : "That's mine"}
           </StyledFoundButton>
+        ) : (
+          <MessageForm
+            id={id}
+            isMutating={isMutating}
+            inDiscuss={inDiscuss}
+            onStopDiscuss={handleStopDiscuss}
+            onSubmitMessage={onHandleMessages}
+          />
         )}
         {session?.user.name == userName ? (
           <SubmitButtonsSet
             variant="details"
             type="button"
-            pagetype="details-page"
             link={`/items/${id}/edit`}
             ariaLabel="edit"
             buttonName="Delete"
@@ -82,6 +104,13 @@ export default function ItemDetails({
         ) : (
           <></>
         )}
+        <StyledList>
+          {messages.map((message) => (
+            <li key={crypto.randomUUID()}>
+              <Message text={message.text} author={message.userName} />
+            </li>
+          ))}
+        </StyledList>
       </DetailsWrapper>
       {showPopup && <Overlay onConfirm={onDelete} onClose={onClosePopup} />}
     </>
@@ -165,4 +194,8 @@ const StyledFoundButton = styled.button`
   :active {
     box-shadow: none;
   }
+`;
+
+const StyledList = styled.ul`
+  list-style: none;
 `;

@@ -12,10 +12,17 @@ const ItemSchema = new Schema({
   latitude: String,
   inDiscuss: Boolean,
   isFinished: Boolean,
-  messages: [{ userName: String, userId: String, message: String }],
+  messages: [{ type: Schema.Types.ObjectId, ref: "Message" }],
+});
+
+const MessageSchema = new Schema({
+  userId: { type: String, ref: "Item" },
+  userName: String,
+  text: String,
 });
 
 const Item = models.Item || model("Item", ItemSchema);
+const Message = models.Message || model("Message", MessageSchema);
 
 async function connectDatabase() {
   await mongoose.connect(process.env.MONGODB_URI);
@@ -24,23 +31,43 @@ async function connectDatabase() {
 async function getAllItems() {
   await connectDatabase();
 
-  const items = await Item.find({});
+  const items = await Item.find({}).populate({
+    path: "messages",
+    model: "Item",
+  });
   return items;
 }
 
 async function getItem(id) {
   await connectDatabase();
 
-  const item = await Item.findOne({ itemId: id });
+  const item = await Item.findOne({ itemId: id }).populate({
+    path: "messages",
+    model: "Item",
+  });
   return item;
 }
 
-async function updateItem(id, item) {
+async function updateItem(id, userId, message) {
+  console.log(message); // get object with text
+
   await connectDatabase();
 
-  const updatedItem = await Item.findOneAndUpdate({ itemId: id }, item, {
-    new: true,
-  });
+  const updatedItem = await Item.findOneAndUpdate(
+    { itemId: id },
+    {
+      $push: {
+        messages: {
+          userId: userId,
+          text: message.text, // don't added to message object!
+          userName: message.userName,
+        },
+      },
+    },
+    {
+      new: true,
+    }
+  );
   return updatedItem;
 }
 
@@ -49,6 +76,13 @@ async function createItem(item) {
 
   const newItem = await Item.create(item);
   return newItem;
+}
+
+async function createMessage(message) {
+  await connectDatabase();
+
+  const newMessage = await Message.create(message);
+  return newMessage;
 }
 
 async function editItem(id, item) {
@@ -67,4 +101,12 @@ async function deleteItem(id) {
   return deletedItem;
 }
 
-export { getAllItems, getItem, updateItem, createItem, editItem, deleteItem };
+export {
+  getAllItems,
+  getItem,
+  updateItem,
+  createItem,
+  editItem,
+  deleteItem,
+  createMessage,
+};
