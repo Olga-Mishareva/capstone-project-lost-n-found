@@ -18,6 +18,7 @@ export default createGlobalStyle`
     --middle-finished-color: rgba(68, 140, 116, 0.75);
     --finished-pastel-color: rgba(68, 140, 116, 0.5);
     --font-color: #262626;
+    --grey-color: rgba(26, 26, 26, 0.6);
     --lightgrey-color: rgba(26, 26, 26, 0.4);
     --more-lightgrey-color: rgba(26, 26, 26, 0.3);
     --overlay-color: rgba(26, 26, 26, 0.7);

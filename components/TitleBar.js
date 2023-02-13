@@ -79,7 +79,6 @@ const StyledHeader = styled.header`
   align-items: center;
   padding: 0.7em 0;
   margin: 0 1rem;
-
   border-bottom: ${({ listView, pathName }) =>
     pathName !== "/" || listView ? "3px solid var(--lightgrey-color)" : "none"};
 `;
@@ -90,7 +89,7 @@ const TitleBarButton = styled.button`
   width: 48px;
   height: 48px;
   margin: 0;
-  border: 3px solid rgba(26, 26, 26, 0.6);
+  border: 3px solid var(--grey-color);
   border-radius: 0.7em;
   background-color: transparent;
   cursor: pointer;
@@ -118,7 +117,7 @@ const Headline = styled(Link)`
   font-size: 1.9rem;
   font-weight: 600;
   line-height: 2.2rem;
-  color: var(--font-color);
+  color: var(--grey-color);
   text-align: center;
 `;
 
