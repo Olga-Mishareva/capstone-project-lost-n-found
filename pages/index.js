@@ -10,10 +10,10 @@ const Map = dynamic(() => import("@/components/Map/Map"), { ssr: false });
 
 export default function HomePage({ listView, onPosition, clickPosition }) {
   const { data: session } = useSession();
-  const { data: items, isLoading, error } = useSWR("/api/items");
+  const { data: items, isLoading, mutate, error } = useSWR("/api/items");
 
   if (error) {
-    return <h2>{JSON.stringify(error)}</h2>;
+    return <h2>Something went wrong.</h2>;
   }
 
   if (isLoading) {
@@ -32,7 +32,7 @@ export default function HomePage({ listView, onPosition, clickPosition }) {
       ) : (
         <StyledList>
           {items
-            .slice() // temporary reverse function!
+            .slice()
             .reverse()
             .map((item) => (
               <li key={item.itemId}>

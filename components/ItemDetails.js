@@ -1,20 +1,24 @@
 import { useRouter } from "next/router";
+import useSWR from "swr";
 import styled from "styled-components";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useSession } from "next-auth/react";
+import { useEffect, useState } from "react";
 
 import SVGIcon from "@/components/SVGIcon";
 import SubmitButtonsSet from "@/components/SubmitButtonsSet";
 import Overlay from "@/components/Overlay";
+import MessageForm from "@/components/MessageForm";
+import Message from "@/components/Message";
 
 export default function ItemDetails({
   title,
   description,
   initialStatus,
-  isFound,
+  inDiscuss,
   userName,
-  onHandleStatus,
+  onHandleMessages,
   onDelete,
   isMutating,
   showPopup,
@@ -27,12 +31,37 @@ export default function ItemDetails({
   const router = useRouter();
   const { id } = router.query;
 
+  const [isMessageFormOpen, setIsMessageFormOpen] = useState(false);
+
+  const {
+    data: messages,
+    isLoading,
+    mutate,
+    error,
+  } = useSWR(session ? `/api/items/${id}/messages` : null);
+
+  useEffect(() => {
+    mutate();
+  }, [isMutating]);
+
+  function openMessageForm() {
+    setIsMessageFormOpen(true);
+  }
+
+  function closeMessageForm() {
+    setIsMessageFormOpen(false);
+  }
+
   return (
     <>
       <DetailsWrapper>
         <Container>
-          <Category initialStatus={initialStatus} isFound={isFound}>
-            {isFound ? "Waiting for pick-up" : initialStatus ? "Lost" : "Found"}
+          <Category initialStatus={initialStatus} inDiscuss={inDiscuss}>
+            {inDiscuss
+              ? "Waiting for pick-up"
+              : initialStatus
+              ? "Lost"
+              : "Found"}
           </Category>
 
           <StyledCancelLink href="/">
@@ -49,28 +78,31 @@ export default function ItemDetails({
         </UserName>
         <ItemTitle>{title}</ItemTitle>
         <ItemDescription>{description}</ItemDescription>
+
         {session?.user.name === userName ? (
           <></>
-        ) : (
-          <StyledFoundButton
-            onClick={session ? onHandleStatus : onShowPopup}
+        ) : !isMessageFormOpen ? (
+          <MessageButton
+            onClick={session ? openMessageForm : onShowPopup}
             type="button"
-            isFound={isFound}
             session={session}
             disabled={isMutating}
           >
-            {isFound
-              ? "Found its owner"
-              : initialStatus
-              ? "I found it"
-              : "That's mine"}
-          </StyledFoundButton>
+            Leave a message
+          </MessageButton>
+        ) : (
+          <MessageForm
+            id={id}
+            isMutating={isMutating}
+            isMessageFormOpen={isMessageFormOpen}
+            onCloseForm={closeMessageForm}
+            onSubmitMessage={onHandleMessages}
+          />
         )}
         {session?.user.name == userName ? (
           <SubmitButtonsSet
             variant="details"
             type="button"
-            pagetype="details-page"
             link={`/items/${id}/edit`}
             ariaLabel="edit"
             buttonName="Delete"
@@ -80,8 +112,30 @@ export default function ItemDetails({
             onOpen={onShowPopup}
           />
         ) : (
-          <></>
+          <>
+            {!session && inDiscuss ? (
+              <StyledText>Log in to see the messages.</StyledText>
+            ) : (
+              <></>
+            )}
+          </>
         )}
+        <MessagesList>
+          {isLoading ? (
+            <p>Loading...</p>
+          ) : error ? (
+            <p>Something went wrong.</p>
+          ) : (
+            messages
+              ?.slice()
+              .reverse()
+              .map((message) => (
+                <li key={crypto.randomUUID()}>
+                  <Message text={message.text} author={message.userName} />
+                </li>
+              ))
+          )}
+        </MessagesList>
       </DetailsWrapper>
       {showPopup && <Overlay onConfirm={onDelete} onClose={onClosePopup} />}
     </>
@@ -106,8 +160,8 @@ const Category = styled.p`
   margin: 0;
   font-size: 1.2rem;
   font-weight: 700;
-  color: ${({ isFound, initialStatus }) =>
-    isFound
+  color: ${({ initialStatus, inDiscuss }) =>
+    inDiscuss
       ? "var(--finished-color)"
       : initialStatus
       ? "var(--lost-color)"
@@ -144,16 +198,15 @@ const ItemDescription = styled.p`
   word-break: break-word;
 `;
 
-const StyledFoundButton = styled.button`
+const MessageButton = styled.button`
   min-width: 100%;
-  margin-top: 5em;
+  margin-top: 2em;
   padding: 1em;
   border: none;
   border-radius: 1em;
-  background-color: ${({ isFound }) =>
-    isFound ? "var(--finished-color)" : "var(--middle-finished-color)"};
-  color: ${({ isFound }) => (isFound ? "#FFFFFF" : "var(--font-color)")};
-  box-shadow: 5px 5px 15px 0px var(--more-lightgrey-color);
+  background-color: var(--middle-finished-color);
+  color: var(--font-color);
+  box-shadow: 5px 5px 10px 2px var(--more-lightgrey-color);
   transition: opacity 0.2s ease-in;
 
   :hover {
@@ -165,4 +218,17 @@ const StyledFoundButton = styled.button`
   :active {
     box-shadow: none;
   }
+`;
+
+const StyledText = styled.p`
+  margin: 0 auto;
+  text-align: center;
+  padding-top: 2.5rem;
+  color: var(--grey-color);
+`;
+
+const MessagesList = styled.ul`
+  list-style: none;
+  margin: 0;
+  padding: 1rem 0 1rem;
 `;

@@ -4,7 +4,6 @@ import { useSession } from "next-auth/react";
 
 export default function SubmitButtonsSet({
   type,
-  pagetype,
   link,
   ariaLabel,
   buttonName,
@@ -12,6 +11,8 @@ export default function SubmitButtonsSet({
   onOpen,
   variant,
   isMutating,
+  onCloseForm,
+  isMessageFormOpen,
 }) {
   const { data: session } = useSession();
 
@@ -21,7 +22,6 @@ export default function SubmitButtonsSet({
         variant={variant}
         type={type}
         onClick={onOpen}
-        pagetype={pagetype}
         disabled={isMutating}
       >
         {buttonName}
@@ -30,9 +30,8 @@ export default function SubmitButtonsSet({
         variant={variant}
         href={session ? link : "/"}
         aria-label={ariaLabel}
-        pagetype={pagetype}
         ismutating={isMutating ? "true" : ""}
-        onClick={!session ? onOpen : () => {}}
+        onClick={!session ? onOpen : isMessageFormOpen ? onCloseForm : () => {}}
       >
         {linkName}
       </StyledLinkButton>

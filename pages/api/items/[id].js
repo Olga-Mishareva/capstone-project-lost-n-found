@@ -1,4 +1,10 @@
-import { getItem, updateItem, editItem, deleteItem } from "@/helpers/db";
+import {
+  getItem,
+  updateItem,
+  editItem,
+  deleteItem,
+  createMessage,
+} from "@/helpers/db";
 import { getToken } from "next-auth/jwt";
 
 export default async function handler(request, response) {
@@ -20,9 +26,22 @@ export default async function handler(request, response) {
 
     case "PUT": {
       if (token) {
-        const item = JSON.parse(request.body);
-        if (userId !== item.userId) {
-          const updatedItem = await updateItem(request.query.id, item);
+        const data = JSON.parse(request.body);
+
+        if (data.text) {
+          const newMessage = await createMessage(data);
+          const updatedItem = await updateItem(request.query.id, newMessage);
+          if (!updatedItem) {
+            response.status(404).json({
+              message: `Item ${request.query.id} was not found.`,
+            });
+            return;
+          }
+          response.status(200).json(updatedItem);
+          break;
+        } else {
+          const updatedItem = await updateItem(request.query.id, data);
+
           if (!updatedItem) {
             response.status(404).json({
               message: `Item ${request.query.id} was not found.`,
@@ -32,9 +51,6 @@ export default async function handler(request, response) {
           response.status(200).json(updatedItem);
           break;
         }
-        response.status(403).json({
-          message: `Forbidden error: user with id ${userId} has no right for this action.`,
-        });
       }
       response.status(401).json({
         message: "Unauthorized: authentication is required.",

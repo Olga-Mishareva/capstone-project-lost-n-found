@@ -65,7 +65,6 @@ export default function ItemForm({
       <SubmitButtonsSet
         variant="form"
         type="submit"
-        pagetype="add-form"
         link={id ? `/items/${id}` : "/"}
         ariaLabel="cancel"
         buttonName="Submit"

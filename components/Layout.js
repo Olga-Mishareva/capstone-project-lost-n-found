@@ -15,7 +15,6 @@ export function Layout({ children, onToggle, listView, pathName }) {
 }
 
 const Wrapper = styled.div`
-  /* padding: 0 1rem; */
   display: grid;
   grid-template-rows: 90px auto 36px;
   height: 100vh;

@@ -50,7 +50,6 @@ export default function CreatePage({
       latitude: latlng.lat,
       inDiscuss: false,
       isFinished: false,
-      messages: [],
     };
     try {
       await triggerPost({ method: "POST", body: newItem });
