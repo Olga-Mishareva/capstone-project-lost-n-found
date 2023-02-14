@@ -112,9 +112,15 @@ export default function ItemDetails({
             onOpen={onShowPopup}
           />
         ) : (
-          <></>
+          <>
+            {!session && inDiscuss ? (
+              <StyledText>Log in to see the messages.</StyledText>
+            ) : (
+              <></>
+            )}
+          </>
         )}
-        <StyledList>
+        <MessagesList>
           {isLoading ? (
             <p>Loading...</p>
           ) : error ? (
@@ -129,7 +135,7 @@ export default function ItemDetails({
                 </li>
               ))
           )}
-        </StyledList>
+        </MessagesList>
       </DetailsWrapper>
       {showPopup && <Overlay onConfirm={onDelete} onClose={onClosePopup} />}
     </>
@@ -214,7 +220,14 @@ const MessageButton = styled.button`
   }
 `;
 
-const StyledList = styled.ul`
+const StyledText = styled.p`
+  margin: 0 auto;
+  text-align: center;
+  padding-top: 2.5rem;
+  color: var(--grey-color);
+`;
+
+const MessagesList = styled.ul`
   list-style: none;
   margin: 0;
   padding: 1rem 0 1rem;
