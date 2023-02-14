@@ -25,34 +25,12 @@ export default async function handler(request, response) {
       break;
     }
 
-    // case "PUT": {
-    //   if (token) {
-    //     const item = JSON.parse(request.body);
-
-    //     const updatedItem = await updateItem(request.query.id, item);
-    //     if (!updatedItem) {
-    //       response.status(404).json({
-    //         message: `Item ${request.query.id} was not found.`,
-    //       });
-    //       return;
-    //     }
-    //     response.status(200).json(updatedItem);
-    //     break;
-    //   }
-    //   response.status(401).json({
-    //     message: "Unauthorized: authentication is required.",
-    //   });
-    // }
-
     case "PUT": {
       if (token) {
         const message = JSON.parse(request.body);
 
         const newMessage = await createMessage(message);
-
         const updatedItem = await updateItem(request.query.id, newMessage);
-
-        console.log(updatedItem);
 
         if (!updatedItem) {
           response.status(404).json({

@@ -19,8 +19,6 @@ export default function Map({ items, onPosition }) {
       <Click onPosition={onPosition} />
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        // url="https://api.maptiler.com/maps/bright-v2/{z}/{x}/{y}.png?key=LNcdyb0REf1mYIYz1asv"
-        // url="https://api.maptiler.com/maps/topo-v2/{z}/{x}/{y}.png?key=LNcdyb0REf1mYIYz1asv"
         url="https://api.maptiler.com/maps/streets-v2/{z}/{x}/{y}.png?key=LNcdyb0REf1mYIYz1asv"
       />
 
@@ -30,7 +28,7 @@ export default function Map({ items, onPosition }) {
             key={item.itemId}
             position={[parseFloat(item.latitude), parseFloat(item.longitude)]}
             icon={
-              item.inDiscuss
+              item.messages[0]
                 ? finishedIcon
                 : item.initiallyLost
                 ? lostIcon

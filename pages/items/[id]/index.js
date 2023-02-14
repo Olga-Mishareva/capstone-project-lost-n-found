@@ -23,29 +23,20 @@ export default function DetailsPage({ showPopup, onShowPopup, onClosePopup }) {
 
   const { data: item, mutate, isLoading, error } = useSWR(`/api/items/${id}`);
 
+  console.log(item);
+
   const {
     trigger,
     isMutating,
     error: fetchError,
   } = useSWRMutation(`/api/items/${id}`, fetcher);
 
-  // async function handleStatus() {
-  //   const updatedItem = { ...item, inDiscuss: !item.inDiscuss };
-  //   try {
-  //     await trigger({ method: "PUT", body: updatedItem });
-  //     mutate();
-  //   } catch (error) {
-  //     throw new Error(error.message);
-  //   }
-  // }
-
   async function handleMessages(data) {
-    // console.log(data);
     const newMessage = {
       text: data.text,
       userName: session.user.name,
+      item: item._id,
     };
-    // console.log(newMessage);
     try {
       await trigger({ method: "PUT", body: newMessage });
       mutate();
@@ -78,10 +69,8 @@ export default function DetailsPage({ showPopup, onShowPopup, onClosePopup }) {
       title={item.title}
       description={item.description}
       initialStatus={item.initiallyLost}
-      isFound={item.inDiscuss}
       messages={item.messages}
       userName={item.userName}
-      // onHandleStatus={handleStatus}
       onHandleMessages={handleMessages}
       onDelete={handleDelete}
       isMutating={isMutating}
