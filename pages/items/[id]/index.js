@@ -26,8 +26,6 @@ export default function DetailsPage({ showPopup, onShowPopup, onClosePopup }) {
 
   const { data: item, mutate, isLoading, error } = useSWR(`/api/items/${id}`);
 
-  console.log(item);
-
   const {
     trigger,
     isMutating,
