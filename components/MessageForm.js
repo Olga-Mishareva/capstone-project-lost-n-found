@@ -5,16 +5,17 @@ import SubmitButtonsSet from "@/components/SubmitButtonsSet";
 export default function MessageForm({
   id,
   isMutating,
-  onStopDiscuss,
-  inDiscuss,
+  onCloseForm,
+  isMessageFormOpen,
   onSubmitMessage,
 }) {
   function handleSubmit(event) {
     event.preventDefault();
     const data = Object.fromEntries(new FormData(event.target));
-
-    onSubmitMessage(data);
-    onStopDiscuss();
+    if (data.text) {
+      onSubmitMessage(data);
+    }
+    onCloseForm();
   }
 
   return (
@@ -36,8 +37,8 @@ export default function MessageForm({
         buttonName="Submit"
         linkName="Cancel"
         isMutating={isMutating}
-        onStopDiscuss={onStopDiscuss}
-        inDiscuss={inDiscuss}
+        onCloseForm={onCloseForm}
+        isMessageFormOpen={isMessageFormOpen}
       />
     </Form>
   );

@@ -16,7 +16,6 @@ export default function ItemDetails({
   title,
   description,
   initialStatus,
-  isFound,
   userName,
   onHandleMessages,
   onDelete,
@@ -31,35 +30,35 @@ export default function ItemDetails({
   const router = useRouter();
   const { id } = router.query;
 
-  const [inDiscuss, setInDiscuss] = useState(false);
+  const [isMessageFormOpen, setIsMessageFormOpen] = useState(false);
 
   const {
     data: messages,
     isLoading,
     mutate,
     error,
-  } = useSWR(`/api/items/${id}/messages`);
+  } = useSWR(session ? `/api/items/${id}/messages` : null);
 
   useEffect(() => {
     mutate();
   }, [isMutating]);
 
-  console.log(messages);
+  // console.log(messages);
 
-  function handleStartDiscuss() {
-    setInDiscuss(true);
+  function openMessageForm() {
+    setIsMessageFormOpen(true);
   }
 
-  function handleStopDiscuss() {
-    setInDiscuss(false);
+  function closeMessageForm() {
+    setIsMessageFormOpen(false);
   }
 
   return (
     <>
       <DetailsWrapper>
         <Container>
-          <Category initialStatus={initialStatus} isFound={isFound}>
-            {isFound ? "Waiting for pick-up" : initialStatus ? "Lost" : "Found"}
+          <Category initialStatus={initialStatus}>
+            {initialStatus ? "Lost" : "Found"}
           </Category>
 
           <StyledCancelLink href="/">
@@ -79,9 +78,9 @@ export default function ItemDetails({
 
         {session?.user.name === userName ? (
           <></>
-        ) : !inDiscuss ? (
+        ) : !isMessageFormOpen ? (
           <MessageButton
-            onClick={session ? handleStartDiscuss : onShowPopup}
+            onClick={session ? openMessageForm : onShowPopup}
             type="button"
             session={session}
             disabled={isMutating}
@@ -92,8 +91,8 @@ export default function ItemDetails({
           <MessageForm
             id={id}
             isMutating={isMutating}
-            inDiscuss={inDiscuss}
-            onStopDiscuss={handleStopDiscuss}
+            isMessageFormOpen={isMessageFormOpen}
+            onCloseForm={closeMessageForm}
             onSubmitMessage={onHandleMessages}
           />
         )}
@@ -118,11 +117,14 @@ export default function ItemDetails({
           ) : error ? (
             <p>Something went wrong.</p>
           ) : (
-            messages.map((message) => (
-              <li key={crypto.randomUUID()}>
-                <Message text={message.text} author={message.userName} />
-              </li>
-            ))
+            messages
+              ?.slice()
+              .reverse()
+              .map((message) => (
+                <li key={crypto.randomUUID()}>
+                  <Message text={message.text} author={message.userName} />
+                </li>
+              ))
           )}
         </StyledList>
       </DetailsWrapper>
@@ -149,12 +151,8 @@ const Category = styled.p`
   margin: 0;
   font-size: 1.2rem;
   font-weight: 700;
-  color: ${({ isFound, initialStatus }) =>
-    isFound
-      ? "var(--finished-color)"
-      : initialStatus
-      ? "var(--lost-color)"
-      : "var(--found-color)"};
+  color: ${({ initialStatus }) =>
+    initialStatus ? "var(--lost-color)" : "var(--found-color)"};
 `;
 
 const StyledCancelLink = styled(Link)`
@@ -195,7 +193,7 @@ const MessageButton = styled.button`
   border-radius: 1em;
   background-color: var(--middle-finished-color);
   color: var(--font-color);
-  box-shadow: 5px 5px 15px 0px var(--more-lightgrey-color);
+  box-shadow: 5px 5px 10px 2px var(--more-lightgrey-color);
   transition: opacity 0.2s ease-in;
 
   :hover {
@@ -211,4 +209,6 @@ const MessageButton = styled.button`
 
 const StyledList = styled.ul`
   list-style: none;
+  margin: 0;
+  padding: 1rem 0 1rem;
 `;

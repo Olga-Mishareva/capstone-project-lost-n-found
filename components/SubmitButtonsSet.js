@@ -11,8 +11,8 @@ export default function SubmitButtonsSet({
   onOpen,
   variant,
   isMutating,
-  onStopDiscuss,
-  inDiscuss,
+  onCloseForm,
+  isMessageFormOpen,
 }) {
   const { data: session } = useSession();
 
@@ -31,7 +31,7 @@ export default function SubmitButtonsSet({
         href={session ? link : "/"}
         aria-label={ariaLabel}
         ismutating={isMutating ? "true" : ""}
-        onClick={!session ? onOpen : inDiscuss ? onStopDiscuss : () => {}}
+        onClick={!session ? onOpen : isMessageFormOpen ? onCloseForm : () => {}}
       >
         {linkName}
       </StyledLinkButton>
