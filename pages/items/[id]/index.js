@@ -40,13 +40,13 @@ export default function DetailsPage({ showPopup, onShowPopup, onClosePopup }) {
   // }
 
   async function handleMessages(data) {
-    console.log(data);
+    // console.log(data);
     const newMessage = {
       text: data.text,
       userName: session.user.name,
-      userId: item._id,
+      item: item._id,
     };
-    console.log(newMessage);
+    // console.log(newMessage);
     try {
       await trigger({ method: "PUT", body: newMessage });
       mutate();
@@ -71,7 +71,7 @@ export default function DetailsPage({ showPopup, onShowPopup, onClosePopup }) {
   }
 
   if (error || fetchError) {
-    return <h2>Something goes wrong.</h2>;
+    return <h2>Something went wrong.</h2>;
   }
 
   return (

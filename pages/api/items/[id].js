@@ -50,13 +50,9 @@ export default async function handler(request, response) {
 
         const newMessage = await createMessage(message);
 
-        const updatedItem = await updateItem(
-          request.query.id,
-          userId,
-          newMessage
-        );
+        const updatedItem = await updateItem(request.query.id, newMessage);
 
-        console.log(updatedItem); // get object without text!!
+        console.log(updatedItem);
 
         if (!updatedItem) {
           response.status(404).json({

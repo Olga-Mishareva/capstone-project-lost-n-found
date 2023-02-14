@@ -14,6 +14,7 @@ export default function MessageForm({
     const data = Object.fromEntries(new FormData(event.target));
 
     onSubmitMessage(data);
+    onStopDiscuss();
   }
 
   return (

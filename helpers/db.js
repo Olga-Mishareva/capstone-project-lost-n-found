@@ -49,20 +49,27 @@ async function getItem(id) {
   return item;
 }
 
-async function updateItem(id, userId, message) {
-  console.log(message); // get object with text
+async function getMessages(id) {
+  await connectDatabase();
 
+  const item = await Item.findOne({ itemId: id });
+
+  const messages = await Message.find({ item: item._id }).populate({
+    path: "item",
+    model: "Message",
+  });
+
+  return messages;
+}
+
+async function updateItem(id, message) {
   await connectDatabase();
 
   const updatedItem = await Item.findOneAndUpdate(
     { itemId: id },
     {
       $push: {
-        messages: {
-          userId: userId,
-          text: message.text, // don't added to message object!
-          userName: message.userName,
-        },
+        messages: message._id,
       },
     },
     {
@@ -110,4 +117,5 @@ export {
   editItem,
   deleteItem,
   createMessage,
+  getMessages,
 };

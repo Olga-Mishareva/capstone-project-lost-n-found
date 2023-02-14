@@ -1,9 +1,10 @@
 import { useRouter } from "next/router";
+import useSWR from "swr";
 import styled from "styled-components";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useSession } from "next-auth/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import SVGIcon from "@/components/SVGIcon";
 import SubmitButtonsSet from "@/components/SubmitButtonsSet";
@@ -16,7 +17,6 @@ export default function ItemDetails({
   description,
   initialStatus,
   isFound,
-  messages,
   userName,
   onHandleMessages,
   onDelete,
@@ -32,6 +32,19 @@ export default function ItemDetails({
   const { id } = router.query;
 
   const [inDiscuss, setInDiscuss] = useState(false);
+
+  const {
+    data: messages,
+    isLoading,
+    mutate,
+    error,
+  } = useSWR(`/api/items/${id}/messages`);
+
+  useEffect(() => {
+    mutate();
+  }, [isMutating]);
+
+  console.log(messages);
 
   function handleStartDiscuss() {
     setInDiscuss(true);
@@ -105,11 +118,17 @@ export default function ItemDetails({
           <></>
         )}
         <StyledList>
-          {messages.map((message) => (
-            <li key={crypto.randomUUID()}>
-              <Message text={message.text} author={message.userName} />
-            </li>
-          ))}
+          {isLoading ? (
+            <p>Loading...</p>
+          ) : error ? (
+            <p>Something went wrong.</p>
+          ) : (
+            messages.map((message) => (
+              <li key={crypto.randomUUID()}>
+                <Message text={message.text} author={message.userName} />
+              </li>
+            ))
+          )}
         </StyledList>
       </DetailsWrapper>
       {showPopup && <Overlay onConfirm={onDelete} onClose={onClosePopup} />}
