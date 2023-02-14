@@ -66,21 +66,26 @@ async function getMessages(id) {
   return messages;
 }
 
-async function updateItem(id, message) {
+async function updateItem(id, data) {
   await connectDatabase();
 
-  const updatedItem = await Item.findOneAndUpdate(
-    { itemId: id },
-    {
-      $push: {
-        messages: message._id,
+  if (data.text) {
+    const updatedItem = await Item.findOneAndUpdate(
+      { itemId: id },
+      {
+        $push: {
+          messages: data._id,
+        },
       },
-    },
-    {
-      new: true,
-    }
-  );
-  return updatedItem;
+      {
+        new: true,
+      }
+    );
+    return updatedItem;
+  } else {
+    const updatedItem = Item.findOneAndUpdate({ itemId: id }, data);
+    return updatedItem;
+  }
 }
 
 async function createItem(item) {

@@ -27,19 +27,31 @@ export default async function handler(request, response) {
 
     case "PUT": {
       if (token) {
-        const message = JSON.parse(request.body);
+        const data = JSON.parse(request.body);
 
-        const newMessage = await createMessage(message);
-        const updatedItem = await updateItem(request.query.id, newMessage);
+        if (data.text) {
+          const newMessage = await createMessage(data);
+          const updatedItem = await updateItem(request.query.id, newMessage);
+          if (!updatedItem) {
+            response.status(404).json({
+              message: `Item ${request.query.id} was not found.`,
+            });
+            return;
+          }
+          response.status(200).json(updatedItem);
+          break;
+        } else {
+          const updatedItem = await updateItem(request.query.id, data);
 
-        if (!updatedItem) {
-          response.status(404).json({
-            message: `Item ${request.query.id} was not found.`,
-          });
-          return;
+          if (!updatedItem) {
+            response.status(404).json({
+              message: `Item ${request.query.id} was not found.`,
+            });
+            return;
+          }
+          response.status(200).json(updatedItem);
+          break;
         }
-        response.status(200).json(updatedItem);
-        break;
       }
       response.status(401).json({
         message: "Unauthorized: authentication is required.",

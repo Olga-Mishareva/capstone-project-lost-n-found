@@ -28,7 +28,7 @@ export default function Map({ items, onPosition }) {
             key={item.itemId}
             position={[parseFloat(item.latitude), parseFloat(item.longitude)]}
             icon={
-              item.messages[0]
+              item.inDiscuss
                 ? finishedIcon
                 : item.initiallyLost
                 ? lostIcon

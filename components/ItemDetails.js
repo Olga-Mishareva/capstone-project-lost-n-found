@@ -16,6 +16,7 @@ export default function ItemDetails({
   title,
   description,
   initialStatus,
+  inDiscuss,
   userName,
   onHandleMessages,
   onDelete,
@@ -43,8 +44,6 @@ export default function ItemDetails({
     mutate();
   }, [isMutating]);
 
-  // console.log(messages);
-
   function openMessageForm() {
     setIsMessageFormOpen(true);
   }
@@ -57,8 +56,12 @@ export default function ItemDetails({
     <>
       <DetailsWrapper>
         <Container>
-          <Category initialStatus={initialStatus}>
-            {initialStatus ? "Lost" : "Found"}
+          <Category initialStatus={initialStatus} inDiscuss={inDiscuss}>
+            {inDiscuss
+              ? "Waiting for pick-up"
+              : initialStatus
+              ? "Lost"
+              : "Found"}
           </Category>
 
           <StyledCancelLink href="/">
@@ -151,8 +154,12 @@ const Category = styled.p`
   margin: 0;
   font-size: 1.2rem;
   font-weight: 700;
-  color: ${({ initialStatus }) =>
-    initialStatus ? "var(--lost-color)" : "var(--found-color)"};
+  color: ${({ initialStatus, inDiscuss }) =>
+    inDiscuss
+      ? "var(--finished-color)"
+      : initialStatus
+      ? "var(--lost-color)"
+      : "var(--found-color)"};
 `;
 
 const StyledCancelLink = styled(Link)`
