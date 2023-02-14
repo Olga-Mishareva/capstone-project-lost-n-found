@@ -80,19 +80,14 @@ export default function ItemDetails({
         {session?.user.name === userName ? (
           <></>
         ) : !inDiscuss ? (
-          <StyledFoundButton
+          <MessageButton
             onClick={session ? handleStartDiscuss : onShowPopup}
             type="button"
-            isFound={isFound}
             session={session}
             disabled={isMutating}
           >
-            {isFound
-              ? "Found its owner"
-              : initialStatus
-              ? "I found it"
-              : "That's mine"}
-          </StyledFoundButton>
+            Leave a message
+          </MessageButton>
         ) : (
           <MessageForm
             id={id}
@@ -192,15 +187,14 @@ const ItemDescription = styled.p`
   word-break: break-word;
 `;
 
-const StyledFoundButton = styled.button`
+const MessageButton = styled.button`
   min-width: 100%;
-  margin-top: 5em;
+  margin-top: 2em;
   padding: 1em;
   border: none;
   border-radius: 1em;
-  background-color: ${({ isFound }) =>
-    isFound ? "var(--finished-color)" : "var(--middle-finished-color)"};
-  color: ${({ isFound }) => (isFound ? "#FFFFFF" : "var(--font-color)")};
+  background-color: var(--middle-finished-color);
+  color: var(--font-color);
   box-shadow: 5px 5px 15px 0px var(--more-lightgrey-color);
   transition: opacity 0.2s ease-in;
 

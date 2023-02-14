@@ -44,7 +44,6 @@ export default function DetailsPage({ showPopup, onShowPopup, onClosePopup }) {
     const newMessage = {
       text: data.text,
       userName: session.user.name,
-      item: item._id,
     };
     // console.log(newMessage);
     try {
