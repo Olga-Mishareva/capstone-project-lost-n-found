@@ -8,7 +8,6 @@ export default async function handler(request, response) {
     if (request.method === "GET") {
       const messages = await getMessages(request.query.id);
 
-      console.log(messages);
       if (!messages) {
         response.status(404).json({
           message: "Internal server error.",
