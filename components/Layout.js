@@ -25,7 +25,7 @@ const StyledMain = styled.main`
   overflow-y: scroll;
   margin: 0 auto;
   padding: 0 1rem;
-
+  scrollbar-width: none;
   ::-webkit-scrollbar {
     width: 0;
   }
