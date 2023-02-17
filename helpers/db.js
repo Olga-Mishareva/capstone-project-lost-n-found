@@ -6,17 +6,19 @@ const ItemSchema = new Schema({
   description: String,
   itemId: String,
   userName: String,
+  userEmail: String,
   userId: String,
   userRole: String,
   longitude: String,
   latitude: String,
   inDiscuss: Boolean,
   isFinished: Boolean,
-  messages: {
-    type: [{ type: Schema.Types.ObjectId }],
-    ref: "Message",
-    default: [],
-  },
+  messages: [{ type: Schema.Types.ObjectId, ref: "Message" }],
+  // messages: {
+  //   type: [{ type: Schema.Types.ObjectId }],
+  //   ref: "Message",
+  //   default: [],
+  // },
 });
 
 const MessageSchema = new Schema({

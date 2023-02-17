@@ -18,6 +18,7 @@ export default function ItemDetails({
   initialStatus,
   inDiscuss,
   userName,
+  userEmail,
   onHandleMessages,
   onDelete,
   isMutating,
@@ -81,7 +82,7 @@ export default function ItemDetails({
 
         {isMessageFormOpen ? (
           <></>
-        ) : session?.user.name === userName ? (
+        ) : session?.user.email === userEmail ? (
           <SubmitButtonsSet
             variant="details"
             type="button"
@@ -97,7 +98,7 @@ export default function ItemDetails({
           <></>
         )}
 
-        {session?.user.name === userName && !inDiscuss ? (
+        {session?.user.email === userEmail && !inDiscuss ? (
           <></>
         ) : !isMessageFormOpen ? (
           <MessageButton

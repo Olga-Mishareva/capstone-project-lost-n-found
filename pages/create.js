@@ -38,6 +38,8 @@ export default function CreatePage({
     isMutating: isCreating,
   } = useSWRMutation("/api/items", fetcher);
 
+  console.log(session.user.email);
+
   async function addItem(data, latlng) {
     const newItem = {
       ...data,
@@ -45,6 +47,7 @@ export default function CreatePage({
       itemId: crypto.randomUUID(),
       userId: "",
       userName: "",
+      userEmail: session.user.email,
       userRole: "user",
       longitude: latlng.lng,
       latitude: latlng.lat,
