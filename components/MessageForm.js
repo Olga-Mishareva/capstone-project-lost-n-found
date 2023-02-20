@@ -53,7 +53,7 @@ const Form = styled.form`
 
 const Label = styled.label`
   margin: 0;
-  padding-bottom: 0.5rem;
+  padding-bottom: 0.8rem;
   font-size: 1rem;
   font-weight: 500;
   color: var(--grey-color);

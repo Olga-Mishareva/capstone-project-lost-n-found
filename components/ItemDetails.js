@@ -18,6 +18,7 @@ export default function ItemDetails({
   initialStatus,
   inDiscuss,
   userName,
+  userEmail,
   onHandleMessages,
   onDelete,
   isMutating,
@@ -79,7 +80,25 @@ export default function ItemDetails({
         <ItemTitle>{title}</ItemTitle>
         <ItemDescription>{description}</ItemDescription>
 
-        {session?.user.name === userName ? (
+        {isMessageFormOpen ? (
+          <></>
+        ) : session?.user.email === userEmail ? (
+          <SubmitButtonsSet
+            variant="details"
+            type="button"
+            link={`/items/${id}/edit`}
+            ariaLabel="edit"
+            buttonName="Delete"
+            linkName="Edit"
+            isMutating={isMutating}
+            pathName={pathName}
+            onOpen={onShowPopup}
+          />
+        ) : (
+          <></>
+        )}
+
+        {session?.user.email === userEmail && !inDiscuss ? (
           <></>
         ) : !isMessageFormOpen ? (
           <MessageButton
@@ -99,27 +118,13 @@ export default function ItemDetails({
             onSubmitMessage={onHandleMessages}
           />
         )}
-        {session?.user.name == userName ? (
-          <SubmitButtonsSet
-            variant="details"
-            type="button"
-            link={`/items/${id}/edit`}
-            ariaLabel="edit"
-            buttonName="Delete"
-            linkName="Edit"
-            isMutating={isMutating}
-            pathName={pathName}
-            onOpen={onShowPopup}
-          />
+
+        {!session && inDiscuss ? (
+          <StyledText>Log in to see the messages.</StyledText>
         ) : (
-          <>
-            {!session && inDiscuss ? (
-              <StyledText>Log in to see the messages.</StyledText>
-            ) : (
-              <></>
-            )}
-          </>
+          <></>
         )}
+
         <MessagesList>
           {isLoading ? (
             <p>Loading...</p>
@@ -201,11 +206,12 @@ const ItemDescription = styled.p`
 const MessageButton = styled.button`
   min-width: 100%;
   margin-top: 2em;
-  padding: 1em;
+  padding: 0.8rem;
   border: none;
-  border-radius: 1em;
+  border-radius: 0.6rem;
   background-color: var(--middle-finished-color);
   color: var(--font-color);
+  font-size: 1.2rem;
   box-shadow: 5px 5px 10px 2px var(--more-lightgrey-color);
   transition: opacity 0.2s ease-in;
 
@@ -230,5 +236,5 @@ const StyledText = styled.p`
 const MessagesList = styled.ul`
   list-style: none;
   margin: 0;
-  padding: 1rem 0 1rem;
+  padding: 1.5rem 0 1rem;
 `;

@@ -26,6 +26,8 @@ export default function DetailsPage({ showPopup, onShowPopup, onClosePopup }) {
 
   const { data: item, mutate, isLoading, error } = useSWR(`/api/items/${id}`);
 
+  console.log(item);
+
   const {
     trigger,
     isMutating,
@@ -39,7 +41,7 @@ export default function DetailsPage({ showPopup, onShowPopup, onClosePopup }) {
   }, [isCommited]);
 
   async function handleStatus() {
-    const updatedItem = { ...item, inDiscuss: !item.inDiscuss };
+    const updatedItem = { ...item, inDiscuss: true };
     try {
       await trigger({ method: "PUT", body: updatedItem });
       mutate();
@@ -90,6 +92,7 @@ export default function DetailsPage({ showPopup, onShowPopup, onClosePopup }) {
       inDiscuss={item.inDiscuss}
       messages={item.messages}
       userName={item.userName}
+      userEmail={item.userEmail}
       onHandleMessages={handleMessages}
       onDelete={handleDelete}
       isMutating={isMutating}

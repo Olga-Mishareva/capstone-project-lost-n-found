@@ -6,17 +6,14 @@ const ItemSchema = new Schema({
   description: String,
   itemId: String,
   userName: String,
+  userEmail: String,
   userId: String,
   userRole: String,
   longitude: String,
   latitude: String,
   inDiscuss: Boolean,
   isFinished: Boolean,
-  messages: {
-    type: [{ type: Schema.Types.ObjectId }],
-    ref: "Message",
-    default: [],
-  },
+  messages: [{ type: Schema.Types.ObjectId, ref: "Message" }],
 });
 
 const MessageSchema = new Schema({
@@ -58,12 +55,13 @@ async function getMessages(id) {
 
   const item = await Item.findOne({ itemId: id });
 
-  const messages = await Message.find({ item: item._id }).populate({
-    path: "item",
-    model: "Message",
-  });
-
-  return messages;
+  if (item) {
+    const messages = await Message.find({ item: item._id }).populate({
+      path: "item",
+      model: "Message",
+    });
+    return messages;
+  }
 }
 
 async function updateItem(id, data) {
