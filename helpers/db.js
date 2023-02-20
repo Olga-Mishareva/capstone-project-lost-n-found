@@ -14,11 +14,6 @@ const ItemSchema = new Schema({
   inDiscuss: Boolean,
   isFinished: Boolean,
   messages: [{ type: Schema.Types.ObjectId, ref: "Message" }],
-  // messages: {
-  //   type: [{ type: Schema.Types.ObjectId }],
-  //   ref: "Message",
-  //   default: [],
-  // },
 });
 
 const MessageSchema = new Schema({

@@ -38,26 +38,26 @@ export default function CreatePage({
     isMutating: isCreating,
   } = useSWRMutation("/api/items", fetcher);
 
-  console.log(session.user.email);
-
   async function addItem(data, latlng) {
-    const newItem = {
-      ...data,
-      initiallyLost: `${data.initiallyLost}` === "Lost" ? true : false,
-      itemId: crypto.randomUUID(),
-      userId: "",
-      userName: "",
-      userEmail: session.user.email,
-      userRole: "user",
-      longitude: latlng.lng,
-      latitude: latlng.lat,
-      inDiscuss: false,
-      isFinished: false,
-    };
-    try {
-      await triggerPost({ method: "POST", body: newItem });
-    } catch (error) {
-      throw new Error(error.message);
+    if (session) {
+      const newItem = {
+        ...data,
+        initiallyLost: `${data.initiallyLost}` === "Lost" ? true : false,
+        itemId: crypto.randomUUID(),
+        userId: "",
+        userName: "",
+        userEmail: session.user.email,
+        userRole: "user",
+        longitude: latlng.lng,
+        latitude: latlng.lat,
+        inDiscuss: false,
+        isFinished: false,
+      };
+      try {
+        await triggerPost({ method: "POST", body: newItem });
+      } catch (error) {
+        throw new Error(error.message);
+      }
     }
 
     if (!error) {
