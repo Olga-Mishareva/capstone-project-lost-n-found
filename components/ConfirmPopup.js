@@ -28,7 +28,6 @@ export default function ConfirmPopup({
                   onClose();
                 }
               : () => {
-                  // router.push("/");
                   onClose();
                   signIn();
                 }
