@@ -53,9 +53,6 @@ export default function ItemDetails({
     setIsMessageFormOpen(false);
   }
 
-  console.log(`item.userEmail: ${userEmail}`);
-  console.log(`session.user.email: ${session.user.email}`);
-
   return (
     <>
       <DetailsWrapper>
