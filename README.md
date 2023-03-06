@@ -1,16 +1,49 @@
 # Lost-n-Found
 
-The Lost-n-Found app will help lost or found things find their owner more quickly.
+My app makes it easier to find a lost item or to report a find using OpenStreetMaps. To exchange information about lost and found items you can use build-in messenger.
 
-## Development
+-----------
 
-To run project commands locally, you need to install the dependencies using `npm i` first.
+## App impressions
 
-You can then use the following commands:
+![](/access/olga_mishareva.mov)
 
-- `npm run dev` to start the development server
-- `npm run build` to create a production build
-- `npm run start` to start the production build
-- `npm run test` to run the tests in watch mode (if available)
+-------------
 
-> 💡 This project requires a bundler. You can use `npm run dev` to start the development server. You can then view the project in the browser at `http://localhost:3000`. The Live Preview Extension for Visual Studio Code will **not** work for this project.
+## Demo
+
+[You can see the project here](https://capstone-project-lost-n-found.vercel.app/)
+
+------------------
+
+## Tech Stack
+
+- JavaScript
+- React
+- Next.js
+- Styled Components
+- NextAuth.js
+- Node.js
+- MongoDB
+- Mongoose
+- Leaflet
+
+------------
+
+## Project setup
+
+1. Clone this repository.
+
+2. Install all npm dependencies using `npm install`
+
+3. To start the development server `npm run dev` 
+You can then view the project in the browser at `http://localhost:3000`
+
+4. To run the tests in watch mode (if available) `npm run test`
+
+5. To create a production build `npm run build`
+
+6. To start the production build `npm run start`
+
+
+
