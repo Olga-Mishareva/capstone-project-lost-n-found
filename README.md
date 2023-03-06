@@ -4,11 +4,11 @@ My app makes it easier to find a lost item or to report a find using OpenStreetM
 
 -----------
 
-## App impressions
+<!-- ## App impressions
 
-![](/access/olga_mishareva.mov)
+![video](/access/olga_mishareva.mov)
 
--------------
+------------- -->
 
 ## Demo
 
