@@ -4,7 +4,9 @@ My app makes it easier to find a lost item or to report a find using OpenStreetM
 
 -----------
 
-<img align="center" width="375" height="667" src="/access/mobile_view.png">
+<p  align="center">
+<img width="375" height="667" src="/access/mobile_view.png">
+</p>
 
 -------------
 
