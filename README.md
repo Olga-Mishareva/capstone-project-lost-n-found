@@ -4,15 +4,13 @@ My app makes it easier to find a lost item or to report a find using OpenStreetM
 
 -----------
 
-![](/access/mobile_view.png)
-<p align="center">
-<img width="375" height="667" src="/access/mobile_view.png">
-</p>
+<img align="center" width="375" height="667" src="/access/mobile_view.png">
+
 -------------
 
 ## Demo
 
-[You can see the project here](https://capstone-project-lost-n-found.vercel.app/)
+[lost-n-found-om.vercel.app](https://capstone-project-lost-n-found.vercel.app/)
 
 
 
