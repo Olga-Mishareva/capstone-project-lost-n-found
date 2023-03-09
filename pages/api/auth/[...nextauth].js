@@ -10,36 +10,37 @@ export const authOptions = {
       clientId: process.env.GITHUB_ID,
       clientSecret: process.env.GITHUB_SECRET,
     }),
-    process.env.VERCEL_ENV === "preview"
-      ? CredentialsProvider({
-          name: "Credentials",
-          credentials: {
-            username: {
-              label: "Username",
-              type: "text",
-              placeholder: "Test User",
-            },
-            password: { label: "Password", type: "password" },
-          },
-          async authorize() {
-            return {
-              id: "0",
-              name: "Preview Test User",
-              email: "preview@test.com",
-            };
-          },
-        })
-      : GoogleProvider({
-          clientId: process.env.GOOGLE_CLIENT_ID,
-          clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-          authorization: {
-            params: {
-              prompt: "consent",
-              access_type: "offline",
-              response_type: "code",
-            },
-          },
-        }),
+    // process.env.VERCEL_ENV === "preview"
+    //   ? CredentialsProvider({
+    //       name: "Credentials",
+    //       credentials: {
+    //         username: {
+    //           label: "Username",
+    //           type: "text",
+    //           placeholder: "Test User",
+    //         },
+    //         password: { label: "Password", type: "password" },
+    //       },
+    //       async authorize() {
+    //         return {
+    //           id: "0",
+    //           name: "Preview Test User",
+    //           email: "preview@test.com",
+    //         };
+    //       },
+    //     })
+    //   :
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      authorization: {
+        params: {
+          prompt: "consent",
+          access_type: "offline",
+          response_type: "code",
+        },
+      },
+    }),
 
     CredentialsProvider({
       // The name to display on the sign in form (e.g. "Sign in with...")
