@@ -1,6 +1,5 @@
 import NextAuth from "next-auth";
 import GithubProvider from "next-auth/providers/github";
-import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
 
 export const authOptions = {
@@ -10,6 +9,7 @@ export const authOptions = {
       clientId: process.env.GITHUB_ID,
       clientSecret: process.env.GITHUB_SECRET,
     }),
+    
     // process.env.VERCEL_ENV === "preview"
     //   ? CredentialsProvider({
     //       name: "Credentials",
@@ -30,6 +30,7 @@ export const authOptions = {
     //       },
     //     })
     //   :
+    
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
@@ -57,7 +58,7 @@ export const authOptions = {
         },
         password: { label: "Password", type: "password" },
       },
-      async authorize(credentials, req) {
+      async authorize() {
         // Add logic here to look up the user from the credentials supplied
         const user = {
           id: "1",
