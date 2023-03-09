@@ -10,6 +10,7 @@ export const authOptions = {
       clientId: process.env.GITHUB_ID,
       clientSecret: process.env.GITHUB_SECRET,
     }),
+
     // process.env.VERCEL_ENV === "preview"
     //   ? CredentialsProvider({
     //       name: "Credentials",
@@ -57,7 +58,7 @@ export const authOptions = {
         },
         password: { label: "Password", type: "password" },
       },
-      async authorize(credentials, req) {
+      async authorize() {
         // Add logic here to look up the user from the credentials supplied
         const user = {
           id: "1",
