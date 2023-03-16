@@ -1,6 +1,7 @@
 import useSWR from "swr";
 import { useRouter } from "next/router";
 import useSWRMutation from "swr/mutation";
+import useSWRSubscription from "swr/subscription";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 
@@ -25,6 +26,23 @@ export default function DetailsPage({ showPopup, onShowPopup, onClosePopup }) {
   const [isCommited, setIsCommited] = useState(false);
 
   const { data: item, mutate, isLoading, error } = useSWR(`/api/items/${id}`);
+
+  useEffect(() => {
+    mutate();
+  }, [item]);
+
+  // const { data: newM, error: subscriptionError } = useSWRSubscription(
+  //   `/api/items/${id}`,
+  //   (id, { next }) => {
+  //     const sub = item?.subscribe(`/api/items/${id}`, (err, data) =>
+  //       next(err, data)
+  //     );
+  //     return () => sub?.close();
+  //   }
+  // );
+
+  // console.log(newM);
+  // console.log(subscriptionError);
 
   const {
     trigger,
